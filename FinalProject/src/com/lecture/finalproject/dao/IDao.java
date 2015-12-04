@@ -25,6 +25,7 @@ public interface IDao {
 	public abstract int getUserCount(String user_id);
 	
 	public abstract int getTravelPostCount();
+	public abstract List<ModelFrontTravlePost> getFrontTravlePostList();
 	//front Travle List 가져오기
 	public abstract List<ModelFrontTravlePost> getFrontTravlePostList(int startPage, int pageNum);
 	//front Travle List 위치기반

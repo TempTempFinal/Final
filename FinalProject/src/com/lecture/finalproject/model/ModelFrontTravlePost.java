@@ -7,7 +7,21 @@ public class ModelFrontTravlePost {
 	private int comment_count;
 	private String image_url;
 	private String address;
+	private double latitude;
+	private double longitude;
 	
+	public double getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+	public double getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
 	public ModelFrontTravlePost(String title, int like_count, int comment_count, String image_url, String address) {
 		super();
 		this.title = title;
@@ -52,6 +66,8 @@ public class ModelFrontTravlePost {
 	@Override
 	public String toString() {
 		return "ModelFrontTravlePost [title=" + title + ", like_count=" + like_count + ", comment_count="
-				+ comment_count + ", image_url=" + image_url + ", address=" + address + "]";
+				+ comment_count + ", image_url=" + image_url + ", address=" + address + ", latitude=" + latitude
+				+ ", longitude=" + longitude + "]";
 	}
+
 }

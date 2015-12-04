@@ -469,6 +469,47 @@ public class DaoTravlePlace implements IDao{
 	    	return result;
 		
 	}
+	
+	
+	
+	@Override
+	public List<ModelFrontTravlePost> getFrontTravlePostList() {
+		// TODO Auto-generated method stub
+		
+		  List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
+		  
+		  try{
+    		  String query = "select image_url,travelPost_no, title,view_count, like_count, comment_count, address, latitude, longitude" +
+    				  			" from image_tb natural join "
+    				  				+ "(travelpost_tb  natural join location_tb)" +
+    				  						" group by travelPost_no";
+    		  pstmt = connection.prepareStatement(query);
+    		  rs = pstmt.executeQuery();
+                
+              while (rs.next()) {
+            	  ModelFrontTravlePost one = new ModelFrontTravlePost();
+                  
+            	  String image_url = rs.getString("image_url").equals("null") == true ? "img/notFound.jpg" : rs.getString("image_url");
+ 
+                  one.setImage_url(image_url);
+                  one.setAddress(rs.getString("address"));
+                  one.setComment_count(rs.getInt("comment_count"));
+                  one.setLike_count(rs.getInt("like_count"));
+                  one.setTitle(rs.getString("title"));
+                  one.setLatitude(rs.getDouble("latitude"));
+                  one.setLongitude(rs.getDouble("longitude"));
+                  result.add(one);
+              }
+            
+          } catch (SQLException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+           
+          }
+          return result;
+	}
+	
+	
     
     @Override //startPage 시작 page : 1부터 시작, Pagenum : page당 갯수
     public List<ModelFrontTravlePost> getFrontTravlePostList(int startPage, int pageNum) {
