@@ -1,0 +1,49 @@
+
+.row {
+
+}
+
+.col-1,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-10,
+.col-11,
+.col-12 {
+  float: left;
+  padding-top: 10px; /* <----------------------------------------------- 실제 서비스 시에는 삭제*/
+  padding-bottom: 10px; /* <-------------------------------------------- 실제 서비스 시에는 삭제*/
+  padding-left: 10px;
+  padding-right: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #ccc; /* <------------------------------------------ 실제 서비스 시에는 삭제*/
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* <----- 실제 서비스 시에는 삭제*/
+}
+
+
+.col-10 { width: 10% }
+
+.col-9 { width: 11.11111111% }
+
+.col-8 { width: 12.5% }
+
+.col-7 { width: 14.28571428% }
+
+.col-6 { width: 16.66666666% }
+
+.col-5 { width: 20% }
+
+.col-4 { width: 25% }
+
+.col-3 { width: 33.33333333% }
+
+.col-2 { width: 50% }
+
+.col-1 { width: 100% }
