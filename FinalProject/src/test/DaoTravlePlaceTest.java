@@ -23,10 +23,10 @@ public class DaoTravlePlaceTest {
 		List<ModelFrontTravlePost> result = null;
 		int result1 = 0;
 	
-		result = one.getFrontTravlePostByHashTag("바다", 1, 9);
+		result = one.getFrontTravlePostList();
 		
 		for(int i= 0;i<result.size(); i++){
-			System.out.println(result);
+			System.out.println(result.get(i));
 		}
 	}
 

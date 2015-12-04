@@ -473,7 +473,7 @@ public class DaoTravlePlace implements IDao{
 	
 	
 	@Override
-	public List<ModelFrontTravlePost> getFrontTravlePostList() {
+	public List<ModelFrontTravlePost> getFrontTravlePostList(){
 		// TODO Auto-generated method stub
 		
 		  List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
@@ -481,23 +481,30 @@ public class DaoTravlePlace implements IDao{
 		  try{
     		  String query = "select image_url,travelPost_no, title,view_count, like_count, comment_count, address, latitude, longitude" +
     				  			" from image_tb natural join "
-    				  				+ "(travelpost_tb  natural join location_tb)" +
+    				  				+ " (travelpost_tb  natural join location_tb)" +
     				  						" group by travelPost_no";
-    		  pstmt = connection.prepareStatement(query);
-    		  rs = pstmt.executeQuery();
+    		  
+              st = connection.createStatement();
+              rs =st.executeQuery(query);
+              
+              if(st.execute(query))
+                  rs = st.getResultSet();
+
                 
               while (rs.next()) {
             	  ModelFrontTravlePost one = new ModelFrontTravlePost();
                   
             	  String image_url = rs.getString("image_url").equals("null") == true ? "img/notFound.jpg" : rs.getString("image_url");
- 
+            	  double latitude = rs.getString("latitude").equals("null" ) == true ? 0 : Double.parseDouble(rs.getString("latitude"));
+            	  double longitude = rs.getString("longitude").equals("null" ) == true ? 0 : Double.parseDouble(rs.getString("longitude"));
+            	  
                   one.setImage_url(image_url);
                   one.setAddress(rs.getString("address"));
                   one.setComment_count(rs.getInt("comment_count"));
                   one.setLike_count(rs.getInt("like_count"));
                   one.setTitle(rs.getString("title"));
-                  one.setLatitude(rs.getDouble("latitude"));
-                  one.setLongitude(rs.getDouble("longitude"));
+                  one.setLatitude(latitude);
+                  one.setLongitude(longitude);
                   result.add(one);
               }
             
@@ -597,9 +604,9 @@ public class DaoTravlePlace implements IDao{
             st = connection.createStatement();
             rs =st.executeQuery(query);
             
+            
             if(st.execute(query))
                 rs = st.getResultSet();
-              
             while (rs.next()) {
                 result = new ModelLocation();
                 

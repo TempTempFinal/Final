@@ -59,10 +59,10 @@ function showPosition(position) {
     latitude = position.coords.latitude.toFixed(2);
     longitude = position.coords.longitude.toFixed(2);
  
-    var parameter = 'listByBoundaryLocation&latitude=' + latitude + '&longitude=' + longitude + '&startPage=1&pageNum=9';
+    var parameter = '?method=listByBoundaryLocation&latitude=' + latitude + '&longitude=' + longitude + '&startPage=1&pageNum=9';
     console.log(parameter); 
     
-   // loadXMLDoc(parameter);
+    loadXMLDoc(parameter);
 }
 
 function showError(error) {

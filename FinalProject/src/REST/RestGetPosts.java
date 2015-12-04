@@ -125,9 +125,12 @@ public class RestGetPosts extends HttpServlet {
 		List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
 		
 		for(int i=0 ;i<inputPost.size(); i++){
-			//해당 여행지가 3000m내에 있다면
-			if(calDistance(myLatitude,myLongitude,inputPost.get(i).getLatitude(),inputPost.get(i).getLongitude()) <= 3000)
-				result.add(result.get(i));
+			//해당 여행지가 30000m = 30km 내에 있다면
+			//TODO 위도 경도 반대로 넣어줘야 한다!!.
+			System.out.println(inputPost.get(i).getAddress());
+			double distance = calDistance(myLatitude,myLongitude,inputPost.get(i).getLongitude(),inputPost.get(i).getLatitude());
+			if(distance <= 30000)
+				result.add(inputPost.get(i));
 		}
 		
 		return result;
@@ -146,7 +149,7 @@ public class RestGetPosts extends HttpServlet {
 	    dist = dist * 1.609344;    // 단위 mile 에서 km 변환.  
 	    dist = dist * 1000.0;      // 단위  km 에서 m 로 변환  
 	  
-	    return dist;  
+	    return (int)(dist * 100) / 100.0;  
 	}  
 	  
 	    // 주어진 도(degree) 값을 라디언으로 변환  
