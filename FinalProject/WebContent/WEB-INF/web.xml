@@ -16,7 +16,6 @@
     <servlet-name>ServletWrite</servlet-name>
     <servlet-class>com.lecture.finalproject.controller.WriteController</servlet-class>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>ServletWrite</servlet-name>
     <url-pattern>/write</url-pattern>

@@ -9,11 +9,14 @@ public class ModelInformation {
                                          .getLogger(ModelInformation.class);
     
     private String travel_content ;
-    private int travelPost_no     ;
-    public ModelInformation(String travel_content, int travelPost_no) {
+    private int travelPost_no;
+    private double travelsentiment;
+    
+    public ModelInformation(String travel_content, int travelPost_no, double travelsentiment) {
         super();
         this.travel_content = travel_content;
         this.travelPost_no = travelPost_no;
+        this.travelsentiment = travelsentiment;
     }
     public ModelInformation() {
         super();
@@ -36,11 +39,15 @@ public class ModelInformation {
     public void setTravelPost_no(int travelPost_no) {
         this.travelPost_no = travelPost_no;
     }
+    public double getTravelSentiment() {
+        return travelsentiment;
+    }
+    public void setTravelSentiment(Double travelsentiment) {
+        this.travelsentiment = travelsentiment;
+    }
     @Override
     public String toString() {
         return "ModelInformation [travel_content=" + travel_content
-                + ", travelPost_no=" + travelPost_no + "]";
+                + ", travelPost_no=" + travelPost_no + ",travelsentiment=" + travelsentiment + "]";
     }
-    
-    
 }

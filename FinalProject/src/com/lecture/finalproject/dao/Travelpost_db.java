@@ -48,6 +48,17 @@ public class Travelpost_db {
         }
     }
     
+    public void update(String sql)
+    {
+       try{
+          stmt = getConnection().createStatement();
+          stmt.execute(sql);
+       }catch(SQLException e){
+          e.printStackTrace();
+          System.out.println("error/update");
+       }
+    }
+    
     public int findTravelPost_no(String title)
     {
     	 try{
