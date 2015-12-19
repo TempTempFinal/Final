@@ -71,7 +71,7 @@ public class RestGetPosts extends HttpServlet {
 			List<ModelFrontTravlePost> tempPost = db.getFrontTravlePostList();
 			List<ModelFrontTravlePost> nearPosts = getNearPostList(tempPost,latitude,longitude);
 			posts = getNearPagedPostList(nearPosts,Integer.parseInt(request.getParameter("startPage")), Integer.parseInt(request.getParameter("pageNum")));
-		}
+		}	
 		else if(method.equals("listBySeachWord")){
 			String searchWord = URLDecoder.decode(request.getParameter("searchWord"),"UTF-8");
 			System.out.println(searchWord);
@@ -126,9 +126,10 @@ public class RestGetPosts extends HttpServlet {
 		
 		for(int i=0 ;i<inputPost.size(); i++){
 			//해당 여행지가 30000m = 30km 내에 있다면
-			//TODO 위도 경도 반대로 넣어줘야 한다!!.
+			//TODO 내꺼말고 여행지의 위도 경도 반대로 넣어줘야 한다!!.
 			System.out.println(inputPost.get(i).getAddress());
 			double distance = calDistance(myLatitude,myLongitude,inputPost.get(i).getLongitude(),inputPost.get(i).getLatitude());
+			System.out.println(distance);
 			if(distance <= 30000)
 				result.add(inputPost.get(i));
 		}

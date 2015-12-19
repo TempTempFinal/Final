@@ -99,10 +99,10 @@ public class ServiceTravelParser {
                     tp_M.setTitle(node.getTextContent());
                     
                     System.out.println(no);
-                    tp_db.insert("insert into travelpost_tb(travelPost_no,title,travelPost_date,view_count,user_id) values("+no+","+make(tp_M.getTitle())+","+"now(),"+"0,"+make("khyunm91")+")");
+                    tp_db.insert("insert into travelpost_tb(travelPost_no,title,travelPost_date,view_count,like_count,comment_count,user_id) values("+no+","+make(tp_M.getTitle())+","+"now(),"+"0,0,0,"+make("khyunm91")+")");
                     tp_db.insert("insert into location_tb(city1,address,latitude,longitude,travelPost_no) values("+make(tp_L.getCity1())+","+make(tp_L.getAddress())+","+make(tp_L.getLatitude())+","+make(tp_L.getLongitude())+","+no+")");;
                     tp_db.insert("insert into image_tb(image_url, travelpost_no) values("+make(img.getImage_url())+","+no+")");
-                    tp_db.insert("insert into information_tb values('" + content + "'," + no +")");
+                   // tp_db.insert("insert into information_tb values('" + content + "'," + no +")");
                     tp_L.setAddress(null);
                     tp_L.setCity1(null);
                     tp_L.setCity2(null);

@@ -87,9 +87,10 @@ public class FriendsInfoHelper {
 
 		int count = 0;
 
-		//String sk[] = new String[8];
-		Boolean on[] = new Boolean[8];
-		//int skindex[] = new int[8];
+		//String sk[] = new String[10];
+		Boolean on[] = new Boolean[100];
+		//List<Boolean> on = null;
+		//int skindex[] = new int[10];
 		//int s[] = new int[8];
 		double temp=0;
 		
@@ -120,7 +121,7 @@ public class FriendsInfoHelper {
 		}
 		for(int i=0;i<tempW.size();i++)
 		{
-			System.out.println(tempC.get(i).toString() + " : " +tempW.get(i).toString());
+			//System.out.println(tempC.get(i).toString() + " : " +tempW.get(i).toString());
 			groupConcerns.add(tempC.get(i).toString());
 		}
 			
@@ -141,6 +142,7 @@ public class FriendsInfoHelper {
 			Map<String, Float> friendsNameAndWeight = new HashMap<String, Float>();
 			float weight;
 			List fc = new ArrayList();
+			int count = 0;
 			String str = "";
 			Map<String, Double> Friendsconcerns = new HashMap<String,Double>();
 			List<String> meaningWordList = null;
@@ -153,7 +155,7 @@ public class FriendsInfoHelper {
 				for(User user : friendUserObject){
 
 					System.out.println("?Friend's Name " + user.getName());
-
+					System.out.println(count++);
 					friendsNameAndWeight.put(user.getName(), (float) 0);
 
 					if(user.getStatus() != null){
@@ -173,7 +175,7 @@ public class FriendsInfoHelper {
 						List<Status> myStatusess = twitter.getUserTimeline(myUser.getId());
 
 						for(Status status3 : myStatusess){
-							
+								
 							
 							//System.out.println(status3); 
 							checkWeight(status3,myUser,user);

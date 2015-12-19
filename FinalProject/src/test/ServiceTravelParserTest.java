@@ -11,7 +11,6 @@ public class ServiceTravelParserTest {
 	@Test
 	public void test() {
 		ServiceTravelParser one = new ServiceTravelParser();
-		
+		one.Parser();
 	}
-
 }

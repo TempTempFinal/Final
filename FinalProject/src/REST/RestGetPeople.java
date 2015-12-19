@@ -63,28 +63,35 @@ public class RestGetPeople extends HttpServlet {
 	
 		if(method.equalsIgnoreCase("getFrindAndFollowerList")){
 			listFriends = friendHelper.getFriendAndFollowerList();
+			
+			JSONArray FrinedJsonArray = JSONArray.fromObject(listFriends);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("friendList", FrinedJsonArray);
+			
+			JSONObject jsonObject = JSONObject.fromObject(map);
+			System.out.println(jsonObject);
+			PrintWriter out = response.getWriter();
+			
+			out.println(jsonObject);	
 		}
 		if(method.equalsIgnoreCase("getFriendWeight")){
 			String[] friendNames = decoder(request.getParameterValues("name"), request.getParameterValues("name").length);
 			
-			friendsNameAndWeight = friendHelper.getFriendsWeight(friendNames);
+			//friendsNameAndWeight = friendHelper.getFriendsWeight(friendNames);
 			finalgroup = friendHelper.groupConcern(friendNames);
-			for(int i=0;i<friendsNameAndWeight.size();i++)
-				System.out.println(friendsNameAndWeight.toString());
-			for(int i=0;i<finalgroup.size();i++)
-				System.out.println("gg"+finalgroup.get(i));
 			
+			JSONArray groupConcernJsonArray = JSONArray.fromObject(finalgroup);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("groupConcernList", groupConcernJsonArray);
+			
+			JSONObject jsonObject = JSONObject.fromObject(map);
+			System.out.println(jsonObject);
+			PrintWriter out = response.getWriter();
+			
+			out.println(jsonObject);	
 		}
 		
-		JSONArray FrinedJsonArray = JSONArray.fromObject(listFriends);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("friendList", FrinedJsonArray);
 		
-		JSONObject jsonObject = JSONObject.fromObject(map);
-		System.out.println(jsonObject);
-		PrintWriter out = response.getWriter();
-		
-		out.println(jsonObject);	
 	}
 	
 	

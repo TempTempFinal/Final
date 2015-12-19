@@ -1,5 +1,6 @@
 var friendList;
 var addFriendCount = 0;
+var contextPath='<%=request.getContextPath()%>';
 
 $(document).ready(function(){
 
@@ -9,7 +10,7 @@ $(document).ready(function(){
 		
 		var parameter = "?method=getFrindAndFollowerList";
 		console.log(parameter);
-		loadXMLDoc(parameter);	
+		loadXMLDoc1(parameter);	
 	});
 	
 	$('#sendFriendBtn').on('click', function(){
@@ -22,7 +23,9 @@ $(document).ready(function(){
 		}		
 		parameter = "?method=getFriendWeight" + parameter;
 		console.log(parameter);
-		loadXMLDoc(parameter);
+		loadXMLDoc2(parameter);
+		$('#myModal').hide();
+		
 	});
 	
 })
@@ -37,7 +40,7 @@ function addFriend(btn){
 	friendList[addFriendCount++] = friendScreenName;
 }
 
-function loadXMLDoc(parameter)
+function loadXMLDoc1(parameter)
 {
     var xmlhttp = new XMLHttpRequest();
   
@@ -45,6 +48,22 @@ function loadXMLDoc(parameter)
       if (xmlhttp.readyState==4 && xmlhttp.status==200){
     	  var obj = JSON.parse(xmlhttp.responseText);
     	  friendsListParse(obj);
+      }
+    }   
+    console.log(parameter);
+ 
+    xmlhttp.open("GET", "/boot_test/RestGetPeople" + parameter,true);
+    xmlhttp.send();
+}
+
+function loadXMLDoc2(parameter)
+{
+    var xmlhttp = new XMLHttpRequest();
+  
+    xmlhttp.onreadystatechange=function(){
+      if (xmlhttp.readyState==4 && xmlhttp.status==200){
+    	  var obj = JSON.parse(xmlhttp.responseText);
+    	  friendsListParse2(obj);
       }
     }   
     console.log(parameter);
@@ -67,5 +86,35 @@ function friendsListParse(obj)
 		$friend = $('<div></div>').append($img, $name,$btn);
 		$('#friendListMenu').append($friend);
 	}
+}
+
+function friendsListParse2(obj)
+{
+	var size = 0;
+	
+	
+	console.log("ggggggggggggggggggggggggggggg");
+	console.log(obj);
+	console.log(obj.groupConcernList[0])
+	console.log(obj.groupConcernList[1])
+	
+	$('#groupConcern0 a').text("");
+	$('#groupConcern1 a').text("");
+	$('#groupConcern2 a').text("");
+	$('#groupConcern3 a').text("");
+	
+	for(var i in obj.groupConcernList)
+		size++;
+	
+	for(var i=0; i<size; i++){	
+		$('#groupConcern' + i +' a').text(obj.groupConcernList[i]);
+		$('#groupConcern' + i +' a').attr('href',getContextPath() +"/concern?searchWord=" + obj.groupConcernList[i]);
+	}
+}
+
+function getContextPath(){
+    var offset=location.href.indexOf(location.host)+location.host.length;
+    var ctxPath=location.href.substring(offset,location.href.indexOf('/',offset+1));
+    return ctxPath;
 }
 

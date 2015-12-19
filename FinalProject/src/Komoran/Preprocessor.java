@@ -47,7 +47,7 @@ public class Preprocessor {
 			System.out.println(e.getMessage());
 		}
 			
-		System.out.println(temp);
+		//System.out.println(temp);
 		return temp;
 	}
 		

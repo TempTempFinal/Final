@@ -14,6 +14,8 @@ public class ModelComment {
     private String user_id             ;
     private String image_url  ;
     private int travelPost_no          ;
+    private double sentiment ;
+
 	public ModelComment(int comment_no, String commentPost_date, String content, String user_id, String image_url,
 			int travelPost_no) {
 		super();
@@ -69,10 +71,17 @@ public class ModelComment {
 	public void setTravelPost_no(int travelPost_no) {
 		this.travelPost_no = travelPost_no;
 	}
+	public double getSentiment() {
+		return sentiment;
+	}
+	public void setSentiment(double sentiment) {
+		this.sentiment = sentiment;
+	}
 	@Override
 	public String toString() {
 		return "ModelComment [comment_no=" + comment_no + ", commentPost_date=" + commentPost_date + ", content="
 				+ content + ", user_id=" + user_id + ", image_url=" + image_url + ", travelPost_no=" + travelPost_no
-				+ "]";
-	} 
+				+ ", sentiment=" + sentiment + "]";
+	}
+
 }

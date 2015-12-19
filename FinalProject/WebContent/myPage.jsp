@@ -73,7 +73,8 @@
             outline: 1px solid red;
             }
             
-            .concern-list{
+            
+.concern-list{
 margin: 20px;
 padding-bottom : 30px;
 border-bottom: 1px solid #b4b4b4;
@@ -108,9 +109,10 @@ border-bottom: 1px solid #b4b4b4;
 .row .col-3{
  	border: 1px solid gray;
  	border-radius : 10px;
- 	height: 356px;
- 	width : 300px;
- 	margin: 10px;
+ 	height: 90px;
+ 	width : 150px;
+ 	margin: 20px;
+ 	float :left;
  }
  
  .row{
@@ -151,7 +153,22 @@ border-bottom: 1px solid #b4b4b4;
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
                         My Category</a>
-                    </div>
+
+					<%
+						if(isLogin.equalsIgnoreCase("true")) {
+					%>
+					<section class="concern-list">	
+						<div class="row">
+						<div class="col-3" id="groupConcern0"><A href=""></A></div>
+						<div class="col-3" id="groupConcern1"><A href=""></A></div>
+						<div class="col-3" id="groupConcern2"><A href=""></A></div>
+						<div class="col-3" id="groupConcern3"><A href=""></A></div>
+						</div>
+					</section>
+					<%
+						}
+					%>
+				</div>
                 </div>
             </div>
             

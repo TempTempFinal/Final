@@ -169,6 +169,7 @@ border-bottom: 1px solid #b4b4b4;
 	margin-right: 50px;
 	text-align: center;
 	padding-top: 60px;
+
 }
 
 .concern-list .col-3 a{

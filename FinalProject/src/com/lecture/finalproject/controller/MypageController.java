@@ -52,21 +52,18 @@ public class MypageController extends HttpServlet {
     {
 		HttpSession session = request.getSession();
 		
-
 		boolean isLogin = session.getAttribute("checkLogin") == null ? false : true;
 		request.setAttribute("isLogin", "false");
-		
 			
 		if(isLogin)
 		{
 			List<ModelFrontTravlePost> posts = null; 
 			List<ModelConcern> concerns = null;
-		
+			DaoTravlePlace db = new DaoTravlePlace();
+						
 			User user = null;
 			Twitter twitter = null;
 			
-			DaoTravlePlace db = new DaoTravlePlace();	
-	
 			twitter = (Twitter)session.getAttribute("twitter");
 			user = (User)session.getAttribute("twitterUser");
 			posts = db.getFrontTravlePostListById(Long.toString(user.getId()));

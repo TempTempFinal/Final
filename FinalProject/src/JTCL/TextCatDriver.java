@@ -40,11 +40,11 @@ public class TextCatDriver {
 
 		HashMap<String,Double> concernWeight = new HashMap();
 		TextCategorizer guesser = new TextCategorizer();  
-		guesser.setConfFiles("C:\\Users\\khyun\\git\\Final\\FinalProject\\resource\\fingerPrinter\\textcat.conf");
+		guesser.setConfFiles("C:\\Users\\park\\Documents\\Final\\FinalProject\\resource\\fingerPrinter\\textcat.conf");
 		//System.out.println(guesser.categorize(s));
 		//System.out.println(guesser.getCategoryDistances(s));
 
-		//Ä£±¸ ÇÑ¸íÀÇ ±ÛÀ» °¡Á®¿Í¼­ ±× ±Û¿¡ ´ëÇÑ °ü½É»ç¿Í °¡ÁßÄ¡¸¦ ¹è¿­·Î ³ª¿­
+		//Ä£ï¿½ï¿½ ï¿½Ñ¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ ï¿½ï¿½ ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½É»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		Map<String, Integer> a = guesser.getCategoryDistances(s);
 		//String b = a.toString();
 		//System.out.println(a.keySet());
@@ -53,7 +53,7 @@ public class TextCatDriver {
 		//System.out.println(b);
 		String e = (String) c.subSequence(1, c.length()-1);
 		String[] d = e.split(", ");
-		 String interest[] = {"¹Ì½Ä","´ÜÇ³","³¬½Ã","¹Ù´Ù","Ä·ÇÎ","µî»ê","¼¶","·¹Àú"};
+		 String interest[] = {"ë‚šì‹œ","ë‹¨í’","ë“±ì‚°","ë ˆì €","ë¯¸ì‹","ë°”ë‹¤","ì„¬","ìº í•‘"};
 		int realWeight[] = {1,2,3,4,5,6,7,8};
 		double df[] ={1,2,3,4,5,6,7,8};
 		double sum=0;
@@ -103,7 +103,7 @@ public class TextCatDriver {
 		double dev2n3;
 		double dev3n4;
 		double dev4n5;
-		//3°³¿Í 4°³ ºñ±³
+		//3ï¿½ï¿½ï¿½ï¿½ 4ï¿½ï¿½ ï¿½ï¿½
 		sort(temp,temp.length);
 		//System.out.println();
 		
@@ -135,10 +135,10 @@ public class TextCatDriver {
 		dev4n5 = (sum4/4)-(sum5/5);
 		/*
 		System.out.println();
-		System.out.println("2¿Í 3ÀÇ ÆíÂ÷"+dev2n3);
-		System.out.println("3°ú 4ÀÇ ÆíÂ÷" +dev3n4);
-		System.out.println("4¿Í 5ÀÇ ÆíÂ÷ " + dev4n5);
-		System.out.println("ÀüÃ¼ °ªÀÇ Ç¥ÁØÆíÂ÷"+dev);
+		System.out.println("2ï¿½ï¿½ 3ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"+dev2n3);
+		System.out.println("3ï¿½ï¿½ 4ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½" +dev3n4);
+		System.out.println("4ï¿½ï¿½ 5ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ " + dev4n5);
+		System.out.println("ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+dev);
 		*/
 		int picknum = pickdev(dev2n3,dev3n4,dev4n5,dev);
 		
@@ -199,8 +199,8 @@ public class TextCatDriver {
 		FingerPrint fp = new FingerPrint();
 
 		try {
-			fp.create(new File("³¬½Ã.txt"));
-			fp.setCategory("³¬½Ã");
+			fp.create(new File("ï¿½ï¿½ï¿½ï¿½.txt"));
+			fp.setCategory("ï¿½ï¿½ï¿½ï¿½");
 			fp.save();
 		}
 

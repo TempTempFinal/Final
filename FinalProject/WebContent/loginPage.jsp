@@ -116,9 +116,7 @@
              <h3>대한민국 이곳 저곳, 진짜 여행 스토리</h3>
           
                         <ul  class="list-inline intro-social-buttons">      
-                            <li id="
-
- ">
+                            <li id="loginBtn">
                                 <a href="<%=request.getContextPath()%>/signin" class="btn btn-default btn-lg trans-background font-white" style="border: 4px solid white">
                                 	<i class="fa fa-twitter fa-fw whitFont" ></i>
                                 	 <span class="network-name">Twitter로 로그인</span>
@@ -150,7 +148,7 @@
     <script src="http://ironsummitmedia.github.io/startbootstrap-landing-page/js/bootstrap.min.js"></script>
 	<!-- login/logout -->
 	<%if(islogin){ %>
-	
+		
 		console.log("인증1");
 
 	<script type="text/javascript">
@@ -159,7 +157,7 @@
 		var userName = '<%=(String) request.getAttribute("name")%>';
 		var path = '<%=request.getContextPath()%>';
 
-
+		console.log(path);
 		$(function() {
 			console.log("인증2");
 			console.log(path);
