@@ -56,9 +56,9 @@ public class RestGetPeople extends HttpServlet {
 		User user = (User)session.getAttribute("twitterUser");		
 		String method = request.getParameter("method");
 		
-		Map<String, Float> friendsNameAndWeight = null;
+		List<Map<String, Double>> friendsNameAndWeight = null;
 		FriendsInfoHelper friendHelper = new FriendsInfoHelper(twitter, user);
-		
+		List<String> finalgroup = null;
 		List<ModelUser> listFriends = null;
 	
 		if(method.equalsIgnoreCase("getFrindAndFollowerList")){
@@ -66,10 +66,14 @@ public class RestGetPeople extends HttpServlet {
 		}
 		if(method.equalsIgnoreCase("getFriendWeight")){
 			String[] friendNames = decoder(request.getParameterValues("name"), request.getParameterValues("name").length);
-			//각친구별 weight를 구함.
+			
 			friendsNameAndWeight = friendHelper.getFriendsWeight(friendNames);
-			System.out.println(friendsNameAndWeight);
-			//TODO 이제 관심사별 weight을 구하면된다.
+			finalgroup = friendHelper.groupConcern(friendNames);
+			for(int i=0;i<friendsNameAndWeight.size();i++)
+				System.out.println(friendsNameAndWeight.toString());
+			for(int i=0;i<finalgroup.size();i++)
+				System.out.println("gg"+finalgroup.get(i));
+			
 		}
 		
 		JSONArray FrinedJsonArray = JSONArray.fromObject(listFriends);

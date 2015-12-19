@@ -40,14 +40,14 @@ public class TextCatDriver {
 
 		HashMap<String,Double> concernWeight = new HashMap();
 		TextCategorizer guesser = new TextCategorizer();  
-		guesser.setConfFiles("textcat.conf");
+		guesser.setConfFiles("C:\\Users\\khyun\\git\\Final\\FinalProject\\resource\\fingerPrinter\\textcat.conf");
 		//System.out.println(guesser.categorize(s));
 		//System.out.println(guesser.getCategoryDistances(s));
 
 		//친구 한명의 글을 가져와서 그 글에 대한 관심사와 가중치를 배열로 나열
 		Map<String, Integer> a = guesser.getCategoryDistances(s);
 		//String b = a.toString();
-		System.out.println(a.keySet());
+		//System.out.println(a.keySet());
 		//System.out.println(b);
 		String c = a.values().toString();
 		//System.out.println(b);
@@ -80,7 +80,7 @@ public class TextCatDriver {
 		for(int i=0;i<realWeight.length;i++)
 		{
 			df[i] = (df[i]/sum2)*100;
-			System.out.println(interest[i]+" "+ df[i]);
+			//System.out.println(interest[i]+" "+ df[i]);
 			sum+=df[i];
 		}
 		//System.out.println(sum/realWeight.length);
@@ -105,7 +105,7 @@ public class TextCatDriver {
 		double dev4n5;
 		//3개와 4개 비교
 		sort(temp,temp.length);
-		System.out.println();
+		//System.out.println();
 		
 		
 		//for(int i=0;i<temp.length;i++)
