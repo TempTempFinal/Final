@@ -126,15 +126,17 @@ function jsonObjectParse(obj){
 	$('#post_list').empty();
 	for(var i=0; i<size; i++){
 		$divWrapper = $('<div></div>').addClass('span4');
-		$divWrapper.append($('<div></div>').addClass('img-div debug').html('<img src="' + obj.posts[i].image_url + '">'));
-		$divWrapper.append($('<div></div>').addClass('title-div debug').text(obj.posts[i].title));
-		$divWrapper.append($('<div></div>').addClass('location-div debug').text(obj.posts[i].address));
+		$postContainer = $('<div></div>').addClass('post-container');
+		$postContainer.append($('<div></div>').addClass('img-div ').html('<img src="' + obj.posts[i].image_url + '">'));
+		$postContainer.append($('<div></div>').addClass('title-div ').text(obj.posts[i].title));
+		$postContainer.append($('<div></div>').addClass('location-div ').text(obj.posts[i].address));
 		
-		$pWrapper = $('<div></div>').addClass('debug');
+		$pWrapper = $('<div></div>');
 		$pWrapper.append($('<a></a>').addClass('active pull-right').text(obj.posts[i].comment_count).append($('<i></i>').addClass('icon-comment')));
 		$pWrapper.append($('<a></a>').addClass('active pull-right').text(obj.posts[i].like_count).append($('<i></i>').addClass('icon-heart')));
 		
-		$divWrapper.append($pWrapper);
+		$postContainer.append($pWrapper);
+		$divWrapper.append($postContainer);
 		
 		$('#post_list').append($divWrapper);
 	

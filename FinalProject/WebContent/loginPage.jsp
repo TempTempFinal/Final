@@ -20,11 +20,16 @@
 
     <!-- Custom CSS -->
     <link href="http://ironsummitmedia.github.io/startbootstrap-landing-page/css/landing-page.css" rel="stylesheet">
-
+	<link href="${pageContext.request.contextPath}/css/awesome.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/css/grid.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="http://ironsummitmedia.github.io/startbootstrap-landing-page/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
+ 	<link href="${pageContext.request.contextPath}/font/loginFont.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
    	<style type="text/css">
    		.debug {
 			outline: 1px solid red;
@@ -55,6 +60,29 @@
 		.font-white{
 			color: white;
 		}
+		section{
+			background-color: white;
+		}
+		footer{
+			background-color: #696969;
+		}
+		
+		.col-md-4 img{
+			width: 300px;
+			height: 150px;
+		}
+		
+		.team-member img{
+			width: 275px;
+			height: 275px;
+		}
+		
+		#mainFooter {
+		min-width: 1024px;
+		width: 100%;
+		height: auto;
+		background-color: #505050;
+	}
 		
 		a:link{color: white;}
 		a:VISITED {color: white;}
@@ -72,9 +100,6 @@
 </head>
 
 <body>
-
-
-
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top topnav trans-background border-none" role="navigation">
         <div class="container topnav">
@@ -92,7 +117,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul id="loginNav" class="nav navbar-nav navbar-right">
                   <li>
-                  	<a href="<%=request.getContextPath()%>/signin" style="color: white;">로그인</a>
+                  	<a href="<%=request.getContextPath()%>/signin" style="color: white;font-weight: bold;">로그인</a>
                   </li>
                 </ul>
             </div>
@@ -134,22 +159,142 @@
     </div>
     <!-- /.intro-header -->
 
-    <!-- Page Content -->
+    <!-- service -->
+     <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Services</h2>
+                    <h3 class="section-subheading text-muted"></h3>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+        
+                        <img  src="${pageContext.request.contextPath}/img/service1.png">
+     
+                    <h4 class="service-heading">사용자의 분석을 통한 추천 </h4>
+                    <p class="text-muted">SNS의 Time line의 분석, 사용자의 관심사 확보를 통한 맞춤형 여행지 추천</p>
+                </div>
+                <div class="col-md-4">
+                  <img  src="${pageContext.request.contextPath}/img/service2.png">
+     
+                    <h4 class="service-heading">친구와  ‘함께 가기’ 기능
+                    </h4>
+                    <p class="text-muted">상황정보의 분석을 통해  랭킹 알고리즘을 적용하여 집단의 맞춤형 여행지 추천
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <img  src="${pageContext.request.contextPath}/img/service3.png"	>
+     
+                    <h4 class="service-heading">다양한 추천방식을 통한 만족도 향상
+</h4>
+                    <p class="text-muted">사용자들의 선호도, 인기도, 거리 요소를 고려한 추천을 통해 만족도 향상
+</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- /.content-section-a -->
-    
-    <!-- Footer -->
+    <section id="team" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Our Team Member</h2>
+                    <h3 class="section-subheading text-muted"></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="team-member">
+                        <img src="${pageContext.request.contextPath}/img/park.jpg" class="img-responsive img-circle" alt="">
+                        <h4>박 정 호</h4>
+                        <p class="text-muted">Software Engineer<br>Gachon Univ</p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="team-member">
+                        <img src="${pageContext.request.contextPath}/img/kimhyun.png" class="img-responsive img-circle" alt="">
+                        <h4>김 현 민 </h4>
+                        <p class="text-muted">Software Engineer<br>Gachon Univ</p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="team-member">
+                        <img src="img/team/3.jpg" class="img-responsive img-circle" alt="">
+                        <h4>김 영 근</h4>
+                        <p class="text-muted">Software Engineer<br>Gachon Univ</p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div> 
+                 <div class="col-4">
+                    <div class="team-member">
+                        <img src="img/team/3.jpg" class="img-responsive img-circle" alt="">
+                        <h4>박 승 철</h4>
+                        <p class="text-muted">Software Engineer<br>Gachon Univ</p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div> 
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <footer id="mainFooter">
+       <jsp:include page="commonPage/footer.jsp"></jsp:include>
+    </footer>
 
-    <!-- jQuery -->
+	<!-- jQuery -->
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="http://ironsummitmedia.github.io/startbootstrap-landing-page/js/jquery.js"></script>
   
     <!-- Bootstrap Core JavaScript -->
     <script src="http://ironsummitmedia.github.io/startbootstrap-landing-page/js/bootstrap.min.js"></script>
+    
+    <!-- plug in -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/loginPlugin.js"></script>
+    <script src="${pageContext.request.contextPath}/js/loginPlugin2.js"></script>
+    <!-- custom -->
+
 	<!-- login/logout -->
 	<%if(islogin){ %>
-		
-		console.log("인증1");
+	
 
 	<script type="text/javascript">
 		

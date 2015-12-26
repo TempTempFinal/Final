@@ -22,8 +22,7 @@
   padding-right: 10px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: 1px solid #ccc; /* <------------------------------------------ 실제 서비스 시에는 삭제*/
+  box-sizing: border-box; /* <------------------------------------------ 실제 서비스 시에는 삭제*/
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* <----- 실제 서비스 시에는 삭제*/
 }
 

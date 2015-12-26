@@ -5,8 +5,8 @@
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.http.*" %>
 <%@ page import="com.lecture.finalproject.model.ModelFrontTravlePost" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<% String isLogin = (String)request.getAttribute("isLogin"); %>
+
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -146,38 +146,6 @@
  height: 100px;
 }
 
-.concern-list{
-margin: 20px;
-padding-bottom : 30px;
-border-bottom: 1px solid #b4b4b4;
-}
-
-.concern-list .row{
-	padding-left: 100px;
-	padding-right: 100px;
-	
-}
-
-.concern-list .col-3{
-
-	background-color: #b4b4b4;
-	width: 150px;
-	height: 150px;
-	-webkit-border-radius:100px;
-	-moz-border-radius:100px;
-	margin-left: 50px;
-	margin-right: 50px;
-	text-align: center;
-	padding-top: 60px;
-
-}
-
-.concern-list .col-3 a{
-    font-weight: bold;
-    font-size: 50px;
-    margin-top: 30px;
-    position: relative;
-}
 
 
 
@@ -197,15 +165,7 @@ border-bottom: 1px solid #b4b4b4;
             <br>
             <section class="temp "></section>
             
-            <%if(isLogin.equalsIgnoreCase("true")){%>
-             	<section class="concern-list">
-	       			<div class="row">
-          			   <c:forEach items="${concerns}" var="concern">
-             				<div class="col-3"><A href="${pageContext.request.contextPath}/concern?searchWord=${concern.interest}">${concern.interest}</A></div>
-             			</c:forEach>
-              		   </div>
-	           	</section>
-  			 <%}%>
+            
              
             
       

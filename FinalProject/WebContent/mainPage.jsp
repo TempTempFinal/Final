@@ -9,7 +9,7 @@
 <%@ page import="javax.servlet.http.*"%>
 <%@ page import="java.sql.*"%>
 <%	boolean islogin = (String)request.getAttribute("isLogin") == null? false : true; %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <title>Main page</title>
@@ -19,8 +19,8 @@
 <link href="${pageContext.request.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">
 <style type="text/css">
 body {
-	padding-top: 20px;
-	padding-bottom: 60px;
+	height : 100%;
+	width: 100%;
 }
 /* Custom container */
 .container {
@@ -148,34 +148,108 @@ body {
 
 .img-div img{
 	position: relative;
-	border-radius : 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 	width: 100%;
 	height: 200px;
 }
 
 .title-div{
 	position: relative;
-	display: inline;
-	margin-left: 10%;
 	font-weight: bold;
+	margin-left: 10px;
+	padding: 10px 0;
+	    height: 60px;
 }
 
 .location-div{
-	margin-top: 10%;
-	border-bottom : 1px solid gray;
+	border-top: 1px solid #bebebe;
+    padding: 10px;
+        height: 40px;
 }
 
 .row-fluid .span4{
- 	border: 1px solid gray;
- 	border-radius : 10px;
  	height: 356px;
  	margin: 1px;
+ 	padding: 25px 10px;
  }
  
  .row-fluid{
  	margin-top: 20px;
  }
  
+ #mainNav {
+	min-width: 1024px;
+	width: 100%;
+	height: auto;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1030;
+	background-color: white;
+	border-top: 2px solid #1e356a;
+}
+
+	#mainFooter {
+		min-width: 1024px;
+		width: 100%;
+		height: auto;
+		background-color: #505050;
+		margin-top: 60px;
+    height: 150px;
+	}
+
+#myCarousel{
+margin-top: 70px;
+}
+
+.carousel-caption{
+	margin-left: 200px;
+	margin-top:100px;
+	background-color: rgba(0,0,0,0.5);
+	border: 0.5px solid #bebebe;
+}
+
+.content-container{
+	margin: 30px;
+	padding: 50px 0px;
+}
+.content-container h1{
+	font-family: serif;
+}
+
+.content-container p{
+	font-family: sans-serif;
+	font-size: medium;
+}
+
+.content-container a{
+    position: relative;
+    border: 1px solid white;
+    margin-left: 150px;
+    font-size: large;
+    padding: 5px 50px;
+    color: white;
+        bottom: -15px;
+}
+
+#categorySection{
+	 padding: 0px 30px;
+}
+
+#contentSection{
+	padding: 0px 250px;
+}
+
+.post-container{
+	border: 1px solid #bebebe;
+    border-radius: 10px;
+}
+
+#pageSection{
+    padding: 30px;
+    margin-top: 30px;
+}
  
 
 </style>
@@ -183,40 +257,53 @@ body {
 
 
 <body>
-	<div class="container">
-		<%@include file="commonPage/nav.jsp" %>
-			<!-- /.navbar -->
-			<!-- /Carousel area -->
-		</div>
-		<div id="myCarousel" class="carousel slide">
-			<div class="carousel-inner">
-
+	<nav id="mainNav"> <jsp:include page="commonPage/nav.jsp"></jsp:include> </nav>
+	
+	
+	<div id="myCarousel" class="carousel slide">
+			<div class="carousel-inner">	
 				<div class="item active">
-					<img
-						src="${pageContext.request.contextPath}/img/temp.jpg"alt="">
+					<img src="${pageContext.request.contextPath}/img/mainPhoto1.jpg"alt="">
 					<div class="container">
 						<div class="carousel-caption">
-							<h1>test Picture1</h1>
-							<p class="lead">test picture</p>
+							<div class="content-container">
+								<h1>홍콩보다 부산, 야경의<br>메카 더베이 101</h1><br>
+								<p class="lead">홍콩보다 낭만적인 야경이 부산에 있다. 80층을 넘나드는 초고층 빌딩에서 쏟아내는 불빛이 밤하늘을 수놓고 해운대 밤바다에 넘실댄다. 눈앞에 펼쳐진 야경을 바라보며 맥주 한잔 기울이기 딱 좋은 부산의 겨울밤이 반짝반짝 깊어간다.</p>
+								<a>More</a>
+							</div>
 						</div>
 					</div>
 				</div>
 
 				<div class="item">
 					<img
-						src="http://postfiles12.naver.net/20141224_75/kyg91kr_1419407677824VXD1f_JPEG/20141223-IMG_0106.jpg?type=w1"
+						src="${pageContext.request.contextPath}/img/mainPhoto2.jpg"
 						alt="">
 					<div class="container">
 						<div class="carousel-caption">
-							<h1>Example picture2</h1>
-							<p class="lead">test picture</p>
+							<div class="content-container">
+								<h1>홍콩보다 부산, 야경의<br>메카 더베이 101</h1>
+								<p class="lead">홍콩보다 낭만적인 야경이 부산에 있다. 80층을 넘나드는 초고층 빌딩에서 쏟아내는 불빛이 밤하늘을 수놓고 해운대 밤바다에 넘실댄다. 눈앞에 펼쳐진 야경을 바라보며 맥주 한잔 기울이기 딱 좋은 부산의 겨울밤이 반짝반짝 깊어간다.</p>
+							</div>
 						</div>
 					</div>
 				</div>
 
 				<div class="item">
 					<img
-						src="http://postfiles7.naver.net/20150106_262/kyg91kr_1420552730089rgoFA_JPEG/20150101-IMG_0082.jpg?type=w1"
+						src="${pageContext.request.contextPath}/img/mainPhoto3.jpg"
+						alt="">
+					<div class="container">
+						<div class="carousel-caption">
+							<h1>Example picture3</h1>
+							<p class="lead">test picture</p>
+						</div>
+					</div>
+				</div>
+				
+					<div class="item">
+					<img
+						src="${pageContext.request.contextPath}/img/mainPhoto4.jpg"
 						alt="">
 					<div class="container">
 						<div class="carousel-caption">
@@ -227,11 +314,12 @@ body {
 				</div>
 			</div>
 			<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-			<a class="right carousel-control" href="#myCarousel"
-				data-slide="next">&rsaquo;</a>
+			<a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
 		</div>
 
+	
 		<!-- Category -->
+		<section id="categorySection">
 		<div class="accordion" id="accordion2">
 			<div class="accordion-group">
 				<div class="accordion-heading">
@@ -273,10 +361,8 @@ body {
 				</div>
 			</div>
 		</div>
-
-		<!-- category -->
-
-		<div class="row-fluid">
+		
+				<div class="row-fluid">
 			<div class="span12">
 				<div class="btn-group pull-right" data-toggle="buttons-radio">
 					<button type="button" class="btn">New</button>
@@ -287,37 +373,49 @@ body {
 				</div>
 			</div>
 		</div>
+
+		<!-- category -->
+	
+		</section>
 	
 		<!-- Example row of columns -->
+		<section id="contentSection">
+
 		<div class="row-fluid" id="post_list">
 			<%
 			DaoTravlePlace db = new DaoTravlePlace();
 			
 				List<ModelFrontTravlePost> postList = db.getFrontTravlePostList(1,9); 
 				for(int i=0; i<postList.size(); i++){
-					ModelFrontTravlePost post = postList.get(i);
+					ModelFrontTravlePost post = postList.get(i);			
 				%>
 				
 					<div class="span4">
-						<div class ="img-div debug"><img src="<%=post.getImage_url()%>">
+						<div class="post-container">
+							<div class ="img-div"><img src="<%=post.getImage_url()%>">
+							</div>
+							<div class ="title-div"><%=post.getTitle()%>
+							</div>
+							<div class ="location-div"><%=post.getAddress()%>
+							</div>
+							<div class ="feedback-div">
+								<a class="active pull-right" href="#"><%=post.getComment_count()%><i class="icon-comment"></i></a>
+								<a class="active pull-right" href="#"><%=post.getLike_count()%><i class="icon-heart"></i></a>
+							</div>		
 						</div>
-						<div class ="title-div debug"><%=post.getTitle()%>
-						</div>
-						<div class ="location-div debug"><%=post.getAddress()%>
-						</div>
-						<div class ="feedback-div debug">
-							<a class="active pull-right" href="#"><%=post.getComment_count()%><i class="icon-comment"></i></a>
-							<a class="active pull-right" href="#"><%=post.getLike_count()%><i class="icon-heart"></i></a>
-						</div>		
-						
 					</div>		
+					
 				<%
 				}
 				 %>	
 		</div>
-		
+		</section>
+		<section id="pageSection">
 		<%@include file="commonPage/paging.jsp" %>
-
+		</section>
+		<footer id="mainFooter">
+			<jsp:include page="commonPage/footer.jsp"></jsp:include>
+		</footer>
 
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
