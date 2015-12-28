@@ -2,6 +2,8 @@ package com.lecture.finalproject.service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.lecture.finalproject.model.ModelTwitterWiget;
 import com.lecture.finalproject.model.ModelUser;
 
 import JTCL.JTCLHelper;
@@ -38,6 +41,65 @@ public class FriendsInfoHelper {
 		mention = 0;
 		like = 0;
 	}
+	
+	
+	
+	public List<ModelUser> getTopFriendList(Map<String,Float> friendNameAndWeight){
+		
+		List<ModelUser> topFriendList = new ArrayList<ModelUser>();
+		List<String> tempList = new ArrayList<String>();
+		
+		int count = 0;
+		
+		Iterator it = sortByValue(friendNameAndWeight).iterator();
+		
+		//top4명의 screen name을 얻어온다
+        while(it.hasNext()){
+        	if(count == 4)
+        		break;
+        	
+            String temp = (String) it.next();
+            tempList.add(temp);
+            
+	        count++;
+	    }
+        
+        try{
+        	ResponseList<User> friendUserObject = twitter.lookupUsers(tempList.toArray(new String[tempList.size()])); // 나의 친구들의 user객체를 얻어옴
+        	ModelUser temp; 
+        
+        	for(User user : friendUserObject){
+        		temp = new ModelUser();
+        		temp.setImg_url(user.getProfileImageURL());
+        		temp.setName(user.getName());
+        		temp.setScreenName(user.getScreenName());
+        		temp.setUser_id(Long.toString(user.getId()));
+        		topFriendList.add(temp);
+			}
+        }catch(TwitterException e){
+        	System.out.println(e.getMessage());
+        }
+        
+		return topFriendList;
+	}
+	
+	 private  List sortByValue(final Map map){
+	        List<String> list = new ArrayList();
+	        list.addAll(map.keySet());
+	         
+	        Collections.sort(list,new Comparator(){
+	             
+	            public int compare(Object o1,Object o2){
+	                Object v1 = map.get(o1);
+	                Object v2 = map.get(o2);
+	                 
+	                return ((Comparable) v1).compareTo(v2);
+	            }
+	             
+	        });
+	        Collections.reverse(list); // 주석시 오름차순
+	        return list;
+	 }
 
 	public List<ModelUser> getFriendAndFollowerList(){
 
@@ -61,6 +123,28 @@ public class FriendsInfoHelper {
 		}
 
 		return friendList;
+	}
+	
+	public String[] getFriendAndFollowerNameList(){
+		List<String> tempList = new ArrayList<String>();
+		
+		try {
+			long cursor = -1;
+			PagableResponseList<User> pagableFollowings;
+			do {
+				pagableFollowings = twitter.getFriendsList(twitter.getId(), cursor);
+				for (User user : pagableFollowings) {
+					tempList.add(user.getScreenName());	
+				}
+			} while ((cursor = pagableFollowings.getNextCursor()) != 0);
+
+		} catch (TwitterException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		String[] nameList = tempList.toArray(new String[tempList.size()]);
+		
+		return nameList;
 	}
 	
 	public List groupConcern(String[] friendNames){
@@ -130,7 +214,50 @@ public class FriendsInfoHelper {
 	}
 
 
-
+	public Map<String, Float> getPureFriendWeight(String[] friendNames){
+		
+		Map<String, Float> friendsNameAndWeight = new HashMap<String, Float>();
+		float weight;
+		
+		try {
+			ResponseList<User> friendUserObject = twitter.lookupUsers(friendNames); // 나의 친구들의 user객체를 얻어옴
+			for(User user : friendUserObject){
+				
+				System.out.println("Friend's Name " + user.getName());
+				friendsNameAndWeight.put(user.getScreenName(), (float) 0);
+				if(user.getStatus() != null){
+					
+					List<Status> friendStatusess = twitter.getUserTimeline(user.getId()); //나의 timeline에서 해당 user가 적어놓은 timeline을 가져옴/statusess 하나는 timeline 하나를 의미
+							//친구가 나에게 접촉한경우의 weight
+					 for (Status status3 : friendStatusess) {
+						 	checkWeight(status3,user,myUser);
+					}
+					 weight = getTotalWeight();
+	
+					 
+					 //나의 타임라인에서 친구와 관련된걸 뽑아내자
+					 List<Status> myStatusess = twitter.getUserTimeline(myUser.getId());
+						
+					 for(Status status3 : myStatusess){
+						 	checkWeight(status3,myUser,user);
+					 }
+					 weight = getTotalWeight();
+			
+					 
+					friendsNameAndWeight.put(user.getScreenName(), weight);
+				}
+				
+				retweet = 0;
+				comment = 0;
+				mention = 0;
+				like = 0;
+			}
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());	
+		}
+		return friendsNameAndWeight;
+	}
 
 
 
@@ -232,6 +359,42 @@ public class FriendsInfoHelper {
 			float result = 0;	
 			result = retweet + comment + mention + like;
 
+			return result;
+		}
+		
+		public List<ModelTwitterWiget> getFriendWiget(String post_title){
+			
+			List<ModelTwitterWiget> result = new ArrayList<ModelTwitterWiget>();
+			
+			try {
+				ResponseList<User> friendUserObject = twitter.lookupUsers(getFriendAndFollowerNameList()); // �굹�쓽 移쒓뎄�뱾�쓽 user媛앹껜瑜� �뼸�뼱�샂
+				for(User user : friendUserObject){
+
+					if(user.getStatus() != null){
+
+						List<Status> friendStatusess = twitter.getUserTimeline(user.getId()); //�굹�쓽 timeline�뿉�꽌 �빐�떦 user媛� �쟻�뼱�넃�� timeline�쓣 媛��졇�샂/statusess �븯�굹�뒗 timeline �븯�굹瑜� �쓽誘�
+
+						for (Status status3 : friendStatusess) {
+							
+							if(status3.getText().contains(post_title)){
+								ModelTwitterWiget wiget = new ModelTwitterWiget();
+								
+								wiget.setUserId(Long.toString(user.getId()));
+								wiget.setMediaId(Long.toString(status3.getId()));
+								wiget.setCreateTime(status3.getCreatedAt().toString());
+								wiget.setLikeCount(status3.getFavoriteCount());
+								
+								System.out.println(wiget);
+								result.add(wiget);
+								//wiget.setMediaType(status3.getM);
+							}	
+						}
+					}
+				}
+			} catch (TwitterException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());	
+			}
 			return result;
 		}
 		/*

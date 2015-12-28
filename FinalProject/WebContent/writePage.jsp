@@ -4,7 +4,7 @@
 <%@ page import="javax.servlet.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.http.*" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
     <head>
         <title>Write page</title>
@@ -17,10 +17,12 @@
             padding-bottom: 60px;
         }
         
+        
             /* Custom container */
             .container {
             margin: 0 auto;
             max-width: 1000px;
+                margin-top: 40px;
             }
 
             .container > hr {
@@ -28,35 +30,7 @@
             }
 
             /* Customize the navbar links to be fill the entire space of the .navbar */
-            .navbar .navbar-inner {
-            padding: 0;
-            }
-
-      .navbar .nav {
-        margin: 0;
-        display: table;
-        width: 100%;
-    
-      }
-      .navbar .nav li {
-        display: table-cell;
-        width: 1%;
-        float: none;
-      }
-      .navbar .nav li a {
-        font-weight: bold;
-        text-align: center;
-        border-left: 1px solid rgba(255,255,255,.75);
-        border-right: 1px solid rgba(0,0,0,.1);
-      }
-     .navbar .nav li:first-child a {
-        border-left: 0;
-        border-radius: 3px 0 0 3px;
-      }
-      .navbar .nav li:last-child a {
-        border-right: 0;
-        border-radius: 0 3px 3px 0;
-      }
+            
     .textwidth{
     width:500px;
     }
@@ -256,34 +230,13 @@ function removeFile(e) {
 </script>
     </head>
   <body>
- 
+ 	<nav id="mainNav">
+ 		<jsp:include page="commonPage/nav.jsp"></jsp:include>
+ 	</nav>
+ 	
 
     <div class="container">
-        <div class="masthead">
-            <div class="navbar">
-                <div class="navbar-inner navbar-fixed-top">
-                    <div class="container">
-                        <ul class="nav">
-                            <li><a href="#"><i
-                                    class="icon-search"></i>Search</a></li>
-                            <li><a href="mainpage.html"><i
-                                    class="icon-home"></i></a></li>
-                            <li><a href="concernRecommendPage.html"><i
-                                    class="icon-star"></i></a></li>
-                            <li><a href="mainpage.html">SCABTRS</a></li>
-                            <li><a href="mypage.html"><i
-                                    class="icon-user"></i></a></li>
-                            <li><a href="writepage.html"><i
-                                    class="icon-pencil"></i></a></li>
-                            <li><a href="#"><i
-                                    class="icon-gift"></i></a></li>
-                            <li><a href="#"><i
-                                    class="icon-align-justify"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+    
         <br>
         <div class="container">
             <div class="raw-fluid">

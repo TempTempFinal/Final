@@ -14,20 +14,18 @@ import com.lecture.finalproject.model.ModelHash;
 import com.lecture.finalproject.model.ModelImage;
 import com.lecture.finalproject.model.ModelInformation;
 import com.lecture.finalproject.model.ModelTravelPost;
+import com.lecture.finalproject.model.ModelUser;
 
 public class DaoTravlePlaceTest {
 
 	@Test
 	public void test() {
 		DaoTravlePlace one = new DaoTravlePlace();
-		List<ModelFrontTravlePost> result = null;
-		int result1 = 0;
+		ModelUser result = null;
 	
-		result = one.getFrontTravlePostList();
+		result = one.getWriterInfo(1);
 		
-		for(int i= 0;i<result.size(); i++){
-			System.out.println(result.get(i));
-		}
+		System.out.println(result);
 	}
 
 

@@ -13,6 +13,14 @@
 		color: white;
 		font-style: italic;
 	}
+	
+		#mainFooter {
+		min-width: 1024px;
+		width: 100%;
+		height: auto;
+		background-color: #505050;
+  		  height: 150px;
+	}
 
 </style>
 

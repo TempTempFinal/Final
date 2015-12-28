@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/font/loginFont.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
@@ -30,6 +30,7 @@ body{
 	width: 100%;
 	height: 69px;
 	border-bottom: 1px solid #ccc;
+	    border-top: 2px solid #1e356a;
 	
 }
 
@@ -48,6 +49,10 @@ body{
 .myNav li{
 	display: inline;
 	padding: 0 10px;
+}
+
+.myNav li span{
+	font-size: large;
 }
 
 #mySearch-icon{
@@ -82,9 +87,10 @@ body{
 		</div>
 		<div class="myPull-right ">
 			<ul class="myNav">
-				<li id="mySearch-icon"><a href="${pageContext.request.contextPath}/search"><i class="icon-search"></i></a></li>
-				<li><a href="${pageContext.request.contextPath}/my"><i class="icon-user"></i></a></li>
-				<li><a href="${pageContext.request.contextPath}/writePage.jsp"><i class="icon-pencil"></i></a></li>
+				<li id="mySearch-icon"><a href="${pageContext.request.contextPath}/search"><span class="glyphicon glyphicon-search"></span></a></li>
+				<li><a href="${pageContext.request.contextPath}/group"><span class="glyphicon glyphicon-globe"></span></a></li>
+				<li><a href="${pageContext.request.contextPath}/my"><span class="glyphicon glyphicon-user"></span></a></li>
+				<li><a href="${pageContext.request.contextPath}/writePage.jsp"><span class="glyphicon glyphicon-pencil"></span></a></li>
 			</ul>
 		</div>
 	</div>

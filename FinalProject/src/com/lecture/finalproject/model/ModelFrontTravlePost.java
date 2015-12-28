@@ -2,11 +2,19 @@ package com.lecture.finalproject.model;
 
 public class ModelFrontTravlePost {
 	
+	
+	private int travelPost_no      ;
 	private String title;
 	private int like_count;
 	private int comment_count;
 	private String image_url;
 	private String address;
+	public int getTravelPost_no() {
+		return travelPost_no;
+	}
+	public void setTravelPost_no(int travelPost_no) {
+		this.travelPost_no = travelPost_no;
+	}
 	private double latitude;
 	private double longitude;
 	
@@ -22,13 +30,18 @@ public class ModelFrontTravlePost {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	public ModelFrontTravlePost(String title, int like_count, int comment_count, String image_url, String address) {
+
+	public ModelFrontTravlePost(int travelPost_no, String title, int like_count, int comment_count, String image_url,
+			String address, double latitude, double longitude) {
 		super();
+		this.travelPost_no = travelPost_no;
 		this.title = title;
 		this.like_count = like_count;
 		this.comment_count = comment_count;
 		this.image_url = image_url;
 		this.address = address;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 	public ModelFrontTravlePost() {
 		super();

@@ -22,17 +22,7 @@
 		outline: 1px solid red;
 	}
 
-	 #mainNav {
-		min-width: 1024px;
-		width: 100%;
-		height: 70px;;
-		position: fixed;
-		top: 0;
-		left: 0;
-		z-index: 1030;
-		background-color: white;
-		border-top: 2px solid #1e356a;
-	}
+	
 	
 	section{
 		min-width: 1024px;
@@ -46,7 +36,7 @@
 	}
 	
 	.search-container{
-	    padding: 150px;
+	    padding:  100px 150px 150px 150px
 	}
 	
 	#search_input{
@@ -83,7 +73,6 @@ height: 150px;
 	padding-left: 100px;
 	padding-right: 100px;
 	    height: 150px;
-	
 }
 
 .concern-list .col-3{
@@ -111,6 +100,9 @@ height: 150px;
 	font-size: large;
 	color: #b4b4b4
 }
+
+
+
 	
 
 </style>	
@@ -137,11 +129,13 @@ height: 150px;
               		   </div>
 	           	</div>
   			 <%}%>
-			
 		</div>
 	</section>
+	<footer id="mainFooter">
+       <jsp:include page="commonPage/footer.jsp"></jsp:include>
+    </footer>
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/js/search.js"></script>
-	
+
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.lecture.finalproject.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,12 +9,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.lecture.finalproject.dao.DaoTravlePlace;
+import com.lecture.finalproject.model.ModelTravelPost;
+import com.lecture.finalproject.model.ModelTwitterWiget;
 import com.lecture.finalproject.model.ModelUser;
+import com.lecture.finalproject.service.FriendsInfoHelper;
 import com.lecture.finalproject.service.ServiceGetDetailInfo;
 import com.lecture.finalproject.service.ServiceInfoSynchronize;
 
 import twitter4j.Twitter;
+import twitter4j.User;
 
 /**
  * Servlet implementation class GetDetailInfo_action
@@ -47,7 +54,35 @@ public class Detail_action extends HttpServlet {
 	}
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{  
+		DaoTravlePlace db = new DaoTravlePlace();
 		String postNum = request.getParameter("travlePostNumber");
+		HttpSession session = request.getSession();
+		
+		
+		ModelUser user = db.getWriterInfo(Integer.parseInt(postNum));
+		ModelTravelPost post = db.getTravelPostOne(Integer.parseInt(postNum));
+		
+		System.out.println(user);
+		request.setAttribute("writer", user);
+		request.setAttribute("post", post);
+		
+		boolean isLogin = session.getAttribute("checkLogin") == null ? false : true;
+		request.setAttribute("isLogin", "false");
+		
+		if(isLogin){
+			User twitterUser = null;
+			Twitter twitter = null;
+			
+			twitterUser = (User)session.getAttribute("twitterUser");
+			twitter = (Twitter)session.getAttribute("twitter");
+			
+			FriendsInfoHelper friendHelper = new FriendsInfoHelper(twitter,twitterUser);
+			List<ModelTwitterWiget> wigets = friendHelper.getFriendWiget(post.getTitle());
+			
+			request.setAttribute("wigets", wigets);
+			request.setAttribute("isLogin", "true");
+		}
+		
 		ServiceGetDetailInfo collector = new ServiceGetDetailInfo();
 		
 		request.setAttribute("hashList",collector.getHashList(Integer.parseInt(postNum)));

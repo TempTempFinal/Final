@@ -16,195 +16,136 @@
 	<link href="${pageContext.request.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/grid.css" rel="stylesheet">
     <style type="text/css">
-    	a:LINK{
-    	}
-    	a:VISITED{
-    		color: blue;
-    	}
-    	a:HOVER{
-    		text-decoration: none;
-    	}
-    	a:ACTIVE{
-    	}
-    
-        body {
-        width:100%;
-        height:100%;
-        padding-top: 20px;
-        padding-bottom: 60px;
-        }
-        
-        .container {
-        margin: 0 auto;
-        max-width: 1000px;
-        }
+.debug {
+	outline: 1px solid red;
+}
 
-        .container > hr {
-        margin: 20px 0;
-        }
-            .picture{
-        max-width:64px;
-        max-height:64px;
-        }
+body, html {
+	width: 100%;
+	height: 100%;
+}
 
-        .navbar .navbar-inner {
-        padding: 0;
-        }
+#mainNav {
+	min-width: 1024px;
+	width: 100%;
+	height: 70px;;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1030;
+	background-color: white;
+	border-top: 2px solid #1e356a;
+}
 
-        .navbar .nav {
-        margin: 0;
-        display: table;
-        width: 100%;
-        }
+#contentSection {
+	padding: 0px 250px;
+	margin-top: 100px;
+}
 
-        .navbar .nav li {
-        display: table-cell;
-        width: 1%;
-        float: none;
-        }
+.row-fluid .span4 {
+	height: 356px;
+	margin: 1px;
+	padding: 25px 10px;
+}
 
-        .navbar .nav li a {
-        font-weight: bold;
-        text-align: center;
-        border-left: 1px solid rgba(255,255,255,.75);
-        border-right: 1px solid rgba(0,0,0,.1);
-        }
+.row-fluid {
+	margin-top: 20px;
+}
 
-        .navbar .nav li:first-child a {
-        border-left: 0;
-        border-radius: 3px 0 0 3px;
-        }
+.post-container {
+	border: 1px solid #bebebe;
+	border-radius: 10px;
+	height: 340px;
+}
 
-        .navbar .nav li:last-child a {
-        border-right: 0;
-        border-radius: 0 3px 3px 0;
-        }
-
-        .bpicture{
-        margin: 0 auto;
-        width:640px;
-        }
-
-        .btnmargin{
-        margin-left:150px;
-        }
-        
-        .jumbotron {
-        margin: 40px 0;
-        text-align: center;
-        }
-                
-        .jumbotron h1 {
-        font-size: 100px;
-        line-height: 1;
-        }
-        
-        .img-div{
-	position:relative;
-	display:inline;
-	width:100%;
+.img-div {
+	position: relative;
+	display: inline;
+	width: 100%;
 	height: auto;
 }
 
-.img-div img{
+.img-div img {
 	position: relative;
-	border-radius : 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 	width: 100%;
 	height: 200px;
 }
 
-.title-div{
+.title-div {
 	position: relative;
-	display: inline;
-	margin-left: 10%;
 	font-weight: bold;
+	margin-left: 10px;
+	padding: 10px 0;
+	height: 60px;
 }
 
-.location-div{
-	margin-top: 10%;
-	border-bottom : 1px solid gray;
+.location-div {
+	border-top: 1px solid #bebebe;
+	padding: 10px;
+	height: 40px;
 }
 
-.row .col-3{
- 	border: 1px solid gray;
- 	border-radius : 10px;
- 	height: 356px;
- 	width : 300px;
- 	margin: 10px;
- }
- 
- .row{
- 	margin-top: 20px;
- 	margin-left: 40px;
- }
- 
- section{
-	width : 100%;
- }
- 
-.temp{
- height: 100px;
+.feedback-div{
+	    margin-top: 10px;
 }
 
-
-
-
-
-
-
- 
- .debug {
-		outline: 1px solid red;
+#pageSection {
+	padding: 30px;
+	margin-top: 30px;
 }
-        
-        </style>
+
+#mainFooter {
+	min-width: 1024px;
+	width: 100%;
+	height: auto;
+	background-color: #505050;
+	margin-top: 60px;
+	height: 150px;
+}
+</style>
   </head>
     <body>
-        <div class="container">
-          	<%@include file="commonPage/nav.jsp" %>
-            <br>
-            <section class="temp "></section>
-            
-            
+    <nav id="mainNav">
+    	<jsp:include page="commonPage/nav.jsp"></jsp:include>  
+    </nav>
+    <section id="contentSection">
+     <div class="row-fluid" id="post_list">
              
-            
-      
-            <div class="container">
-                <div class="row" id="post_list">
-                    
                     	<%
 				List<ModelFrontTravlePost> posts = (List<ModelFrontTravlePost>) request.getAttribute("posts");
 
 				for (int i = 0; i < posts.size(); i++) {
 					ModelFrontTravlePost post = posts.get(i);
 					%>
-					<div class="col-3">
-								<div class ="img-div debug"><img src="<%=post.getImage_url()%>">
+					<div class="span4">
+						<div class="post-container">
+								<div class ="img-div"><img src="<%=post.getImage_url()%>">
 								</div>
-								<div class ="title-div debug"><%=post.getTitle()%>
+								<div class ="title-div"><%=post.getTitle()%>
 								</div>
-								<div class ="location-div debug"><%=post.getAddress()%>
+								<div class ="location-div"><%=post.getAddress()%>
 								</div>
-								<div class ="feedback-div debug">
+								<div class ="feedback-div">
 									<a class="active pull-right" href="#"><%=post.getComment_count()%><i class="icon-comment"></i></a>
 									<a class="active pull-right" href="#"><%=post.getLike_count()%><i class="icon-heart"></i></a>
 								</div>		
-								
-							</div>		
+						</div>
+					</div>		
 					<%
 						}
 					%>        
                 </div>
-            </div>
-            <hr>
-          	<%@include file="commonPage/paging.jsp" %>
-        </div>
-            <div class="container">
-            <hr>
-            <div class="footer">
-                    <p>Social Context Awareness Based Travel Recommendation System</p>
-            </div>
-        </div> 
+    </section>
+	<section id="pageSection">
+		<%@include file="commonPage/paging.jsp"%>
+	</section>
+	<footer id="mainFooter">
+		<jsp:include page="commonPage/footer.jsp"></jsp:include>
+	</footer>
+
+
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/concernPaging.js"></script>

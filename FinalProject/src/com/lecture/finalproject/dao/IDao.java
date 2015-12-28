@@ -25,6 +25,8 @@ public interface IDao {
 	
 	public abstract int getUserCount(String user_id);
 	
+	public abstract ModelUser getWriterInfo(int travelPost_no);
+	
 	public abstract int getTravelPostCount();
 	
 	public List<ModelFrontTravlePost> getFrontTravlePostList();
@@ -39,6 +41,7 @@ public interface IDao {
 	//search word로 찾기
     public abstract List<ModelFrontTravlePost> getFrontTravlePostBySearchWord(String searchWord, int startPage, int pageNum);
     public abstract List<ModelFrontTravlePost> getFrontTravlePostByHashTag(String hashTag, int startPage, int pageNum);
+    
     public abstract int getCountTravlePostBySearchWord(String searchWord);
     public abstract int getCountTravlePostByHashTagWrod(String searchWord);
     

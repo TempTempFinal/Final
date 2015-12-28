@@ -224,7 +224,7 @@ public class DaoTravlePlace implements IDao{
          while (rs.next()) {
        	  ModelFrontTravlePost one = new ModelFrontTravlePost();
    	  		String image_url = rs.getString("image_url").equals("null") == true ? "img/notFound.jpg" : rs.getString("image_url");
-            
+   	  		one.setTravelPost_no(rs.getInt("travelPost_no"));
    	  		one.setImage_url(image_url);
              one.setAddress(rs.getString("address"));
              one.setComment_count(rs.getInt("comment_count"));
@@ -267,6 +267,7 @@ public class DaoTravlePlace implements IDao{
     		  	String image_url = rs.getString("image_url").equals("null") == true ? "img/notFound.jpg" : rs.getString("image_url");
               
     			one.setImage_url(image_url);
+    			one.setTravelPost_no(rs.getInt("travelPost_no"));
     			one.setAddress(rs.getString("address"));
     			one.setComment_count(rs.getInt("comment_count"));
     			one.setLike_count(rs.getInt("like_count"));
@@ -323,6 +324,7 @@ public class DaoTravlePlace implements IDao{
        	  String image_url = rs.getString("image_url").equals("null") == true ? "img/notFound.jpg" : rs.getString("image_url");
        	
              one.setImage_url(image_url);
+             one.setTravelPost_no(rs.getInt("travelPost_no"));
              one.setAddress(rs.getString("address"));
              one.setComment_count(rs.getInt("comment_count"));
              one.setLike_count(rs.getInt("like_count"));
@@ -421,6 +423,7 @@ public class DaoTravlePlace implements IDao{
 				 String image_url = rs.getString("image_url").equals("null") == true ? "img/notFound.jpg" : rs.getString("image_url");
 			       	
 				 one.setImage_url(image_url);
+				 one.setTravelPost_no(rs.getInt("travelPost_no"));
 	             one.setAddress(rs.getString("address"));
 	             one.setComment_count(rs.getInt("comment_count"));
 	             one.setLike_count(rs.getInt("like_count"));
@@ -456,6 +459,7 @@ public class DaoTravlePlace implements IDao{
 				 String image_url = rs.getString("image_url").equals("null") == true ? "img/notFound.jpg" : rs.getString("image_url");
 			       	
 				 one.setImage_url(image_url);
+				 one.setTravelPost_no(rs.getInt("travelPost_no"));
 	             one.setAddress(rs.getString("address"));
 	             one.setComment_count(rs.getInt("comment_count"));
 	             one.setLike_count(rs.getInt("like_count"));
@@ -495,6 +499,7 @@ public class DaoTravlePlace implements IDao{
             	
             	  System.out.println(image_url);
                   one.setImage_url(image_url);
+                  one.setTravelPost_no(rs.getInt("travelPost_no"));
                   one.setAddress(rs.getString("address"));
                   one.setComment_count(rs.getInt("comment_count"));
                   one.setLike_count(rs.getInt("like_count"));
@@ -533,6 +538,7 @@ public class DaoTravlePlace implements IDao{
             	  double longitude = rs.getString("longitude").equals("null") == true ? 0 : Double.parseDouble(rs.getString("longitude"));
             	  
                   one.setImage_url(image_url);
+                  one.setTravelPost_no(rs.getInt("travelPost_no"));
                   one.setAddress(rs.getString("address"));
                   one.setComment_count(rs.getInt("comment_count"));
                   one.setLike_count(rs.getInt("like_count"));
@@ -1016,12 +1022,46 @@ public class DaoTravlePlace implements IDao{
 	         pstmt.setInt(6, commentList.getTravelPost_no());
 	         pstmt.setDouble(7, commentList.getSentiment());
 	         
-	         result = pstmt.executeUpdate();
+	         rs = pstmt.executeQuery();
 	      } catch (SQLException e) {
 	         System.out.println(e.getMessage());
 	      }
 	      return result;
 	   }
 
+	   @Override
+	public ModelUser getWriterInfo(int travelPost_no) {
+		// TODO Auto-generated method stub
+		
+		   ModelUser user = null;
+
+		   String query;
+		   
+		   try{
+			   query = "select * from user_tb where user_id = (select user_id from travelpost_tb where travelPost_no = ?)";
+			   pstmt = connection.prepareStatement(query);
+			   pstmt.setInt(1, travelPost_no);
+			   rs = pstmt.executeQuery();
+			  
+			   while (rs.next()) {
+				   	user = new ModelUser();
+		       
+		            String image_url = rs.getString("img_url").equals("null") == true ? "img/notFound.jpg"
+		                  : rs.getString("image_url");
+
+		            user.setImg_url(image_url);
+		            user.setName(rs.getString("name"));
+		            user.setUser_id(rs.getString("user_id"));
+		         }
+
+	
+		   }catch(SQLException e){
+			   System.out.println(e.getMessage());
+		   }
+
+
+
+		   return user;
+	}
 
 }

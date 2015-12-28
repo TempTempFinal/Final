@@ -22,19 +22,11 @@ body {
 	height : 100%;
 	width: 100%;
 }
-/* Custom container */
-.container {
-	margin: 0 auto;
-	max-width: 1000px;
-}
 
 .debug {
 		outline: 1px solid red;
 }
 
-.container>hr {
-	margin: 60px 0;
-}
 
 /* Main marketing message and sign up button */
 /* Carousel */
@@ -105,39 +97,6 @@ body {
 .marketing p+h4 {
 	margin-top: 28px;
 }
-/* Customize the navbar links to be fill the entire space of the .navbar */
-.navbar .navbar-inner {
-	padding: 0;
-}
-
-.navbar .nav {
-	margin: 0;
-	display: table;
-	width: 100%;
-}
-
-.navbar .nav li {
-	display: table-cell;
-	width: 1%;
-	float: none;
-}
-
-.navbar .nav li a {
-	font-weight: bold;
-	text-align: center;
-	border-left: 1px solid rgba(255, 255, 255, .75);
-	border-right: 1px solid rgba(0, 0, 0, .1);
-}
-
-.navbar .nav li:first-child a {
-	border-left: 0;
-	border-radius: 3px 0 0 3px;
-}
-
-.navbar .nav li:last-child a {
-	border-right: 0;
-	border-radius: 0 3px 3px 0;
-}
 
 .img-div{
 	position:relative;
@@ -178,33 +137,9 @@ body {
  	margin-top: 20px;
  }
  
- #mainNav {
-	min-width: 1024px;
-	width: 100%;
-	height: auto;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 1030;
-	background-color: white;
-	border-top: 2px solid #1e356a;
-}
-
-	#mainFooter {
-		min-width: 1024px;
-		width: 100%;
-		height: auto;
-		background-color: #505050;
-		margin-top: 60px;
-    height: 150px;
-	}
-
-#myCarousel{
-margin-top: 70px;
-}
 
 .carousel-caption{
-	margin-left: 200px;
+	margin-left: 300px;
 	margin-top:100px;
 	background-color: rgba(0,0,0,0.5);
 	border: 0.5px solid #bebebe;
@@ -230,7 +165,7 @@ margin-top: 70px;
     font-size: large;
     padding: 5px 50px;
     color: white;
-        bottom: -15px;
+    bottom: -15px;
 }
 
 #categorySection{
@@ -241,11 +176,15 @@ margin-top: 70px;
 	padding: 0px 250px;
 }
 
-.post-container{
+.post-container {
 	border: 1px solid #bebebe;
-    border-radius: 10px;
+	border-radius: 10px;
+	height: 340px;
 }
 
+.feedback-div{
+	    margin-top: 10px;
+}
 #pageSection{
     padding: 30px;
     margin-top: 30px;
@@ -263,7 +202,7 @@ margin-top: 70px;
 	<div id="myCarousel" class="carousel slide">
 			<div class="carousel-inner">	
 				<div class="item active">
-					<img src="${pageContext.request.contextPath}/img/mainPhoto1.jpg"alt="">
+					<img src="${pageContext.request.contextPath}/img/mainPhoto2.jpg"alt="">
 					<div class="container">
 						<div class="carousel-caption">
 							<div class="content-container">
@@ -277,7 +216,7 @@ margin-top: 70px;
 
 				<div class="item">
 					<img
-						src="${pageContext.request.contextPath}/img/mainPhoto2.jpg"
+						src="${pageContext.request.contextPath}/img/mainPhoto1.jpg"
 						alt="">
 					<div class="container">
 						<div class="carousel-caption">
@@ -389,7 +328,7 @@ margin-top: 70px;
 				for(int i=0; i<postList.size(); i++){
 					ModelFrontTravlePost post = postList.get(i);			
 				%>
-				
+				<A href="${pageContext.request.contextPath}/detail?travlePostNumber=<%=post.getTravelPost_no()%>">
 					<div class="span4">
 						<div class="post-container">
 							<div class ="img-div"><img src="<%=post.getImage_url()%>">
@@ -404,12 +343,13 @@ margin-top: 70px;
 							</div>		
 						</div>
 					</div>		
-					
+				</A>
 				<%
 				}
 				 %>	
 		</div>
 		</section>
+		
 		<section id="pageSection">
 		<%@include file="commonPage/paging.jsp" %>
 		</section>

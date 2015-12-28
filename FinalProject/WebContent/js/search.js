@@ -3,6 +3,7 @@
  */	
 $(function(){
 			var path = '<%=request.getContextPath()%>';
+	
 			
 			$(".col-3").map(function(index,element){
 				var temp = $(element).children('a');
