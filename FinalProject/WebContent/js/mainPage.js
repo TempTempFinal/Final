@@ -120,9 +120,12 @@ function jsonObjectParse(obj){
 	
 	var size = 0;
 	
+	var path = location.pathname;
+	path = path.substring(0,path.indexOf('/',1));
+	
 	for(var i in obj.posts)
 		size++;
-	
+
 	$('#post_list').empty();
 	for(var i=0; i<size; i++){
 		$divWrapper = $('<div></div>').addClass('span4');
@@ -138,7 +141,10 @@ function jsonObjectParse(obj){
 		$postContainer.append($pWrapper);
 		$divWrapper.append($postContainer);
 		
-		$('#post_list').append($divWrapper);
+		$atag = $('<a></a>').attr('href',path + "/detail?travlePostNumber=" + obj.posts[i].travelPost_no)
+		$atag.append($divWrapper);
+		
+		$('#post_list').append($atag);
 	
 	}
 }

@@ -11,6 +11,7 @@
 <html>
   <head>
     <title>ConcernRecommend Page</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   	<link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/bootstrap-responsive.css" rel="stylesheet">

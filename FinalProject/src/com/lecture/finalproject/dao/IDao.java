@@ -40,10 +40,14 @@ public interface IDao {
 	public List<ModelFrontTravlePost> getFrontTravlePostListById(String user_id);
 	//search word로 찾기
     public abstract List<ModelFrontTravlePost> getFrontTravlePostBySearchWord(String searchWord, int startPage, int pageNum);
+    //관심사로 찾기
+    public abstract List<ModelFrontTravlePost> getFrontTravelPostByConcern(String concern, int startPage, int pageNum);
+    //hash로 찾기
     public abstract List<ModelFrontTravlePost> getFrontTravlePostByHashTag(String hashTag, int startPage, int pageNum);
     
     public abstract int getCountTravlePostBySearchWord(String searchWord);
     public abstract int getCountTravlePostByHashTagWrod(String searchWord);
+    public abstract int getCountTravlePostByConcern(String conern);
     
     
 	
@@ -89,5 +93,10 @@ public interface IDao {
     //comment 긍부정
     public abstract List<ModelCommentList> getModelCommentList(int travelPost_no);
     public abstract int insertCommentList(ModelComment comentList);
-
+    
+    //초기 여행지 setting
+    public abstract int insertTravelPost(ModelTravelPost post);
+    public abstract int insertTravelLocation(ModelLocation location);
+    public abstract int insertTravelImage(ModelImage image);
+    public abstract int insertTravelInformation(ModelInformation info);
 }

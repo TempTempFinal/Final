@@ -93,7 +93,7 @@ public class DaoTravlePlace implements IDao{
     		rs = pstmt.executeQuery();
     		
     		while (rs.next()) {
-  			  result = new ModelInformation(rs.getString("travel_content"), rs.getInt("travelPost_no"), rs.getDouble("sentiment"));
+  			  result = new ModelInformation(rs.getString("travel_content"), rs.getInt("travelPost_no"), rs.getDouble("travelSentiment"));
             }
     		
     	}catch(SQLException e){
@@ -347,11 +347,37 @@ public class DaoTravlePlace implements IDao{
     	int result = 0;
     	
     	try{
-    		String query = "select count(travelPost_no) from hash_tb where hashTag like ? group by travelPost_no";
+    		String query = "select count(travelPost_no) from hash_tb where hashTag like ?";
     		
     		pstmt = connection.prepareStatement(query);
     		
     		pstmt.setString(1, "%"+searchWord+"%");
+    
+    		rs = pstmt.executeQuery();
+    		rs.next();
+    		
+    		result = rs.getInt("count(travelPost_no)");
+    	} catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         
+        }
+    	
+    	return result;
+    }
+    
+    @Override
+    public int getCountTravlePostByConcern(String conern) {
+    	// TODO Auto-generated method stub
+    	
+int result = 0;
+    	
+    	try{
+    		String query = "select count(travelPost_no) from feature_tb where feature like ?";
+    		
+    		pstmt = connection.prepareStatement(query);
+    		
+    		pstmt.setString(1, conern);
     
     		rs = pstmt.executeQuery();
     		rs.next();
@@ -884,7 +910,9 @@ public class DaoTravlePlace implements IDao{
 	    	rs = pstmt.executeQuery();
 	    		
 	    	while (rs.next()) {
-	    		ModelImage image = new ModelImage(rs.getString("image_url"),rs.getInt("travelPost_no"));
+	    		ModelImage image = new ModelImage();
+	    		image.setTravelPost_no(rs.getInt("travelPost_no"));
+	    		image.setImage_url(rs.getString("image_url"));
 	    		result.add(image);
 	    	}
 			 
@@ -1047,7 +1075,7 @@ public class DaoTravlePlace implements IDao{
 				   	user = new ModelUser();
 		       
 		            String image_url = rs.getString("img_url").equals("null") == true ? "img/notFound.jpg"
-		                  : rs.getString("image_url");
+		                  : rs.getString("img_url");
 
 		            user.setImg_url(image_url);
 		            user.setName(rs.getString("name"));
@@ -1058,10 +1086,159 @@ public class DaoTravlePlace implements IDao{
 		   }catch(SQLException e){
 			   System.out.println(e.getMessage());
 		   }
-
-
-
 		   return user;
+	}
+	   
+	 @Override
+	public int insertTravelImage(ModelImage image) {
+	 int result = 0;
+		 
+		 String query;
+		 
+		 try{
+			 query = "insert into image_tb(image_url, travelpost_no)"
+					 +" values(?,?)";
+			 
+			   pstmt = connection.prepareStatement(query);
+			   
+			   pstmt.setString(1, image.getImage_url());
+			   pstmt.setInt(2, image.getTravelPost_no());
+			  
+			   result = pstmt.executeUpdate();
+		 }catch(SQLException e){
+			   System.out.println(e.getMessage());
+		   }
+		 
+		return result;
+
+	}
+	 
+	 @Override
+	public int insertTravelPost(ModelTravelPost post) {
+		// TODO Auto-generated method stub
+		 
+		 int result = 0;
+		 
+		 String query;
+		 
+		 try{
+			 query = "insert into travelpost_tb(travelPost_no,title,travelPost_date,view_count,like_count,comment_count,user_id)"
+					 +" values(?,?,?,?,?,?,?)";
+			 
+			   pstmt = connection.prepareStatement(query);
+			   pstmt.setInt(1, post.getTravelPost_no());
+			   pstmt.setString(2, post.getTitle());
+			   pstmt.setString(3, post.getTravelPost_date());
+			   pstmt.setInt(4, post.getView_count());
+			   pstmt.setInt(5, post.getLike_count());
+			   pstmt.setInt(6, post.getComment_count());
+			   pstmt.setString(7, post.getUser_id());
+   
+			   result = pstmt.executeUpdate();
+			  
+		 }catch(SQLException e){
+			   System.out.println(e.getMessage());
+		   }
+		 
+		return result;
+	}
+	 
+	 @Override
+	public int insertTravelLocation(ModelLocation location) {
+		// TODO Auto-generated method stub
+		 int result = 0;
+		 
+		 String query;
+		 
+		 try{
+			 query = "insert into location_tb(city1,address,latitude,longitude,travelPost_no)"
+					 +" values(?,?,?,?,?)";
+			 
+			   pstmt = connection.prepareStatement(query);
+			   
+			   pstmt.setString(1, location.getCity1());
+			   pstmt.setString(2, location.getAddress());
+			   pstmt.setString(3, location.getLatitude());
+			   pstmt.setString(4, location.getLongitude());
+			   pstmt.setInt(5, location.getTravelPost_no());
+			   
+			   result = pstmt.executeUpdate();
+			  
+		 }catch(SQLException e){
+			   System.out.println(e.getMessage());
+		   }
+		 
+		return result;
+	}
+	 
+	@Override
+	public int insertTravelInformation(ModelInformation info) {
+		// TODO Auto-generated method stub
+		
+		int result = 0;
+
+		String query;
+
+		try{
+			query = "insert into information_tb(travel_content,travelPost_no)"
+					+ " values(?,?)";
+
+			pstmt = connection.prepareStatement(query);
+
+			pstmt.setString(1, info.getTravel_content());
+			pstmt.setInt(2, info.getTravelPost_no());
+
+			result = pstmt.executeUpdate();
+
+		}catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}
+	
+	@Override
+	public List<ModelFrontTravlePost> getFrontTravelPostByConcern(String concern, int startPage, int pageNum) {
+		// TODO Auto-generated method stub
+		 
+		List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>(); 
+		String query;
+		
+		try{
+			query = "select * from" +
+					" (select * from" +
+					" (select * from"+
+					" (select travelPost_no from feature_tb where feature = ?) as a"+
+					" natural join"+
+					" (select travelPost_no, address from location_tb) as b) as c"+
+					" natural join"+
+					" (select travelPost_no, image_url from image_tb) as d) as e"+
+					" natural join"+
+					" (select travelPost_no, title, like_count, comment_count from travelpost_tb) as f"+
+					" limit ?,?";
+
+			pstmt = connection.prepareStatement(query);
+			 
+			 pstmt.setString(1, concern);
+			 pstmt.setInt(2, (startPage - 1) * pageNum);
+			 pstmt.setInt(3, pageNum);
+			 rs = pstmt.executeQuery();
+
+			 while (rs.next()) {
+				 ModelFrontTravlePost one = new ModelFrontTravlePost();	
+				 one.setImage_url(rs.getString("image_url"));
+				 one.setTravelPost_no(rs.getInt("travelPost_no"));
+	             one.setAddress(rs.getString("address"));
+	             one.setComment_count(rs.getInt("comment_count"));
+	             one.setLike_count(rs.getInt("like_count"));
+	             one.setTitle(rs.getString("title"));
+	             result.add(one);
+			 }
+
+	    	}catch(SQLException e){
+	    		System.out.println(e.getMessage());
+	    	}
+	    	
+	    	return result;
 	}
 
 }

@@ -8,14 +8,16 @@ public class ModelImage {
     private static Logger logger = LoggerFactory.getLogger(ModelImage.class);
     
     private String image_url  ;
+    private String image_url2;
     private int travelPost_no    ;
     
-    public ModelImage(String image_url, int travelPost_no) {
-        super();
-        this.image_url = image_url;
-        this.travelPost_no = travelPost_no;
-    }
-    public ModelImage() {
+ 
+    public ModelImage(String image_url, String image_url2, int travelPost_no) {
+		super();
+		this.image_url = image_url;
+		this.travelPost_no = travelPost_no;
+	}
+	public ModelImage() {
         super();
     }
     public static Logger getLogger() {
@@ -24,7 +26,7 @@ public class ModelImage {
     public static void setLogger(Logger logger) {
         ModelImage.logger = logger;
     }
-    public String getImage_url() {
+	public String getImage_url() {
         return image_url;
     }
     public void setImage_url(String image_url) {

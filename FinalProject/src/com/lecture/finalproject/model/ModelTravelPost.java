@@ -16,6 +16,7 @@ public class ModelTravelPost {
     private int like_count;
     private int comment_count;
     private String user_id  ;
+    
 	public ModelTravelPost(int travelPost_no, String title, String travelPost_date, int view_count, int like_count,
 			int comment_count, String user_id) {
 		super();
@@ -30,6 +31,7 @@ public class ModelTravelPost {
 	public ModelTravelPost() {
 		super();
 	}
+	
 	public static Logger getLogger() {
 		return logger;
 	}

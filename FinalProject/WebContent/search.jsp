@@ -114,8 +114,9 @@ height: 150px;
 	</nav>
 	<section id="searchSection">
 		<div class="search-container">
-			<form action="${pageContext.request.contextPath}/concern" method="get" name="form1">
-								<input type="text" name="searchWord" placeholder="검색어를 입력해 주세요" id="search_input" style="width: 600px;height: 80px;" name="searchWord">
+			<form  action="${pageContext.request.contextPath}/concern" method="get" name="form1"> 
+								<input type="text" name="searchWord" placeholder="검색어를 입력해 주세요" id="search_input" style="width: 600px;height: 80px;" name="searchWord"	>
+								<input type="hidden" name="method" value="originalSearch" id="hiddenMethod">
 			</form>
 		
 			<%if(isLogin.equalsIgnoreCase("true")){%>
@@ -124,7 +125,7 @@ height: 150px;
              
 	       			<div class="row">
           			   <c:forEach items="${concerns}" var="concern">
-             				<div class="col-3"><A href="${pageContext.request.contextPath}/concern?searchWord=${concern.interest}">${concern.interest}</A></div>
+             				<div class="col-3"><A href="${pageContext.request.contextPath}/concern?searchWord=${concern.interest}&method=listByConcern">${concern.interest}</A></div>
              			</c:forEach>
               		   </div>
 	           	</div>

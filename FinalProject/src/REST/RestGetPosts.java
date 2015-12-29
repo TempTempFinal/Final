@@ -81,6 +81,10 @@ public class RestGetPosts extends HttpServlet {
 			String hashTag = URLDecoder.decode(request.getParameter("searchWord"),"UTF-8");
 			posts = db.getFrontTravlePostByHashTag(hashTag, Integer.parseInt(request.getParameter("startPage")), Integer.parseInt(request.getParameter("pageNum")));
 		}
+		else if(method.equals("listByConcern")){
+			String concern = URLDecoder.decode(request.getParameter("searchWord"),"UTF-8");
+			posts = db.getFrontTravelPostByConcern(concern, Integer.parseInt(request.getParameter("startPage")), Integer.parseInt(request.getParameter("pageNum")));
+		}
 		JSONArray jsonArray = JSONArray.fromObject(posts);
 		
 		Map<String, Object> map = new HashMap<String, Object>();

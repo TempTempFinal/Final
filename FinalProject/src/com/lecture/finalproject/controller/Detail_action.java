@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.lecture.finalproject.dao.DaoTravlePlace;
+import com.lecture.finalproject.model.ModelInformation;
 import com.lecture.finalproject.model.ModelTravelPost;
 import com.lecture.finalproject.model.ModelTwitterWiget;
 import com.lecture.finalproject.model.ModelUser;
@@ -61,10 +62,12 @@ public class Detail_action extends HttpServlet {
 		
 		ModelUser user = db.getWriterInfo(Integer.parseInt(postNum));
 		ModelTravelPost post = db.getTravelPostOne(Integer.parseInt(postNum));
+		ModelInformation information = db.getInformation(Integer.parseInt(postNum));
 		
-		System.out.println(user);
+		System.out.println(information);
 		request.setAttribute("writer", user);
 		request.setAttribute("post", post);
+		request.setAttribute("information", information);
 		
 		boolean isLogin = session.getAttribute("checkLogin") == null ? false : true;
 		request.setAttribute("isLogin", "false");

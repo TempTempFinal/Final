@@ -39,44 +39,43 @@ public class ConcernRecommendController extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("UTF-8"); 
-		
+		HttpSession session = request.getSession();
 		
 		String checkHash;
 		DaoTravlePlace db = new DaoTravlePlace();
 		List<ModelFrontTravlePost> posts = null;
-		HttpSession session = request.getSession();
 		List<ModelConcern> concerns = null;
+		
 		pagingHelper pager = new pagingHelper();
 		int totalCount = 0;
 		
 		String searchWord = new String(request.getParameter("searchWord") .getBytes("8859_1"), "UTF-8"); 
-		checkHash = searchWord.substring(0, 1);
+		String searchMethod = request.getParameter("method");
 		
-		boolean isLogin = session.getAttribute("checkLogin") == null ? false : true;
-		request.setAttribute("isLogin", "false");
-		
-		if(isLogin){
-			String userId = ((Long)session.getAttribute("twitterUserId")).toString();
-			concerns = db.getConcernList(userId);
-			request.setAttribute("concerns", concerns);
-			request.setAttribute("isLogin", "true");
+		//일반검색인경우 (일반검색, hashTag이용)
+		if(searchMethod.equals("listBySeachWord")){
+			posts = db.getFrontTravlePostBySearchWord(searchWord,1,9);
+			totalCount = db.getCountTravlePostBySearchWord(searchWord);
 		}
-		
-		
- 
-		
-		//hash Tag 검색인경우
-		if(checkHash.equals("#"))
-		{
-			searchWord = searchWord.substring(1);
-			posts = db.getFrontTravlePostByHashTag(searchWord,1,9);
-			totalCount = db.getCountTravlePostByHashTagWrod(searchWord);
+		else if(searchMethod.equals("listByHashTag")){
+			searchWord = searchWord.substring(1); //delete #
+			 posts = db.getFrontTravlePostByHashTag(searchWord,1,9);		
+			 totalCount = db.getCountTravlePostByHashTagWrod(searchWord)	; //해당 키우드로 검색했을떄의 총갯수
 			
-		}//Hash tag검색이 아닌경우
-		else{
-			 posts = db.getFrontTravlePostBySearchWord(searchWord,1,9);		
-			 totalCount = db.getCountTravlePostBySearchWord(searchWord)	; //해당 키우드로 검색했을떄의 총갯수
 		}
+		//관심사 검색인경우
+		else if(searchMethod.equals("listByConcern")){
+			posts = db.getFrontTravelPostByConcern(searchWord,1,9);		
+			totalCount = db.getCountTravlePostByConcern(searchWord)	;	
+		}
+		
+		
+		
+		
+		
+	
+		//hash Tag 검색인경우
+	
 			
 		    pager.setPageNo(1);
 			pager.setPageSize(9);	

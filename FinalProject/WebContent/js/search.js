@@ -1,10 +1,26 @@
 /**
  * 
- */	
-$(function(){
-			var path = '<%=request.getContextPath()%>';
+ */
+
+
+
+
+
+
+
+$(function(){	
 	
-			
+		var temp;
+		$('#search_input').keydown(function(evnet){
+			temp = $(this).val();
+			if(temp.substring(0,1) == '#')
+				$('#hiddenMethod').val('listByHashTag');
+			else
+				$('#hiddenMethod').val('listBySeachWord');
+		});
+		
+			var path = '<%=request.getContextPath()%>';
+
 			$(".col-3").map(function(index,element){
 				var temp = $(element).children('a');
 				

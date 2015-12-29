@@ -189,6 +189,10 @@ body {
     padding: 30px;
     margin-top: 30px;
 }
+
+.img-div img{
+    border-bottom: 1px solid #bebebe;
+}
  
 
 </style>
