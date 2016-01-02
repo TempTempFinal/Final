@@ -75,7 +75,7 @@ public class Travelpost_db {
     	 }
          catch(SQLException e){
              e.printStackTrace();
-             System.out.println("error/inser");
+             System.out.println("error/insert");
          }
     	 
     	 return result;

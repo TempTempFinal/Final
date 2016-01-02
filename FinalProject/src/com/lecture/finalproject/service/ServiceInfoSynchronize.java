@@ -15,7 +15,7 @@ import twitter4j.TwitterException;
 import twitter4j.User;
 
 public class ServiceInfoSynchronize {
-
+	public Map<String,Double> concerns = null;
 	public boolean isSynchronize(ModelUser inputUser){
 
 		DaoTravlePlace checker = new DaoTravlePlace();	
@@ -31,7 +31,7 @@ public class ServiceInfoSynchronize {
 
 		List<String> meaningWordList = null;	
 		List<String> timelineList = null;
-		Map<String,Double> concerns = null;
+		
 
 		ServiceTwitterParser parser = new ServiceTwitterParser();	
 		DaoTravlePlace uploader = new DaoTravlePlace();
@@ -53,7 +53,9 @@ public class ServiceInfoSynchronize {
 
 		//List를 JTCL에 넣어준다
 		concerns = concernHelper.getConcern(meaningWordList);
-
+		
+		//System.out.println(meaningWordList);
+		
 		for( String key : concerns.keySet()){
 			result = uploader.insertConcern(new ModelConcern(key, Long.toString(user.getId())));
 		}

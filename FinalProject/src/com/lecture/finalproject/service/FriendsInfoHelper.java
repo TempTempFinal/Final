@@ -15,6 +15,7 @@ import com.lecture.finalproject.model.ModelTwitterWiget;
 import com.lecture.finalproject.model.ModelUser;
 
 import JTCL.JTCLHelper;
+import JTCL.TextCatDriver;
 import Komoran.Preprocessor;
 import twitter4j.PagableResponseList;
 import twitter4j.ResponseList;
@@ -153,7 +154,25 @@ public class FriendsInfoHelper {
 		List weights = new ArrayList();
 		List tempC = new ArrayList();
 		List tempW = new ArrayList();
+		ServiceInfoSynchronize myConcern = new ServiceInfoSynchronize();
+		myConcern.synchronize(twitter);
+		Map<String,Double> mC = myConcern.concerns;
+		List tempConcerns = new ArrayList();
 		List groupConcerns = new ArrayList();
+		Set mykey = mC.keySet();
+		
+		System.out.println(mC.size());
+		
+		
+		for (Iterator iterator = mykey.iterator(); iterator.hasNext();) {
+			String keyName = (String) iterator.next();
+			Double valueName = mC.get(keyName);
+			mC.replace(keyName, valueName);
+
+			concerns.add(keyName);
+			weights.add(valueName);
+		}
+		
 		for(int i=0;i<weightPlusConcerns.size();i++)
 		{
 
@@ -168,7 +187,11 @@ public class FriendsInfoHelper {
 				weights.add(valueName);
 			}
 		}
-
+		
+		for(int i=0;i<concerns.size();i++)
+		{
+			System.out.println("그룹관심사" + concerns.get(i)+"/ " + weights.get(i));
+		}
 		int count = 0;
 
 		//String sk[] = new String[10];
@@ -203,12 +226,51 @@ public class FriendsInfoHelper {
 			
 			temp=0;
 		}
+		double sum=0;
 		for(int i=0;i<tempW.size();i++)
 		{
-			//System.out.println(tempC.get(i).toString() + " : " +tempW.get(i).toString());
-			groupConcerns.add(tempC.get(i).toString());
-		}
+			System.out.println(tempC.get(i).toString() + " : " +tempW.get(i).toString());
+			sum+=Double.parseDouble(tempW.get(i).toString());
+			tempConcerns.add(tempC.get(i).toString());
 			
+			
+		}
+		double var = sum/tempW.size();
+		double dev = Math.sqrt(var);
+		double sum22 =0;
+		double sum3 =0;
+		double sum4 =0;
+		double sum5 =0;
+		double dev2n3;
+		double dev3n4;
+		double dev4n5;
+		
+		for(int i=0;i<2;i++)
+			sum22+= Double.parseDouble(tempW.get(i).toString());
+		for(int i=0;i<3;i++)
+			sum3+= Double.parseDouble(tempW.get(i).toString());
+		dev2n3 = (sum22/2)-(sum3/3);
+		sum3=0;
+	
+		
+		for(int i=0;i<3;i++)
+			sum3+= Double.parseDouble(tempW.get(i).toString());
+		for(int i=0;i<4;i++)
+			sum4+= Double.parseDouble(tempW.get(i).toString());
+		
+		dev3n4 = (sum3/3)-(sum4/4);
+		sum4=0;
+		for(int i=0;i<4;i++)
+			sum4+= Double.parseDouble(tempW.get(i).toString());
+		for(int i=0;i<5;i++)
+			sum5+= Double.parseDouble(tempW.get(i).toString());
+		
+		dev4n5 = (sum4/4)-(sum5/5);
+		
+		int picknum = TextCatDriver.pickdev(dev2n3,dev3n4,dev4n5,dev);
+			System.out.println(picknum);
+		for(int i=0;i<picknum;i++)
+			groupConcerns.add(tempC.get(i).toString());
 		
 		return groupConcerns;
 	}

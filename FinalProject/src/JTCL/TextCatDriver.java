@@ -40,11 +40,12 @@ public class TextCatDriver {
 
 		HashMap<String,Double> concernWeight = new HashMap();
 		TextCategorizer guesser = new TextCategorizer();  
-		guesser.setConfFiles("C:\\Users\\park\\Documents\\Final\\FinalProject\\resource\\fingerPrinter\\textcat.conf");
+		//C:\Users\KHM\git\Final\FinalProject\resource\fingerPrinter
+		guesser.setConfFiles("C:\\Users\\KHM\\git\\Final\\FinalProject\\resource\\fingerPrinter\\textcat.conf");
 		//System.out.println(guesser.categorize(s));
 		//System.out.println(guesser.getCategoryDistances(s));
 
-		//ģ�� �Ѹ��� ���� �����ͼ� �� �ۿ� ���� ��ɻ�� ����ġ�� �迭�� ����
+		
 		Map<String, Integer> a = guesser.getCategoryDistances(s);
 		//String b = a.toString();
 		//System.out.println(a.keySet());
@@ -53,12 +54,12 @@ public class TextCatDriver {
 		//System.out.println(b);
 		String e = (String) c.subSequence(1, c.length()-1);
 		String[] d = e.split(", ");
-		 String interest[] = {"낚시","단풍","등산","레저","미식","바다","섬","캠핑"};
-		int realWeight[] = {1,2,3,4,5,6,7,8};
-		double df[] ={1,2,3,4,5,6,7,8};
+		 String interest[] = {"낚시","단풍","등산","레저","미식","바다","섬","캠핑","역사","도심","축제"};
+		int realWeight[] = {1,2,3,4,5,6,7,8,9,10,11};
+		double df[] ={1,2,3,4,5,6,7,8,9,10,11};
 		double sum=0;
 		double sum2=0;
-		double temp[] = {1,2,3,4,5,6,7,8};
+		double temp[] = {1,2,3,4,5,6,7,8,9,10,11};
 		for(int i=0;i<d.length;i++){
 			d[i].trim();
 			//System.out.println(d[i]);
@@ -103,7 +104,7 @@ public class TextCatDriver {
 		double dev2n3;
 		double dev3n4;
 		double dev4n5;
-		//3���� 4�� ��
+		//2개냐 3개냐 4개냐
 		sort(temp,temp.length);
 		//System.out.println();
 		
@@ -155,6 +156,10 @@ public class TextCatDriver {
 				}
 			}
 			
+		}
+		for(int i=0;i<11;i++)
+		{
+			System.out.println(interest[i]+"/ "+df[i]);
 		}
 		return concernWeight; 
 		
