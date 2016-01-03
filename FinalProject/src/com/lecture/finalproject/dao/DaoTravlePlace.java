@@ -212,7 +212,7 @@ public class DaoTravlePlace implements IDao{
 		try{
     	 String query = "select image_url,travelPost_no, title,view_count, like_count, comment_count, address" +
 		  			" from image_tb natural join "
-		  				+ "(travelpost_tb  natural join location_tb) where " + str +
+		  				+ "(travelpost_tb  natural join location_tb) where " + str+
 		  						" group by travelPost_no" + 
 		  							" limit ?,?";
     	 

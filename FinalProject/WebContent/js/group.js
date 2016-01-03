@@ -148,6 +148,15 @@ function friendsListParse2(obj)
 		else if(obj.groupConcernList[i] == '캠핑'){
 			$concern.css('backgroundImage','url(concernImg/camping.jpg)');		
 			$concern.css('backgroundSize','cover');}
+		else if(obj.groupConcernList[i] == '도심'){
+			$concern.css('backgroundImage','url(concernImg/city.jpg)');		
+			$concern.css('backgroundSize','cover');}
+		else if(obj.groupConcernList[i] == '축제'){
+			$concern.css('backgroundImage','url(concernImg/fest.jpg)');		
+			$concern.css('backgroundSize','cover');}
+		else if(obj.groupConcernList[i] == '역사'){
+			$concern.css('backgroundImage','url(concernImg/history.jpg)');		
+			$concern.css('backgroundSize','cover');}
 		
 		$('.groupConcernContainer .row').append($concern);
 	}

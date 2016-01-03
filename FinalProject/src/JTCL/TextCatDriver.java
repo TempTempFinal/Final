@@ -152,14 +152,15 @@ public class TextCatDriver {
 				{
 					concernWeight.put(interest[j], df[j]);
 					
-					
 				}
+				
 			}
 			
 		}
-		for(int i=0;i<11;i++)
+		for(int i=0;i<picknum;i++)
 		{
 			System.out.println(interest[i]+"/ "+df[i]);
+			
 		}
 		return concernWeight; 
 		
@@ -187,7 +188,7 @@ public class TextCatDriver {
 		{
 			for(int j=i+1;j<n;j++)
 			{
-				if(a[i] <a[j])
+				if(a[i] <=a[j])
 				{
 					temp1 = a[i];
 					a[i] = a[j];
