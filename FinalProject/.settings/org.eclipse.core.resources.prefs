@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//resource/fingerPrinter=UTF-8
 encoding//src/REST/RestGetPeople.java=UTF-8
 encoding//src/com/lecture/finalproject/controller/LoginController.java=UTF-8
 encoding//src/com/lecture/finalproject/service/FriendsInfoHelper.java=UTF-8

@@ -49,9 +49,19 @@ $(function(){
 				}
 				else if($(temp).text() == '섬'){
 					$(element).css('backgroundImage','url(concernImg/island.jpg)');		
-					$(element).css('backgroundSize','cover');}
+					$(element).css('backgroundSize','cover');
+					}
 				else if($(temp).text() == '캠핑'){
 					$(element).css('backgroundImage','url(concernImg/camping.jpg)');		
+					$(element).css('backgroundSize','cover');}
+				else if($(temp).text() == '축제'){
+					$(element).css('backgroundImage','url(concernImg/fest.jpg)');		
+					$(element).css('backgroundSize','cover');}
+				else if($(temp).text() == '역사'){
+					$(element).css('backgroundImage','url(concernImg/history.jpg)');		
+					$(element).css('backgroundSize','cover');}
+				else if($(temp).text() == '도심'){
+					$(element).css('backgroundImage','url(concernImg/city.jpg)');		
 					$(element).css('backgroundSize','cover');}
 			});
 		})

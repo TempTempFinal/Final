@@ -34,8 +34,8 @@ import twitter4j.conf.ConfigurationBuilder;
 @WebServlet("/")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	final String CONSUMER_KEY = "GEz4eKsuI0sm86utoDsEOsBak"; //APP등록후받은consumer key
-	final String CONSUMER_SECRET = "AjM852KsT3lvBwJ84AJfiZLQslty0QN3NxrHeo7PQOZ721oKUd"; //APP등록후받은consumer secret
+	final String CONSUMER_KEY = "C7nrqY6FAqjhtOpg4knP7ZWk4"; //APP등록후받은consumer key
+	final String CONSUMER_SECRET = " ZalhGXMVT02jP2mzPCNhjA8cDUTGN1sjvBb05YsoH42yy48pto"; //APP등록후받은consumer secret
 	
        
     /** 
