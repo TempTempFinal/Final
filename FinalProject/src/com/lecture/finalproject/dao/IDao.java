@@ -99,4 +99,25 @@ public interface IDao {
     public abstract int insertTravelLocation(ModelLocation location);
     public abstract int insertTravelImage(ModelImage image);
     public abstract int insertTravelInformation(ModelInformation info);
+    
+    
+    //popular page
+    public abstract List<ModelFeature> getFeatureGroupList();
+    public abstract List<ModelFrontTravlePost> getTopFrontTravelPostByCategory(String category);
+    public abstract List<ModelFrontTravlePost> getTopFrontTravelPostByAllCategory();
+    
+    public abstract List<ModelFrontTravlePost> getPopularFrontTravelPostByAllCategory(int startPage, int pageNum);
+    public abstract List<ModelFrontTravlePost> getPopularFrontTravelPostByCategory(String category, int startPage, int pageNum);
+    
+    
+    //update page
+    public abstract int updateViewCount(int travelPost_no);
+    //update like
+    public abstract int updateLikeCount(int travelPost_no);
+    public abstract int updateLikeMinusCount(int travelPost_no);
+    public abstract int insertLikePerosn(int travelPost_no, String userID);
+    public abstract int removeLikePerson(int travelPost_no, String userID);
+    
+    public abstract int getLikeState(int travelPost_no, String userID);
+    
 }

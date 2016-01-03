@@ -156,7 +156,7 @@ height: auto;
 border-radius: 5px;
 }
 
-.commentContainer ,.postCommentContainer{
+.commentContainer ,.postCommentContainer, .popularSNSContainer{
 	border : solid 1px #e6e6e6;
     margin-left: 250px;
     margin-right: 250px;
@@ -167,6 +167,27 @@ border-radius: 5px;
     height: auto;
 }
 
+
+.popularSNSContainer{
+	float:right;
+    margin-left: 0px;
+    width: 345px;
+    padding-right: 0px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+
+}
+
+.commentContainer{
+
+   float: left;
+    width: 500px;
+    margin-right: 0px;
+
+}
+
 .writerInfoContainer{
 
 height: 100px;
@@ -174,6 +195,11 @@ height: 100px;
 
          padding-right: 50px;
     padding-top: 20px;
+}
+
+.writerInfoContainer img{
+    position: relative;
+    bottom: 5px;
 }
 
 .wirterInfo{
@@ -219,7 +245,7 @@ width: 80%;
 margin : 10px 10px 5px 10px;
 }
 
-.nav-container {background:url('images/nav_bg.jpg') repeat-x 0 0;
+.nav-container {
     background-color: white;
     min-width: 845px;
 }
@@ -239,6 +265,7 @@ margin : 10px 10px 5px 10px;
 .navBtn{
     margin-top: -5px;
 }
+
 </style>
 </head>
 
@@ -256,7 +283,7 @@ margin : 10px 10px 5px 10px;
 			<div class="nav-container">
 				<div class="nav">
 					<ul>
-						<li><button type="button" class="btn btn-default navBtn" ><span class="glyphicon glyphicon-heart"><span class="like"> 좋아요 | ${post.like_count}</span></button></span></li>
+						<li><button id="like-btn" type="button" class="btn btn-default navBtn" ><span class="glyphicon glyphicon-heart"><span class="like"> 좋아요 | ${post.like_count}</span></button></span></li>
 					</ul>
 					<div class="clear"></div>
 				</div>
@@ -287,14 +314,13 @@ margin : 10px 10px 5px 10px;
 			<div class="row">
 				<div class="writerInfoContainer">
 						<p>${writer.user_id} 님이 작성</p>
-						<img src="${pageContext.request.contextPath}/${writer.img_url}"/>
+						<img src="${writer.img_url}"/>
 				</div>
 			</div>
 		</div>
 		
 		<div class="commentContainer">
 		<p class="friendCommentTitle">해당 여행지를 다녀온 <b>${writer.name}</b>님의 친구분들의 이야기!</p>
-
 			<c:forEach items="${wigets}" var="wiget">
 				<div class="friendComment">
 					<blockquote class="twitter-tweet"
@@ -303,8 +329,13 @@ margin : 10px 10px 5px 10px;
 					</blockquote>
 				</div>
 			</c:forEach>
-
 		</div>
+		
+		<div class="popularSNSContainer" style="border: solid 1px #e6e6e6;">
+		<p class="friendCommentTitle">여행에 관련된 인기 블로그</p>
+		<script type="text/javascript" src="http://bigfoot9.com/widget/?userid=&section=&data=post&sort=popular&cat=TRAVEL%2fLEISURE&page=&day=1&theme=light&count=7&length=50&height=&cc=KR"></script>
+		</div>
+	
 		<div class="postCommentContainer">
 		
 		
@@ -314,6 +345,7 @@ margin : 10px 10px 5px 10px;
 				<div class="span12 pull-left">
 					댓글<br> <br>
 				</div>
+				<!-- 여기서 에러남 group by 에러!!!!!!!!!!!!!!!!!! -->
 				<%
 					DaoTravlePlace db = new DaoTravlePlace();
 					List<ModelCommentList> commentList = db.getModelCommentList(1);
@@ -357,12 +389,26 @@ margin : 10px 10px 5px 10px;
 			</div>	
 		</div>	
 	</section>
+	
+	<%
 
-   <script src="http://code.jquery.com/jquery.js"></script>
+		String userNameTemp = Long.toString((Long)request.getAttribute("userID"));
+		String travelPost_noTemp = request.getParameter("travlePostNumber");
+		int likeStateTemp = (Integer)request.getAttribute("likeState");
+	
+	%>
+
+	<script>
+  	 var userName = "<%=userNameTemp%>";
+  	 var travelPost_no = "<%=travelPost_noTemp%>";
+  	 var likeState = "<%=likeStateTemp%>";
+	</script>
+
+	<script src="http://code.jquery.com/jquery.js"></script>
    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-   <script src="${pageContext.request.contextPath}/js/mainPage.js"></script>
    <script src="${pageContext.request.contextPath}/js/paging.js"></script>
    <script src="${pageContext.request.contextPath}/js/detail.js"></script>
+
    
    <script src='http://platform.twitter.com/widgets.js' charset='utf-8'></script>";
    

@@ -120,6 +120,7 @@ body, html {
 				for (int i = 0; i < posts.size(); i++) {
 					ModelFrontTravlePost post = posts.get(i);
 					%>
+					<A href="${pageContext.request.contextPath}/detail?travlePostNumber=<%=post.getTravelPost_no()%>">
 					<div class="span4">
 						<div class="post-container">
 								<div class ="img-div"><img src="<%=post.getImage_url()%>">
@@ -134,6 +135,7 @@ body, html {
 								</div>		
 						</div>
 					</div>		
+					</A>
 					<%
 						}
 					%>        

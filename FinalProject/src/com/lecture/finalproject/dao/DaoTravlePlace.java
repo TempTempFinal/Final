@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +26,7 @@ import com.lecture.finalproject.model.ModelInformation;
 import com.lecture.finalproject.model.ModelLocation;
 import com.lecture.finalproject.model.ModelTravelPost;
 import com.lecture.finalproject.model.ModelUser;
+import com.lecture.finalproject.service.weightHelper;
 
 
 public class DaoTravlePlace implements IDao{
@@ -725,22 +728,22 @@ int result = 0;
         int result = 0;
         
         try {
-            String query = "select count(user_id) from like_tb where travelPost_no = '" + travelPost_no + "';";
+            String query = "select like_count from travelpost_tb where travelPost_no = " + travelPost_no +";";
+          
             st = connection.createStatement();
             rs =st.executeQuery(query);
             
             if(st.execute(query))
                 rs = st.getResultSet();
               
-            while (rs.next()) {
-                result = rs.getInt(1);
-            }
+            while (rs.next())
+                  result = rs.getInt("like_count");
           
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
 
-        }
+        }	
         return result;
     }
     
@@ -1240,5 +1243,381 @@ int result = 0;
 	    	
 	    	return result;
 	}
+	
+	@Override
+	public List<ModelFeature> getFeatureGroupList() {
+	
+		List<ModelFeature> result = new ArrayList<ModelFeature>();
+		ModelFeature temp = null;
+		
+		try{
+			String query = "select feature from feature_tb group by feature";
+			
+			pstmt = connection.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				temp = new ModelFeature();
+				temp.setFeature(rs.getString("feature"));
+				result.add(temp);
+			}
+		}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+			
+		return result;
+	}
+	
+	@Override
+	public List<ModelFrontTravlePost> getTopFrontTravelPostByCategory(String category) {
+	
+		List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
+		ModelFrontTravlePost post = null;
+		
+		try{
+			
+			String query = "select * from" +
+					" (select * from" +
+					" (select * from"+
+					" (select travelPost_no from feature_tb where feature = ?) as a"+
+					" natural join"+
+					" (select * from image_tb) as b) as c"+
+					" natural join"+
+					" (select travelPost_no, address, longitude, latitude from location_tb) as d) as e"+
+					" natural join "+
+					" (select travelPost_no, title, like_count, comment_count from travelpost_tb) as f"+
+					" order by like_count desc limit 0,9";
+			
+			pstmt = connection.prepareStatement(query);
+			pstmt.setString(1, category);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				post = new ModelFrontTravlePost();
+	   	  		
+				String image_url = rs.getString("image_url").equals("null") == true ? "img/readyImage.jpg" : rs.getString("image_url");
+	   	  		post.setTravelPost_no(rs.getInt("travelPost_no"));
+	   	  		post.setImage_url(image_url);
+	            post.setAddress(rs.getString("address"));
+	            post.setLatitude(Double.parseDouble(rs.getString("latitude")));
+	            post.setLongitude(Double.parseDouble(rs.getString("longitude")));
+	            post.setComment_count(rs.getInt("comment_count"));
+	            post.setLike_count(rs.getInt("like_count"));
+	            post.setTitle(rs.getString("title"));
+	            result.add(post);
+			}
+			
+		}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+			
+		return result;
+		
+	}
+	
+	@Override
+	public List<ModelFrontTravlePost> getTopFrontTravelPostByAllCategory() {
+		List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
+		ModelFrontTravlePost post = null;
+		
+		try{
+			
+			String query = "select * from" +
+					" (select * from" +
+					" (select * from image_tb) as a"+
+					" natural join"+
+					" (select travelPost_no, address, longitude, latitude from location_tb) as b) as c"+
+					" natural join"+
+					" (select travelPost_no, title, like_count, comment_count from travelpost_tb) as d"+
+					" order by like_count desc limit 0,9";
+		
+			
+			pstmt = connection.prepareStatement(query);
 
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				post = new ModelFrontTravlePost();
+	   	  		
+				String image_url = rs.getString("image_url").equals("null") == true ? "img/readyImage.jpg" : rs.getString("image_url");
+	   	  		post.setTravelPost_no(rs.getInt("travelPost_no"));
+	   	  		post.setImage_url(image_url);
+	            post.setAddress(rs.getString("address"));
+	            post.setLatitude(Double.parseDouble(rs.getString("latitude")));
+	            post.setLongitude(Double.parseDouble(rs.getString("longitude")));
+	            post.setComment_count(rs.getInt("comment_count"));
+	            post.setLike_count(rs.getInt("like_count"));
+	            post.setTitle(rs.getString("title"));
+	            result.add(post);
+			}
+			
+		}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+			
+		return result;
+	}
+	
+	@Override
+	public List<ModelFrontTravlePost> getPopularFrontTravelPostByAllCategory(int startPage, int pageNum) {
+		
+		List<ModelFrontTravlePost> temp = new ArrayList<ModelFrontTravlePost>();
+		List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
+		weightHelper wHelper = new weightHelper();
+		ModelFrontTravlePost post = null;
+		
+		
+		try{
+			
+			String query = "select * from" +
+					" (select * from" +
+					" (select * from" +
+					" (select * from image_tb) as a"+
+					" natural join"+
+					" (select travelPost_no, travelSentiment from information_tb) as b) as c"+
+					" natural join"+
+					" (select travelPost_no, address, longitude, latitude from location_tb) as d) as e"+
+					" natural join"+
+					" (select travelPost_no, title, like_count, comment_count from travelpost_tb) as f";
+		
+			
+			pstmt = connection.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				post = new ModelFrontTravlePost();
+	   	  		
+				String image_url = rs.getString("image_url").equals("null") == true ? "img/readyImage.jpg" : rs.getString("image_url");
+	   	  		post.setTravelPost_no(rs.getInt("travelPost_no"));
+	   	  		post.setImage_url(image_url);
+	            post.setAddress(rs.getString("address"));
+	            post.setLatitude(Double.parseDouble(rs.getString("latitude")));
+	            post.setLongitude(Double.parseDouble(rs.getString("longitude")));
+	            post.setComment_count(rs.getInt("comment_count"));
+	            post.setLike_count(rs.getInt("like_count"));
+	            post.setTitle(rs.getString("title"));
+	            post.setSentiment(rs.getDouble("travelSentiment"));
+	            temp.add(post);
+			}
+			
+			//여기서 sorting해서 가져오자
+			wHelper.setPostWeight(temp);
+			temp.sort(new weightDscCompare());	
+							
+		}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+		
+		if(temp.size() < (startPage-1) * pageNum)
+			return result;
+	
+		for(int i=(startPage-1) * pageNum; i<pageNum * startPage; i++)
+			result.add(temp.get(i));
+			
+			
+		return result;
+	}
+	
+	static class weightDscCompare implements Comparator<ModelFrontTravlePost> {
+		 
+		@Override
+		public int compare(ModelFrontTravlePost arg0, ModelFrontTravlePost arg1) {
+			// TODO Auto-generated method stub
+			if(arg0.getWeight() > arg1.getWeight())
+				return -1;
+			else if(arg0.getWeight() < arg1.getWeight())
+				return 1;
+			else
+				return 0;
+		}
+	}
+		
+	@Override
+	public List<ModelFrontTravlePost> getPopularFrontTravelPostByCategory(String category, int startPage, int pageNum) {
+		List<ModelFrontTravlePost> temp = new ArrayList<ModelFrontTravlePost>();
+		List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
+		weightHelper wHelper = new weightHelper();
+		ModelFrontTravlePost post = null;
+		
+		
+		try{
+			
+			String query = "select * from" +
+					" (select * from" +
+					" (select * from" +
+					" (select * from"+
+					" (select * from feature_tb where feature = ?) as a"+
+					" natural join"+
+					" (select travelPost_no, travelSentiment from information_tb) as b) as c"+
+					" natural join"+
+					" (select * from image_tb) as d) as e"+
+					" natural join"+
+					" (select travelPost_no, address, longitude, latitude from location_tb) as f) as g"+
+					" natural join"+
+					" (select travelPost_no, title, like_count, comment_count from travelpost_tb) as h";
+			
+		
+			
+			pstmt = connection.prepareStatement(query);
+			pstmt.setString(1, category);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				post = new ModelFrontTravlePost();
+	   	  		
+				String image_url = rs.getString("image_url").equals("null") == true ? "img/readyImage.jpg" : rs.getString("image_url");
+	   	  		post.setTravelPost_no(rs.getInt("travelPost_no"));
+	   	  		post.setImage_url(image_url);
+	            post.setAddress(rs.getString("address"));
+	            post.setLatitude(Double.parseDouble(rs.getString("latitude")));
+	            post.setLongitude(Double.parseDouble(rs.getString("longitude")));
+	            post.setComment_count(rs.getInt("comment_count"));
+	            post.setLike_count(rs.getInt("like_count"));
+	            post.setTitle(rs.getString("title"));
+	            post.setSentiment(rs.getDouble("travelSentiment"));
+	            temp.add(post);
+			}
+			
+			//여기서 sorting해서 가져오자
+			wHelper.setPostWeight(temp);
+			temp.sort(new weightDscCompare());	
+
+		}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+		
+		if(temp.size() < (startPage-1) * pageNum)
+			return result;
+	
+		for(int i=(startPage-1) * pageNum; i<pageNum * startPage; i++)
+			result.add(temp.get(i));
+			
+		return result;
+	}
+
+	@Override
+	public int updateViewCount(int travelPost_no) {
+		int result = 0;
+		
+		try{
+			String query = "UPDATE travelpost_tb SET view_count = view_count+1 WHERE travelPost_no = ?";
+			
+			pstmt = connection.prepareStatement(query);
+			pstmt.setInt(1, travelPost_no);
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+		
+		return result;
+	}
+	
+	@Override
+	public int updateLikeCount(int travelPost_no) {
+		int result = 0;
+		
+		try{
+			String query = "update travelpost_tb set like_count = like_count+1 where travelPost_no = ?";
+			
+			pstmt = connection.prepareStatement(query);
+			pstmt.setInt(1, travelPost_no);
+			
+			result = pstmt.executeUpdate();
+	
+		}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+		
+		return result;
+	}
+	
+	@Override
+	public int updateLikeMinusCount(int travelPost_no) {
+	int result = 0;
+		
+		try{
+			String query = "update travelpost_tb set like_count = like_count - 1 where travelPost_no = ?";
+			
+			pstmt = connection.prepareStatement(query);
+			pstmt.setInt(1, travelPost_no);
+			
+			result = pstmt.executeUpdate();
+	
+		}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+		
+		return result;
+	}
+	
+	@Override
+	public int insertLikePerosn(int travelPost_no, String userID) {
+		int result = 0;
+		
+		try{
+			String query = "insert into like_tb values(?,?)";
+			
+			pstmt = connection.prepareStatement(query);
+			pstmt.setString(1, userID);
+			pstmt.setInt(2, travelPost_no);
+	
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+		
+		return result;
+	}
+	
+	@Override
+	public int removeLikePerson(int travelPost_no, String userID) {
+	int result = 0;
+		
+		try{
+			String query = "DELETE FROM like_tb WHERE travelPost_no = ? and user_id = ?";
+			
+			pstmt = connection.prepareStatement(query);
+			pstmt.setString(2, userID);
+			pstmt.setInt(1, travelPost_no);
+	
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+		
+		return result;
+	}
+	
+	@Override
+	public int getLikeState(int travelPost_no, String userID) {
+		
+		int result = 0;
+		
+		try{
+			String query = "select count(*) from like_tb where user_id = ? and travelPost_no = ?";
+			
+			pstmt = connection.prepareStatement(query);
+			pstmt.setString(1, userID);
+			pstmt.setInt(2, travelPost_no);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next())
+				result = rs.getInt("count(*)");
+		}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+		
+		return result;
+	}
+	
+	
+	
+	
 }

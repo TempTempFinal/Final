@@ -9,6 +9,21 @@ public class ModelFrontTravlePost {
 	private int comment_count;
 	private String image_url;
 	private String address;
+	private double sentiment;
+	private double weight;
+	
+	public double getSentiment() {
+		return sentiment;
+	}
+	public void setSentiment(double sentiment) {
+		this.sentiment = sentiment;
+	}
+	public double getWeight() {
+		return weight;
+	}
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
 	public int getTravelPost_no() {
 		return travelPost_no;
 	}
@@ -31,8 +46,9 @@ public class ModelFrontTravlePost {
 		this.longitude = longitude;
 	}
 
+	
 	public ModelFrontTravlePost(int travelPost_no, String title, int like_count, int comment_count, String image_url,
-			String address, double latitude, double longitude) {
+			String address, double sentiment, double weight, double latitude, double longitude) {
 		super();
 		this.travelPost_no = travelPost_no;
 		this.title = title;
@@ -40,6 +56,8 @@ public class ModelFrontTravlePost {
 		this.comment_count = comment_count;
 		this.image_url = image_url;
 		this.address = address;
+		this.sentiment = sentiment;
+		this.weight = weight;
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
@@ -78,9 +96,11 @@ public class ModelFrontTravlePost {
 	}
 	@Override
 	public String toString() {
-		return "ModelFrontTravlePost [title=" + title + ", like_count=" + like_count + ", comment_count="
-				+ comment_count + ", image_url=" + image_url + ", address=" + address + ", latitude=" + latitude
-				+ ", longitude=" + longitude + "]";
+		return "ModelFrontTravlePost [travelPost_no=" + travelPost_no + ", title=" + title + ", like_count="
+				+ like_count + ", comment_count=" + comment_count + ", image_url=" + image_url + ", address=" + address
+				+ ", sentiment=" + sentiment + ", weight=" + weight + ", latitude=" + latitude + ", longitude="
+				+ longitude + "]";
 	}
+	
 
 }

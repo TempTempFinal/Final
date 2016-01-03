@@ -63,6 +63,7 @@ public class Detail_action extends HttpServlet {
 		ModelUser user = db.getWriterInfo(Integer.parseInt(postNum));
 		ModelTravelPost post = db.getTravelPostOne(Integer.parseInt(postNum));
 		ModelInformation information = db.getInformation(Integer.parseInt(postNum));
+		db.updateViewCount(Integer.parseInt(postNum));
 		
 		System.out.println(information);
 		request.setAttribute("writer", user);
@@ -82,19 +83,25 @@ public class Detail_action extends HttpServlet {
 			FriendsInfoHelper friendHelper = new FriendsInfoHelper(twitter,twitterUser);
 			List<ModelTwitterWiget> wigets = friendHelper.getFriendWiget(post.getTitle());
 			
+			int likeState = db.getLikeState(Integer.parseInt(postNum), Long.toString(twitterUser.getId()));
+			
+			request.setAttribute("likeState", likeState);
+			request.setAttribute("userID", twitterUser.getId());
 			request.setAttribute("wigets", wigets);
 			request.setAttribute("isLogin", "true");
 		}
 		
 		ServiceGetDetailInfo collector = new ServiceGetDetailInfo();
-		
 		request.setAttribute("hashList",collector.getHashList(Integer.parseInt(postNum)));
 		request.setAttribute("featureList", collector.getFeatureList(Integer.parseInt(postNum)));
 		request.setAttribute("informationList", collector.getInformationList(Integer.parseInt(postNum)));
+	
 		request.setAttribute("imageList", collector.getImageList(Integer.parseInt(postNum)));
+		
 		request.setAttribute("location", collector.getLocation(Integer.parseInt(postNum)));
 		request.setAttribute("commentList", collector.getCommentList(Integer.parseInt(postNum)));
 		request.setAttribute("travlePost", collector.getTravlePost(Integer.parseInt(postNum)));
+		
 		request.setAttribute("writer", collector.getWriter(Integer.parseInt(postNum)));
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/detailPage.jsp");

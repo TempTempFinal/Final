@@ -25,12 +25,8 @@ public class DaoTravlePlaceTest {
 	public void test() {
 		DaoTravlePlace one = new DaoTravlePlace();
 
-		List<ModelFrontTravlePost> result = one.getFrontTravelPostByConcern("레저", 1, 9);
+		int a = one.getLikeState(1, "1493501562");
 		
-		for(int i=0 ;i<result.size(); i++)
-			System.out.println(result.get(i));
-		
+		System.out.println(a);
 	}
-
-
 }

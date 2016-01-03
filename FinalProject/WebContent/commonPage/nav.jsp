@@ -82,7 +82,7 @@ body{
 			<ul class="myNav">
 				<li id="myLogo" style="margin-right: 20px;">The Real travel</li>
 				<li><a href="${pageContext.request.contextPath}/main">홈</a>
-				<li><a href="#">인기</a>
+				<li><a href="${pageContext.request.contextPath}/PopularControllerT">인기</a>
 			</ul>
 		</div>
 		<div class="myPull-right ">
