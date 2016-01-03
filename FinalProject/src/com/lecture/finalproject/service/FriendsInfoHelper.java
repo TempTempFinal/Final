@@ -248,7 +248,12 @@ public class FriendsInfoHelper {
 		double dev2n3;
 		double dev3n4;
 		double dev4n5;
-		
+		int picknum=0;
+		if(tempW.size()<=3)
+			picknum=tempW.size();
+		else if(tempW.size()>3)
+		{
+			
 		for(int i=0;i<2;i++)
 			sum22+= Double.parseDouble(tempW.get(i).toString());
 		for(int i=0;i<3;i++)
@@ -271,9 +276,9 @@ public class FriendsInfoHelper {
 		
 		dev4n5 = (sum4/4)-(sum5/5);
 		
-		int picknum = TextCatDriver.pickdev(dev2n3,dev3n4,dev4n5,dev);
+		 picknum = TextCatDriver.pickdev(dev2n3,dev3n4,dev4n5,dev);
 			System.out.println(picknum);
-			
+		}	
 		
 		
 		for(int i=0;i<picknum;i++)
