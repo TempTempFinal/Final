@@ -1,6 +1,7 @@
 package com.lecture.finalproject.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -84,6 +85,8 @@ public class FriendsInfoHelper {
 		return topFriendList;
 	}
 	
+	
+	
 	 private  List sortByValue(final Map map){
 	        List<String> list = new ArrayList();
 	        list.addAll(map.keySet());
@@ -150,15 +153,15 @@ public class FriendsInfoHelper {
 	
 	public List groupConcern(String[] friendNames){
 		List <Map<String,Double>> weightPlusConcerns = getFriendsWeight(friendNames);
-		List concerns = new ArrayList();
-		List weights = new ArrayList();
-		List tempC = new ArrayList();
-		List tempW = new ArrayList();
+		List<String> concerns = new ArrayList();
+		List<Double> weights = new ArrayList();
+		List<String> tempC = new ArrayList();
+		List<Double> tempW = new ArrayList();
 		ServiceInfoSynchronize myConcern = new ServiceInfoSynchronize();
 		myConcern.synchronize(twitter);
 		Map<String,Double> mC = myConcern.concerns;
-		List tempConcerns = new ArrayList();
-		List groupConcerns = new ArrayList();
+		ArrayList tempConcerns = new ArrayList();
+		ArrayList groupConcerns = new ArrayList();
 		Set mykey = mC.keySet();
 		
 		System.out.println(mC.size());
@@ -229,12 +232,13 @@ public class FriendsInfoHelper {
 		double sum=0;
 		for(int i=0;i<tempW.size();i++)
 		{
-			System.out.println(tempC.get(i).toString() + " : " +tempW.get(i).toString());
+			//System.out.println(tempC.get(i).toString() + " : " +tempW.get(i).toString());
 			sum+=Double.parseDouble(tempW.get(i).toString());
 			tempConcerns.add(tempC.get(i).toString());
-			
-			
 		}
+		ArrayList<Integer> index = new ArrayList();
+		sortWeights(tempW,index);
+		
 		double var = sum/tempW.size();
 		double dev = Math.sqrt(var);
 		double sum22 =0;
@@ -269,11 +273,34 @@ public class FriendsInfoHelper {
 		
 		int picknum = TextCatDriver.pickdev(dev2n3,dev3n4,dev4n5,dev);
 			System.out.println(picknum);
+			
+		
+		
 		for(int i=0;i<picknum;i++)
-			groupConcerns.add(tempC.get(i).toString());
+			groupConcerns.add(tempC.get(index.get(i)).toString());
 		
 		return groupConcerns;
 	}
+	
+	private void sortWeights(List<Double> iList, List<Integer> index)
+	{
+		 double itmp=0;
+		 for(int i = 0 ; i < iList.size(); i++){
+	            for(int j = 0; j < i ; j++) {
+	                if(iList.get(i) >= iList.get(j)){
+	                    itmp = iList.get(i);
+	                    iList.set(i, iList.get(j));
+	                    iList.set(j, itmp);
+	                }
+	            }
+	        }
+		 
+		 for(int i=0;i<iList.size();i++)
+		       index.add(i);
+
+
+	}
+
 
 
 	public Map<String, Float> getPureFriendWeight(String[] friendNames){

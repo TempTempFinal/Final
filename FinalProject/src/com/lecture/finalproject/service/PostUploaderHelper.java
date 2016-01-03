@@ -70,9 +70,10 @@ public class PostUploaderHelper {
         	
     		
     		features = jtcl.getFeature(keywordList);
-    		
+    	
     		for(String key : features.keySet()){
-    			db.insertPostFeature(new ModelFeature(key, travlePost_no));  			
+    			db.insertPostFeature(new ModelFeature(key, travlePost_no));  		
+    			System.out.println(key + ": " +features.values());
     		}
     }
        
