@@ -21,6 +21,8 @@
 body {
 	height : 100%;
 	width: 100%;
+    background-color: #e7e7e7;
+	
 }
 
 .debug {
@@ -41,8 +43,9 @@ body {
 
 .carousel-control {
 	height: 80px;
-	margin-top: 0;
-	font-size: 120px;
+	margin-top: 200px !important;
+    font-size: 120px !important;
+    background: none !important;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
 	background-color: transparent;
 	border: 0;
@@ -58,7 +61,8 @@ body {
 	top: 0;
 	left: 0;
 	min-width: 100%;
-	height: 500px;
+	width:100%;
+	height: 500px !important;
 }
 
 .carousel-caption {
@@ -109,6 +113,7 @@ body {
 	position: relative;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
+	border-bottom: 1px solid #bebebe;
 	width: 100%;
 	height: 200px;
 }
@@ -127,6 +132,17 @@ body {
         height: 40px;
 }
 
+.post-container {
+	border: 1px solid #bebebe;
+	border-radius: 10px;
+	height: 340px;
+}
+
+.feedback-div{
+	    margin-top: 10px;
+}
+
+
 .row-fluid .span4{
  	height: 356px;
  	margin: 1px;
@@ -136,6 +152,7 @@ body {
  .row-fluid{
  	margin-top: 20px;
  }
+ 
  
 
 .carousel-caption{
@@ -176,23 +193,21 @@ body {
 	padding: 0px 250px;
 }
 
-.post-container {
-	border: 1px solid #bebebe;
-	border-radius: 10px;
-	height: 340px;
-}
 
-.feedback-div{
-	    margin-top: 10px;
-}
 #pageSection{
     padding: 30px;
     margin-top: 30px;
 }
 
-.img-div img{
-    border-bottom: 1px solid #bebebe;
+.item img{
+height: 500px;
 }
+
+.accordion-group{
+	border: 1px solid #b4b4b4 !important;
+}
+
+
  
 
 </style>
@@ -207,53 +222,27 @@ body {
 			<div class="carousel-inner">	
 				<div class="item active">
 					<img src="${pageContext.request.contextPath}/img/mainPhoto2.jpg"alt="">
-					<div class="container">
-						<div class="carousel-caption">
-							<div class="content-container">
-								<h1>홍콩보다 부산, 야경의<br>메카 더베이 101</h1><br>
-								<p class="lead">홍콩보다 낭만적인 야경이 부산에 있다. 80층을 넘나드는 초고층 빌딩에서 쏟아내는 불빛이 밤하늘을 수놓고 해운대 밤바다에 넘실댄다. 눈앞에 펼쳐진 야경을 바라보며 맥주 한잔 기울이기 딱 좋은 부산의 겨울밤이 반짝반짝 깊어간다.</p>
-								<a>More</a>
-							</div>
-						</div>
-					</div>
-				</div>
+									</div>
 
 				<div class="item">
 					<img
 						src="${pageContext.request.contextPath}/img/mainPhoto1.jpg"
 						alt="">
-					<div class="container">
-						<div class="carousel-caption">
-							<div class="content-container">
-								<h1>홍콩보다 부산, 야경의<br>메카 더베이 101</h1>
-								<p class="lead">홍콩보다 낭만적인 야경이 부산에 있다. 80층을 넘나드는 초고층 빌딩에서 쏟아내는 불빛이 밤하늘을 수놓고 해운대 밤바다에 넘실댄다. 눈앞에 펼쳐진 야경을 바라보며 맥주 한잔 기울이기 딱 좋은 부산의 겨울밤이 반짝반짝 깊어간다.</p>
-							</div>
-						</div>
-					</div>
+					
 				</div>
 
 				<div class="item">
 					<img
 						src="${pageContext.request.contextPath}/img/mainPhoto3.jpg"
 						alt="">
-					<div class="container">
-						<div class="carousel-caption">
-							<h1>Example picture3</h1>
-							<p class="lead">test picture</p>
-						</div>
-					</div>
+					
 				</div>
 				
 					<div class="item">
 					<img
 						src="${pageContext.request.contextPath}/img/mainPhoto4.jpg"
 						alt="">
-					<div class="container">
-						<div class="carousel-caption">
-							<h1>Example picture3</h1>
-							<p class="lead">test picture</p>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 			<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>

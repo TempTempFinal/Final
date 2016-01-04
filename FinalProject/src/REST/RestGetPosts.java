@@ -85,6 +85,23 @@ public class RestGetPosts extends HttpServlet {
 			String concern = URLDecoder.decode(request.getParameter("searchWord"),"UTF-8");
 			posts = db.getFrontTravelPostByConcern(concern, Integer.parseInt(request.getParameter("startPage")), Integer.parseInt(request.getParameter("pageNum")));
 		}
+		else if(method.equals("popularTop")){
+			String category = URLDecoder.decode(request.getParameter("category"),"UTF-8");
+			
+			if(category.equalsIgnoreCase("all"))
+				posts = db.getTopFrontTravelPostByAllCategory();
+			else
+				posts = db.getTopFrontTravelPostByCategory(category);
+		}
+		else if(method.equals("popularList")){
+			String category = URLDecoder.decode(request.getParameter("category"),"UTF-8");
+			
+			if(category.equalsIgnoreCase("all"))//Top list 9개를위해 +1개해줘서 출력
+				posts = db.getPopularFrontTravelPostByAllCategory(Integer.parseInt(request.getParameter("startPage")) + 1, Integer.parseInt(request.getParameter("pageNum")));
+			else
+				posts = db.getPopularFrontTravelPostByCategory(category, Integer.parseInt(request.getParameter("startPage")) + 1, Integer.parseInt(request.getParameter("pageNum")));
+			
+		}
 		JSONArray jsonArray = JSONArray.fromObject(posts);
 		
 		Map<String, Object> map = new HashMap<String, Object>();

@@ -116,7 +116,7 @@ function friendsListParse2(obj)
 	
 	console.log('1111111111111111111');
 	for(var i=0; i<size; i++){
-		$atag = $('<a></a>').attr('href', path + "/concern?searchWord=" + obj.groupConcernList[i]).text(obj.groupConcernList[i]).css('color','white');
+		$atag = $('<a></a>').attr('href', path + "/concern?searchWord=" + obj.groupConcernList[i] + "&method=listByConcern").text(obj.groupConcernList[i]).css('color','white');
 		$concern = $('<div></div>').addClass('col-4').append($atag);
 		
 		if(obj.groupConcernList[i] == '낚시'){
