@@ -54,8 +54,9 @@ public class ServiceInfoSynchronize {
 		//List를 JTCL에 넣어준다
 		concerns = concernHelper.getConcern(meaningWordList);
 		
-		//System.out.println(meaningWordList);
+		System.out.println(meaningWordList);
 		
+		System.out.println(concerns);
 		for( String key : concerns.keySet()){
 			result = uploader.insertConcern(new ModelConcern(key, Long.toString(user.getId())));
 		}

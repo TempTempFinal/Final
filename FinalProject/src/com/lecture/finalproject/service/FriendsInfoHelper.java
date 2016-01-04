@@ -193,7 +193,7 @@ public class FriendsInfoHelper {
 		
 		for(int i=0;i<concerns.size();i++)
 		{
-			System.out.println("그룹관심사" + concerns.get(i)+"/ " + weights.get(i));
+			System.out.println("그룹관심사" + concerns.get(i)+"/ " + Double.parseDouble(weights.get(i).toString()));
 		}
 		int count = 0;
 
@@ -205,12 +205,12 @@ public class FriendsInfoHelper {
 		double temp=0;
 		
 
-		for (int j = 0; j < concerns.size(); ++j) {  //寃��궗
+		for (int j = 0; j < concerns.size(); ++j) {  
 			for (int k = 0; k < concerns.size(); ++k) {
 				if (concerns.get(j).toString().equals(concerns.get(k).toString())) {
 					count++;
 					temp=temp+Double.parseDouble(weights.get(k).toString());
-					if (count > 1) {  //以묐났 �젣嫄�
+					if (count > 1) { 
 						on[k] = true;
 						;
 					}
@@ -232,7 +232,7 @@ public class FriendsInfoHelper {
 		double sum=0;
 		for(int i=0;i<tempW.size();i++)
 		{
-			//System.out.println(tempC.get(i).toString() + " : " +tempW.get(i).toString());
+			System.out.println(tempC.get(i).toString() + " : " +tempW.get(i).toString());
 			sum+=Double.parseDouble(tempW.get(i).toString());
 			tempConcerns.add(tempC.get(i).toString());
 		}
@@ -249,9 +249,9 @@ public class FriendsInfoHelper {
 		double dev3n4;
 		double dev4n5;
 		int picknum=0;
-		if(tempW.size()<=3)
+		if(tempW.size()<=4)
 			picknum=tempW.size();
-		else if(tempW.size()>3)
+		else if(tempW.size()>4)
 		{
 			
 		for(int i=0;i<2;i++)
@@ -282,8 +282,12 @@ public class FriendsInfoHelper {
 		
 		
 		for(int i=0;i<picknum;i++)
-			groupConcerns.add(tempC.get(index.get(i)).toString());
-		
+		{
+			if(Double.parseDouble(tempW.get(i).toString())!=0.0)
+				groupConcerns.add(tempC.get(index.get(i)).toString());
+			
+			System.out.println("최종관심사" + groupConcerns);
+		}
 		return groupConcerns;
 	}
 	
@@ -292,7 +296,7 @@ public class FriendsInfoHelper {
 		 double itmp=0;
 		 for(int i = 0 ; i < iList.size(); i++){
 	            for(int j = 0; j < i ; j++) {
-	                if(iList.get(i) >= iList.get(j)){
+	                if(iList.get(i) <= iList.get(j)){
 	                    itmp = iList.get(i);
 	                    iList.set(i, iList.get(j));
 	                    iList.set(j, itmp);
@@ -383,7 +387,7 @@ public class FriendsInfoHelper {
 
 						List<Status> friendStatusess = twitter.getUserTimeline(user.getId()); //�굹�쓽 timeline�뿉�꽌 �빐�떦 user媛� �쟻�뼱�넃�� timeline�쓣 媛��졇�샂/statusess �븯�굹�뒗 timeline �븯�굹瑜� �쓽誘�
 
-						//移쒓뎄媛� �굹�뿉寃� �젒珥됲븳寃쎌슦�쓽 weight
+						
 						for (Status status3 : friendStatusess) {
 							//System.out.println(status3);
 							fstr+=status3.getText();
@@ -442,10 +446,10 @@ public class FriendsInfoHelper {
 				System.out.println(e.getMessage());	
 			}
 			//for(int i=0;i<groupConcern(friendNames).size();i++)
-				//System.out.println(groupConcern(friendNames).toString());
-			//System.out.println(groupConcern(friendNames).size());
-			//for(int i=0;i<3;i++)
-				//System.out.println(i+1 +"�쐞 媛먯젙 : " + groupConcern(friendNames).get(i));
+			//	System.out.println(groupConcern(friendNames).toString());
+		//	System.out.println(groupConcern(friendNames).size());
+		//	for(int i=0;i<3;i++)
+			//	System.out.println(i+1 +"�쐞 媛먯젙 : " + groupConcern(friendNames).get(i));
 			return fc;
 		}
 

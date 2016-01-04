@@ -150,11 +150,19 @@ public class TextCatDriver {
 			{
 				if(temp[i] == df[j])
 				{
+					k++;
 					concernWeight.put(interest[j], df[j]);
-					System.out.println(interest[j]+"/ "+df[j]);
+					System.out.println("개인관심사: "+interest[j]+"/ "+df[j]);
+					if(k==picknum)
+						break;
 				}
+				if(k==picknum)
+					break;
 				
 			}
+			if(k==picknum)
+				break;
+			
 			
 		}
 	
@@ -166,7 +174,7 @@ public class TextCatDriver {
 		if(origin<1.1 && origin >0.9)
 			return 3;
 		else if(a>b && a>c)
-			return 3;
+			return 2;
 		else if(b>a && b>c)
 			return 3;
 		else if(c>a && c>b)
