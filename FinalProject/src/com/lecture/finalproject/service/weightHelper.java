@@ -6,37 +6,44 @@ import com.lecture.finalproject.model.ModelFrontTravlePost;
 
 public class weightHelper {
 	
-	public int setPostWeight(List<ModelFrontTravlePost> postList){
+	public void setPostWeight(List<ModelFrontTravlePost> postList){
 		int likeCount;
 		int commentCount;
-		double sentiment;
-		double weight;
-		int completeCount = 0;
+		double senti_positive;
+		double senti_negative;
+		double pre_popularity;
+		int search_count;
+	
+		double newPopularity;
 		
 		for(ModelFrontTravlePost postOne : postList){
 			
 			 likeCount = postOne.getLike_count();
 			 commentCount = postOne.getComment_count();
-			 sentiment = postOne.getSentiment();
-			
-			 weight = calWeight(likeCount,commentCount,sentiment);
-			 postOne.setWeight(weight);
+			 senti_positive = postOne.getSenti_positive();
+			 senti_negative = postOne.getSenti_negative();
+			 search_count = postOne.getSearch_count();
 			 
-			 completeCount++;
+			 pre_popularity = postOne.getPre_popularity();
 			 
-			 if(completeCount == postList.size())
-				 return 1;
+			 newPopularity= calPopularity(likeCount,commentCount,senti_positive, senti_negative, search_count);
+			 
+			 if((newPopularity - pre_popularity) > 0)
+				 postOne.setgap_popularity(newPopularity - pre_popularity);
+			 else
+				 postOne.setgap_popularity(0);
 		}
-		
-		return 0;
 	}
 	
 	//TODO have to calculate Popular weight
-	private double calWeight(int likeCount, int commentCount, double sentiment){
+	private double calPopularity(int likeCount, int commentCount, double senti_positive, double senti_negative, int search_count){
 		
-		double result;
+		double result = 0;
 		
-		result = likeCount;
+		result += (likeCount * 10);
+		result += ((senti_positive * 10) * commentCount);
+		result += ((senti_negative * 10) * commentCount);
+		result += (search_count * 0.5);
 		
 		return result;
 	}

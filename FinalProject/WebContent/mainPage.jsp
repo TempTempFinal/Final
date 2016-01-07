@@ -21,7 +21,7 @@
 body {
 	height : 100%;
 	width: 100%;
-    background-color: #e7e7e7;
+    background-color: #f3f4f5;
 	
 }
 

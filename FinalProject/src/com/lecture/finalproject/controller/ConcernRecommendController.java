@@ -2,7 +2,9 @@ package com.lecture.finalproject.controller;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +17,10 @@ import javax.servlet.http.HttpSession;
 import com.lecture.finalproject.dao.DaoTravlePlace;
 import com.lecture.finalproject.model.ModelConcern;
 import com.lecture.finalproject.model.ModelFrontTravlePost;
+import com.lecture.finalproject.repository.SearchHelper;
 import com.lecture.finalproject.service.pagingHelper;
+
+import Komoran.Preprocessor;
 
 /**
  * Servlet implementation class MainController
@@ -24,10 +29,17 @@ import com.lecture.finalproject.service.pagingHelper;
 @WebServlet("/concern")
 public class ConcernRecommendController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private static SearchHelper searchHelper = null;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
+	
+	@Override
+	public void init() throws ServletException {
+		// TODO Auto-generated method stub
+		searchHelper = SearchHelper.getInstance();
+	}
     public ConcernRecommendController() {
         super();
         // TODO Auto-generated constructor stub
@@ -45,6 +57,8 @@ public class ConcernRecommendController extends HttpServlet {
 		DaoTravlePlace db = new DaoTravlePlace();
 		List<ModelFrontTravlePost> posts = null;
 		List<ModelConcern> concerns = null;
+		List<String> searchKeyword = new ArrayList<String>();
+		
 		
 		pagingHelper pager = new pagingHelper();
 		int totalCount = 0;
@@ -56,6 +70,7 @@ public class ConcernRecommendController extends HttpServlet {
 		if(searchMethod.equals("listBySeachWord")){
 			posts = db.getFrontTravlePostBySearchWord(searchWord,1,9);
 			totalCount = db.getCountTravlePostBySearchWord(searchWord);
+			
 		}
 		else if(searchMethod.equals("listByHashTag")){
 			searchWord = searchWord.substring(1); //delete #

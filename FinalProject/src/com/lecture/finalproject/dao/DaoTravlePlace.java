@@ -26,13 +26,18 @@ import com.lecture.finalproject.model.ModelInformation;
 import com.lecture.finalproject.model.ModelLocation;
 import com.lecture.finalproject.model.ModelTravelPost;
 import com.lecture.finalproject.model.ModelUser;
+import com.lecture.finalproject.repository.SearchHelper;
 import com.lecture.finalproject.service.weightHelper;
+
+import Komoran.Preprocessor;
 
 
 public class DaoTravlePlace implements IDao{
     
   
     private static Connection connection = JDBCMannager.getInstance();
+    private static SearchHelper searchHelper = SearchHelper.getInstance();
+    Preprocessor komoran = new Preprocessor();
    
     private Statement st = null;
     private ResultSet rs = null;
@@ -471,15 +476,38 @@ int result = 0;
 	public List<ModelFrontTravlePost> getFrontTravlePostBySearchWord(String searchWord, int startPage, int pageNum) {
 		// TODO Auto-generated method stub
 		 List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
+		 List<String> searchKeyword = new ArrayList<String>();
+		 List<String> searchLocation = null;
+		
+		 String temp = komoran.preProcess(searchWord);
+		 searchKeyword = komoran.getMeaningWord(temp);	
+		 searchLocation = searchHelper.findLocationQuery(searchKeyword);
+		 
+		 String locationQuery = getLocationQuery(searchLocation);
+		 String searchAndQuery = getSearchAndQuery(searchKeyword);
+		 String searchOrQuery = getSearchOrQuery(searchKeyword);
 		 
 		 try{
-			 String query = "select * from (select * from (select address, travelPost_no from location_tb) as a natural join (select travelPost_no, title, like_count, comment_count from travelpost_tb) as b where address like ? or title like ?) as c natural  join image_tb group by travelPost_no limit ?,?";
+			 String query = "select * from" + 
+					 		" ((select * from"+
+					 		" (select travelPost_no, title, like_count, comment_count "+
+					 		" from travelpost_tb "+ searchAndQuery + ") as a"+
+					 		" natural join "+
+					 		" (select * from image_tb) as b)"+
+					 		" union"+
+					 		" (select * from"+
+					 		" (select travelPost_no, title, like_count, comment_count "+
+					 		" from travelpost_tb "+ searchAndQuery + ") as a"+
+					 		" natural join "+
+					 		" (select * from image_tb) as b)) as c"+
+					 		" natural join"+
+					 		" (select address, travelPost_no from location_tb " + locationQuery + ") as d" +
+					 		" limit ?,?";
+					 
 			 pstmt = connection.prepareStatement(query);
 			 
-			 pstmt.setString(1, "%"+searchWord+"%");
-			 pstmt.setString(2, "%"+searchWord+"%");
-			 pstmt.setInt(3, (startPage - 1) * pageNum);
-			 pstmt.setInt(4, pageNum);
+			 pstmt.setInt(1, (startPage - 1) * pageNum);
+			 pstmt.setInt(2, pageNum);
 			  
 			 rs = pstmt.executeQuery();
 
@@ -500,9 +528,46 @@ int result = 0;
 	    		System.out.println(e.getMessage());
 	    	}
 	    	
-	    	return result;
-		
+	    	return result;	
 	}
+	
+	private String getLocationQuery(List<String> searchLocation){
+		StringBuffer query = new StringBuffer();
+		
+		for(int i=0; i<searchLocation.size(); i++){
+			if(i == 0)
+				query.append(" where address like '" + searchLocation.get(i) + "'");
+			else
+				query.append(" or address like '" + searchLocation.get(i) +"'");
+		}
+		return query.toString();
+	}
+	
+	private String getSearchAndQuery(List<String> searchKeyword){
+		StringBuffer query = new StringBuffer();
+		
+		for(int i=0; i<searchKeyword.size(); i++){
+			if(i == 0)
+				query.append(" where title like '%" + searchKeyword.get(i) + "%'");
+			else
+				query.append(" and address like '%" + searchKeyword.get(i) +"%'");
+		}
+		return query.toString();
+	}
+	
+	private String getSearchOrQuery(List<String> searchKeyword){
+		StringBuffer query = new StringBuffer();
+		
+		for(int i=0; i<searchKeyword.size(); i++){
+			if(i == 0)
+				query.append(" where title like '" + searchKeyword.get(i) + "'");
+			else
+				query.append(" or address like '" + searchKeyword.get(i) +"'");
+		}
+		return query.toString();
+	}
+	
+	
     
     @Override //startPage 시작 page : 1부터 시작, Pagenum : page당 갯수
     public List<ModelFrontTravlePost> getFrontTravlePostList(int startPage, int pageNum) {
@@ -1376,7 +1441,7 @@ int result = 0;
 					" (select * from" +
 					" (select * from image_tb) as a"+
 					" natural join"+
-					" (select travelPost_no, travelSentiment from information_tb) as b) as c"+
+					" (select travelPost_no, senti_positive, senti_negative, search_count, popularity from information_tb) as b) as c"+
 					" natural join"+
 					" (select travelPost_no, address, longitude, latitude from location_tb) as d) as e"+
 					" natural join"+
@@ -1398,7 +1463,11 @@ int result = 0;
 	            post.setComment_count(rs.getInt("comment_count"));
 	            post.setLike_count(rs.getInt("like_count"));
 	            post.setTitle(rs.getString("title"));
-	            post.setSentiment(rs.getDouble("travelSentiment"));
+	            post.setSenti_negative(rs.getDouble("senti_negative"));
+	            post.setSenti_positive(rs.getDouble("senti_positive"));
+	            post.setSearch_count(rs.getInt("search_count"));
+	            post.setPre_popularity(rs.getDouble("popularity"));
+	            
 	            temp.add(post);
 			}
 			
@@ -1425,9 +1494,9 @@ int result = 0;
 		@Override
 		public int compare(ModelFrontTravlePost arg0, ModelFrontTravlePost arg1) {
 			// TODO Auto-generated method stub
-			if(arg0.getWeight() > arg1.getWeight())
+			if(arg0.getgap_popularity() > arg1.getgap_popularity())
 				return -1;
-			else if(arg0.getWeight() < arg1.getWeight())
+			else if(arg0.getgap_popularity() < arg1.getgap_popularity())
 				return 1;
 			else
 				return 0;
@@ -1450,7 +1519,7 @@ int result = 0;
 					" (select * from"+
 					" (select * from feature_tb where feature = ?) as a"+
 					" natural join"+
-					" (select travelPost_no, travelSentiment from information_tb) as b) as c"+
+					" (select travelPost_no, senti_positive, senti_negative, search_count, popularity from information_tb) as b) as c"+
 					" natural join"+
 					" (select * from image_tb) as d) as e"+
 					" natural join"+
@@ -1476,7 +1545,10 @@ int result = 0;
 	            post.setComment_count(rs.getInt("comment_count"));
 	            post.setLike_count(rs.getInt("like_count"));
 	            post.setTitle(rs.getString("title"));
-	            post.setSentiment(rs.getDouble("travelSentiment"));
+	            post.setSenti_negative(rs.getDouble("senti_negative"));
+	            post.setSenti_positive(rs.getDouble("senti_positive"));
+	            post.setSearch_count(rs.getInt("search_count"));
+	            post.setPre_popularity(rs.getDouble("popularity"));
 	            temp.add(post);
 			}
 			
