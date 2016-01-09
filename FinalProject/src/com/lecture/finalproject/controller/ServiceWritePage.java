@@ -29,6 +29,7 @@ import com.lecture.finalproject.model.ModelConcern;
 import com.lecture.finalproject.model.ModelFeature;
 import com.lecture.finalproject.model.ModelImage;
 import com.lecture.finalproject.model.ModelInformation;
+import com.lecture.finalproject.model.ModelLocation;
 import com.lecture.finalproject.model.ModelTravelPost;
 import com.lecture.finalproject.service.S3Upload;
 import com.lecture.finalproject.service.PostUploaderHelper;
@@ -53,7 +54,7 @@ public class ServiceWritePage extends HttpServlet {
 	ModelInformation info = new ModelInformation();
 	ModelTravelPost post = new ModelTravelPost();
 	Travelpost_db tp_db = new Travelpost_db();
-
+	ModelLocation loca = new ModelLocation();
 
 	private String make(String s)
 	{
@@ -106,22 +107,43 @@ public class ServiceWritePage extends HttpServlet {
 		String contents = multi.getParameter("istext");
 		String uploadFileName = multi.getFilesystemName("file");
 		File file = multi.getFile("file");
+		String lat = multi.getParameter("latreceiver");
+		String lng = multi.getParameter("lngreceiver");
+		String address = multi.getParameter("receiver");
+		String city1=null;
+		String city2=null;
 		int num;
 		
+		String[] result = address.split(" ");
+		if(result[0].equalsIgnoreCase("대한민국"))
+		{
+			city1=result[1];
+			city2=result[2];
+		}
+		else
+		{
+			city1=result[0];
+			city2=result[1];
+		}
 		
 		PostUploaderHelper hashExtracter = new PostUploaderHelper();
 		
 		info.setTravel_content(contents);
 		post.setTitle(title);
-		
+		loca.setAddress(address);
+		loca.setLatitude(lat);
+		loca.setLongitude(lng);
+		loca.setCity1(city1);
+		loca.setCity2(city2);
 		//TODO 나중에 수정해야할 부분, title중복시 에러 , User ID, 
 		tp_db.insert("insert into travelpost_tb(title,travelPost_date,user_id) values("+make(post.getTitle())+","+"now(),"+make("khyunm91")+")");
 		num = tp_db.findTravelPost_no(post.getTitle());
 		tp_db.insert("insert into information_tb(travel_content,travelpost_no) values("+make(info.getTravel_content())+","+num+")");
 		
 		
+		
 		//TODO 위치정보도 DB에 넣어줘야함
-		tp_db.insert("insert into location_tb values('null','null','null','null','null','" + num + "')");
+		tp_db.insert("insert into location_tb(city1,city2,address,latitude,longitude,travelpost_no) values("+make(loca.getCity1())+","+make(loca.getCity2())+"," +make(loca.getAddress())+","+make(loca.getLatitude())+","+make(loca.getLongitude())+","+num+")");
 	
 		
 		//해당 글의 Hash Tag와 특징 정보를 추출하여 해당 TravlePost_date 번호의 DB에 저장.
