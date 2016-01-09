@@ -26,11 +26,8 @@ import com.lecture.finalproject.model.ModelUser;
 import com.lecture.finalproject.repository.SearchHelper;
 import com.lecture.finalproject.service.weightHelper;
 
-<<<<<<< HEAD
 import Komoran.Preprocessor;
-=======
 import OpinionMining.OpinionMining;
->>>>>>> 6606c79e6be1c8291d95f70361113ffbbec1e29a
 
 
 public class DaoTravlePlace implements IDao{
@@ -472,8 +469,7 @@ int result = 0;
             
             return result;
     }
-    
-<<<<<<< HEAD
+
 	@Override
 	public List<ModelFrontTravlePost> getFrontTravlePostBySearchWord(String searchWord, int startPage, int pageNum) {
 		// TODO Auto-generated method stub
@@ -512,23 +508,7 @@ int result = 0;
 			 pstmt.setInt(2, pageNum);
 			  
 			 rs = pstmt.executeQuery();
-=======
-    @Override
-    public List<ModelFrontTravlePost> getFrontTravlePostBySearchWord(String searchWord, int startPage, int pageNum) {
-        // TODO Auto-generated method stub
-         List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
-         
-         try{
-             String query = "select * from (select * from (select address, travelPost_no from location_tb) as a natural join (select travelPost_no, title, like_count, comment_count from travelpost_tb) as b where address like ? or title like ?) as c natural  join image_tb group by travelPost_no limit ?,?";
-             pstmt = connection.prepareStatement(query);
-             
-             pstmt.setString(1, "%"+searchWord+"%");
-             pstmt.setString(2, "%"+searchWord+"%");
-             pstmt.setInt(3, (startPage - 1) * pageNum);
-             pstmt.setInt(4, pageNum);
-              
-             rs = pstmt.executeQuery();
->>>>>>> 6606c79e6be1c8291d95f70361113ffbbec1e29a
+
 
              while (rs.next()) {
                  ModelFrontTravlePost one = new ModelFrontTravlePost();
@@ -543,7 +523,6 @@ int result = 0;
                  result.add(one);
              }
 
-<<<<<<< HEAD
 	    	}catch(SQLException e){
 	    		System.out.println(e.getMessage());
 	    	}
@@ -588,16 +567,6 @@ int result = 0;
 	}
 	
 	
-=======
-            }catch(SQLException e){
-                System.out.println(e.getMessage());
-            }
-            
-            return result;
-        
-    }
->>>>>>> 6606c79e6be1c8291d95f70361113ffbbec1e29a
-    
     @Override //startPage 시작 page : 1부터 시작, Pagenum : page당 갯수
     public List<ModelFrontTravlePost> getFrontTravlePostList(int startPage, int pageNum) {
         
@@ -1456,25 +1425,24 @@ int result = 0;
     }
     
     @Override
-    public List<ModelFrontTravlePost> getTopFrontTravelPostByAllCategory() {
-        List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
-        ModelFrontTravlePost post = null;
-        
-        try{
-            
-            String query = "select * from" +
-                    " (select * from" +
-                    " (select * from image_tb) as a"+
-                    " natural join"+
-                    " (select travelPost_no, address, longitude, latitude from location_tb) as b) as c"+
-                    " natural join"+
-                    " (select travelPost_no, title, like_count, comment_count from travelpost_tb) as d"+
-                    " order by like_count desc limit 0,9";
-        
-            
-            pstmt = connection.prepareStatement(query);
+	public List<ModelFrontTravlePost> getTopFrontTravelPostByAllCategory() {
+		List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
+		ModelFrontTravlePost post = null;
+		
+		try{
+			
+			String query = "select * from" +
+					" (select * from" +
+					" (select * from image_tb) as a"+
+					" natural join"+
+					" (select travelPost_no, address, longitude, latitude from location_tb) as b) as c"+
+					" natural join"+
+					" (select travelPost_no, title, like_count, comment_count from travelpost_tb) as d"+
+					" order by like_count desc limit 0,9";
+		
+			
+			pstmt = connection.prepareStatement(query);
 
-<<<<<<< HEAD
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
@@ -1563,19 +1531,7 @@ int result = 0;
 		return result;
 	}
 	
-	static class weightDscCompare implements Comparator<ModelFrontTravlePost> {
-		 
-		@Override
-		public int compare(ModelFrontTravlePost arg0, ModelFrontTravlePost arg1) {
-			// TODO Auto-generated method stub
-			if(arg0.getgap_popularity() > arg1.getgap_popularity())
-				return -1;
-			else if(arg0.getgap_popularity() < arg1.getgap_popularity())
-				return 1;
-			else
-				return 0;
-		}
-	}
+
 		
 	@Override
 	public List<ModelFrontTravlePost> getPopularFrontTravelPostByCategory(String category, int startPage, int pageNum) {
@@ -1629,169 +1585,35 @@ int result = 0;
 			//여기서 sorting해서 가져오자
 			wHelper.setPostWeight(temp);
 			temp.sort(new weightDscCompare());	
-=======
-            rs = pstmt.executeQuery();
-            
-            while(rs.next()){
-                post = new ModelFrontTravlePost();
-                
-                String image_url = rs.getString("image_url").equals("null") == true ? "img/readyImage.jpg" : rs.getString("image_url");
-                post.setTravelPost_no(rs.getInt("travelPost_no"));
-                post.setImage_url(image_url);
-                post.setAddress(rs.getString("address"));
-                post.setLatitude(Double.parseDouble(rs.getString("latitude")));
-                post.setLongitude(Double.parseDouble(rs.getString("longitude")));
-                post.setComment_count(rs.getInt("comment_count"));
-                post.setLike_count(rs.getInt("like_count"));
-                post.setTitle(rs.getString("title"));
-                result.add(post);
-            }
-            
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-            
-        return result;
-    }
-    
-    @Override
-    public List<ModelFrontTravlePost> getPopularFrontTravelPostByAllCategory(int startPage, int pageNum) {
-        
-        List<ModelFrontTravlePost> temp = new ArrayList<ModelFrontTravlePost>();
-        List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
-        weightHelper wHelper = new weightHelper();
-        ModelFrontTravlePost post = null;
-        
-        
-        try{
-            
-            String query = "select * from" +
-                    " (select * from" +
-                    " (select * from" +
-                    " (select * from image_tb) as a"+
-                    " natural join"+
-                    " (select travelPost_no, travelSentiment from information_tb) as b) as c"+
-                    " natural join"+
-                    " (select travelPost_no, address, longitude, latitude from location_tb) as d) as e"+
-                    " natural join"+
-                    " (select travelPost_no, title, like_count, comment_count from travelpost_tb) as f";
-        
-            
-            pstmt = connection.prepareStatement(query);
-            rs = pstmt.executeQuery();
-            
-            while(rs.next()){
-                post = new ModelFrontTravlePost();
-                
-                String image_url = rs.getString("image_url").equals("null") == true ? "img/readyImage.jpg" : rs.getString("image_url");
-                post.setTravelPost_no(rs.getInt("travelPost_no"));
-                post.setImage_url(image_url);
-                post.setAddress(rs.getString("address"));
-                post.setLatitude(Double.parseDouble(rs.getString("latitude")));
-                post.setLongitude(Double.parseDouble(rs.getString("longitude")));
-                post.setComment_count(rs.getInt("comment_count"));
-                post.setLike_count(rs.getInt("like_count"));
-                post.setTitle(rs.getString("title"));
-                post.setSentiment(rs.getDouble("travelSentiment"));
-                temp.add(post);
-            }
-            
-            //여기서 sorting해서 가져오자
-            wHelper.setPostWeight(temp);
-            temp.sort(new weightDscCompare());  
-                            
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-        
-        if(temp.size() < (startPage-1) * pageNum)
-            return result;
-    
-        for(int i=(startPage-1) * pageNum; i<pageNum * startPage; i++)
-            result.add(temp.get(i));
-            
-            
-        return result;
-    }
-    
-    static class weightDscCompare implements Comparator<ModelFrontTravlePost> {
-         
-        @Override
-        public int compare(ModelFrontTravlePost arg0, ModelFrontTravlePost arg1) {
-            // TODO Auto-generated method stub
-            if(arg0.getWeight() > arg1.getWeight())
-                return -1;
-            else if(arg0.getWeight() < arg1.getWeight())
-                return 1;
-            else
-                return 0;
-        }
-    }
-        
-    @Override
-    public List<ModelFrontTravlePost> getPopularFrontTravelPostByCategory(String category, int startPage, int pageNum) {
-        List<ModelFrontTravlePost> temp = new ArrayList<ModelFrontTravlePost>();
-        List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
-        weightHelper wHelper = new weightHelper();
-        ModelFrontTravlePost post = null;
-        
-        
-        try{
-            
-            String query = "select * from" +
-                    " (select * from" +
-                    " (select * from" +
-                    " (select * from"+
-                    " (select * from feature_tb where feature = ?) as a"+
-                    " natural join"+
-                    " (select travelPost_no, travelSentiment from information_tb) as b) as c"+
-                    " natural join"+
-                    " (select * from image_tb) as d) as e"+
-                    " natural join"+
-                    " (select travelPost_no, address, longitude, latitude from location_tb) as f) as g"+
-                    " natural join"+
-                    " (select travelPost_no, title, like_count, comment_count from travelpost_tb) as h";
-            
-        
-            
-            pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, category);
-            rs = pstmt.executeQuery();
-            
-            while(rs.next()){
-                post = new ModelFrontTravlePost();
-                
-                String image_url = rs.getString("image_url").equals("null") == true ? "img/readyImage.jpg" : rs.getString("image_url");
-                post.setTravelPost_no(rs.getInt("travelPost_no"));
-                post.setImage_url(image_url);
-                post.setAddress(rs.getString("address"));
-                post.setLatitude(Double.parseDouble(rs.getString("latitude")));
-                post.setLongitude(Double.parseDouble(rs.getString("longitude")));
-                post.setComment_count(rs.getInt("comment_count"));
-                post.setLike_count(rs.getInt("like_count"));
-                post.setTitle(rs.getString("title"));
-                post.setSentiment(rs.getDouble("travelSentiment"));
-                temp.add(post);
-            }
-            
-            //여기서 sorting해서 가져오자
-            wHelper.setPostWeight(temp);
-            temp.sort(new weightDscCompare());  
->>>>>>> 6606c79e6be1c8291d95f70361113ffbbec1e29a
 
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-        
-        if(temp.size() < (startPage-1) * pageNum)
-            return result;
-    
-        for(int i=(startPage-1) * pageNum; i<pageNum * startPage; i++)
-            result.add(temp.get(i));
-            
-        return result;
-    }
-
+		}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+		
+		if(temp.size() < (startPage-1) * pageNum)
+			return result;
+	
+		for(int i=(startPage-1) * pageNum; i<pageNum * startPage; i++)
+			result.add(temp.get(i));
+			
+		return result;
+	}
+   
+	static class weightDscCompare implements Comparator<ModelFrontTravlePost> {
+		 
+		@Override
+		public int compare(ModelFrontTravlePost arg0, ModelFrontTravlePost arg1) {
+			// TODO Auto-generated method stub
+			if(arg0.getgap_popularity() > arg1.getgap_popularity())
+				return -1;
+			else if(arg0.getgap_popularity() < arg1.getgap_popularity())
+				return 1;
+			else
+				return 0;
+		}
+	}
+	
+  
     @Override
     public int updateViewCount(int travelPost_no) {
         int result = 0;
