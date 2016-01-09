@@ -109,17 +109,16 @@
 	function delForm() {
 
 		var addedFormDiv = document.getElementById("pre_set");
-		if (count > 1) { // ?꾩옱 Div媛? ?먭컻 ?댁긽?대㈃
+		if (count > 1) { 
 			var addedDiv = document.getElementById("added_" + (--count));
-			// 留덉?留됱쑝濡? ?앹꽦?? Div?? ID瑜? ?듯빐 Div媛앹껜瑜? 媛??몄샂
-
+		
 			while ( addedDiv.hasChildNodes() )
 		    {
 			    addedDiv.removeChild( addedDiv.firstChild );       
 			   }
 		addedFormDiv.removeChild(addedDiv);	
-		} else { // 留덉?留? Div留? ?⑥븘?덈떎硫?
-			document.baseForm.reset(); // Div ?댁슜 ??젣
+		} else { 
+			document.baseForm.reset();
 		}
 	}
 
@@ -225,6 +224,13 @@ function removeFile(e) {
     $(this).parent().remove();
 }
 
+function recieve(){
+    var txt = "<font color='red'>자식창에서 받아온 값</font>";
+    document.getElementById("process").innerHTML = txt;
+    document.myform.receiver.value = newWindow.document.myform.sender.value;        
+}
+
+
 
 
 </script>
@@ -233,6 +239,7 @@ function removeFile(e) {
  	<nav id="mainNav">
  		<jsp:include page="commonPage/nav.jsp"></jsp:include>
  	</nav>
+ 	
  	
 
     <div class="container">
@@ -251,7 +258,7 @@ function removeFile(e) {
                 </div>
             </div>
         </div>
-        <form action="ServiceWritePage" method="post" enctype="multipart/form-data">
+        <form name="myform" action="ServiceWritePage" method="post" enctype="multipart/form-data">
         <div class="container">
             <div class="raw-fluid">
                 <div class="span10 offset2">
@@ -279,9 +286,18 @@ function removeFile(e) {
                                 </div>
                                                                  
                                 <div class="file_input_div">
-                                      
-                                         <input type="button" name="file_1" class="file_input_hidden"  />
+                                    
+                                    <script>
+                                    function openNewWindow(){
+                                        newWindow = window.open("map.jsp", "newWindow", "height=200, width=400, resizable=yes");        
+                                    }
+                                   
+
+
+                                    </script>
+                                         <input type="button" name="file_1" class="file_input_hidden" onclick="openNewWindow()"/>
                                       <img src="map.png" class="file_input_img_btn">
+                                     
                                 </div>
                                     </div>
                             
@@ -294,7 +310,9 @@ function removeFile(e) {
                                  
 							
                             </div>
-                            
+                             <input  type="text" name="receiver" class="textwidth textheight"  placeholder="Location-위치표시를 클릭하세요 !" >
+                              <input  type="hidden" name="latreceiver" size="0">
+                               <input  type="hidden" name="lngreceiver" size="0">
                             <textarea class="textwidth" name="istext" rows="10"  id ="abc"></textarea>
                             
                             </button>
