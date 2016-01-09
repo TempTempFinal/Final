@@ -1,21 +1,19 @@
 package com.lecture.finalproject.model;
 
-import java.sql.Timestamp;
-
 public class ModelCommentList {
 
    private int comment_no;
-    private Timestamp commentPost_date;
+    private String commentPost_date;
     private String content;
     private String user_id;
     private String image_url;
     private int travelPost_no;
     private double sentiment;
     
-   public ModelCommentList(int comment_no, Timestamp timestamp, String content, String user_id, String image_url, int travelPost_no, double sentiment) {
+   public ModelCommentList(int comment_no, String commentPost_date, String content, String user_id, String image_url, int travelPost_no, double sentiment) {
       super();
       this.comment_no = comment_no;
-      this.commentPost_date = timestamp;
+      this.commentPost_date = commentPost_date;
       this.content = content;
       this.user_id = user_id;
       this.image_url = image_url;
@@ -35,16 +33,16 @@ public class ModelCommentList {
       this.comment_no = comment_no;
    }
    
-   public Timestamp getCommentPost_date(){
+   public String getCommentPost_date(){
       return commentPost_date;
    }
    
-   public void setCommentPost_date(Timestamp commentPost_date){
+   public void setCommentPost_date(String commentPost_date){
       this.commentPost_date = commentPost_date;
    }
    
    public String getContent(){
-      return content;
+      return commentPost_date;
    }
    
    public void setContent(String comment_no){
@@ -88,4 +86,5 @@ public class ModelCommentList {
             + content + ", user_id=" + user_id + ", image_url=" + image_url + ", travelPost_no=" + travelPost_no
             + ", sentiment=" + sentiment + "]";
    }
+
 }

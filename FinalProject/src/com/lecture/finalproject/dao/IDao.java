@@ -18,27 +18,27 @@ import com.lecture.finalproject.model.ModelUser;
 
 
 public interface IDao {
-    
-    public abstract ModelUser getUserInfo(String user_id);
-    
-    public abstract int insertUserInfo(ModelUser user);
-    
-    public abstract int getUserCount(String user_id);
-    
-    public abstract ModelUser getWriterInfo(int travelPost_no);
-    
-    public abstract int getTravelPostCount();
-    
-    public List<ModelFrontTravlePost> getFrontTravlePostList();
-    //front Travle List 가져오기
-    public abstract List<ModelFrontTravlePost> getFrontTravlePostList(int startPage, int pageNum);
-    //front Travle List 위치기반
-    public abstract List<ModelFrontTravlePost> getFrontTravlePostListByLocation(String[] location, int startPage, int pageNum);
-     //front Travle sorted List 위치 기반
-    public List<ModelFrontTravlePost> getFrontTravlePostListBySortedLocation(String[] location, String standard,int startPage, int pageNum);
-    //front Travle List Id기반
-    public List<ModelFrontTravlePost> getFrontTravlePostListById(String user_id);
-    //search word로 찾기
+	
+	public abstract ModelUser getUserInfo(String user_id);
+	
+	public abstract int insertUserInfo(ModelUser user);
+	
+	public abstract int getUserCount(String user_id);
+	
+	public abstract ModelUser getWriterInfo(int travelPost_no);
+	
+	public abstract int getTravelPostCount();
+	
+	public List<ModelFrontTravlePost> getFrontTravlePostList();
+	//front Travle List 가져오기
+	public abstract List<ModelFrontTravlePost> getFrontTravlePostList(int startPage, int pageNum);
+	//front Travle List 위치기반
+	public abstract List<ModelFrontTravlePost> getFrontTravlePostListByLocation(String[] location, int startPage, int pageNum);
+	 //front Travle sorted List 위치 기반
+	public List<ModelFrontTravlePost> getFrontTravlePostListBySortedLocation(String[] location, String standard,int startPage, int pageNum);
+	//front Travle List Id기반
+	public List<ModelFrontTravlePost> getFrontTravlePostListById(String user_id);
+	//search word로 찾기
     public abstract List<ModelFrontTravlePost> getFrontTravlePostBySearchWord(String searchWord, int startPage, int pageNum);
     //관심사로 찾기
     public abstract List<ModelFrontTravlePost> getFrontTravelPostByConcern(String concern, int startPage, int pageNum);
@@ -50,8 +50,8 @@ public interface IDao {
     public abstract int getCountTravlePostByConcern(String conern);
     
     
-    
-    //여행지 List, 여행지 하나 가져오기
+	
+	//여행지 List, 여행지 하나 가져오기
 
     public abstract List<ModelTravelPost> getTravelPostList(String user_id);
     public abstract ModelTravelPost getTravelPostOne(int travelPost_no);
@@ -90,7 +90,7 @@ public interface IDao {
     public abstract int insertPostFeature(ModelFeature feature);
     public abstract int insertPostHash(ModelHash hashTag);
     
-  //comment 긍부정
+    //comment 긍부정
     public abstract List<ModelCommentList> getModelCommentList(int travelPost_no);
     public abstract int insertCommentList(ModelComment comentList);
     
@@ -118,5 +118,6 @@ public interface IDao {
     public abstract int insertLikePerosn(int travelPost_no, String userID);
     public abstract int removeLikePerson(int travelPost_no, String userID);
     
-    public abstract int getLikeState(int travelPost_no, String userID);   
+    public abstract int getLikeState(int travelPost_no, String userID);
+    
 }
