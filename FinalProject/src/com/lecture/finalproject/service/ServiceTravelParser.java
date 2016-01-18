@@ -72,7 +72,7 @@ public class ServiceTravelParser {
 	  try {
 		  for(int i=0; i<contentTypeIds.length; i++){
 			  //pageNum<=pageNumArr[i]
-			  for(int pageNum=1; pageNum<=10; pageNum++){
+			  for(int pageNum=1; pageNum<=16; pageNum++){
 			  
 				URL url = new URL("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
 				  		+ "ServiceKey=" + serviceKey + "&contentTypeId=" + contentTypeIds[i] + "&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&listYN=Y&"
