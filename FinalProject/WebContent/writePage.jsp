@@ -342,19 +342,37 @@ function recieve(){
                 <br>
                  <br>
                 <center>
+   
                 
           <input type="submit" >
           </center>
+          
+                 <dt id="my_name">로그인 해주세요  </dt>
+		<input type="hidden" id="my_id" name="userid_Num">
+
+          
         </form>
 
+  
 
     </div>
 
-
+  
+       
    
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 
-   
+ <script type="text/javascript">
+	 
+			var user_id = '<%=(String)request.getAttribute("userId")%>';
+			var userName = '<%=(String)request.getAttribute("userName")%>';
+			
+		if(user_id!== "" && userName !== "null"){
+			$("#my_id").empty().val(user_id)
+			$("#my_name").empty().text(userName);
+		}
+		
+	    </script>
     </body>
 </html>

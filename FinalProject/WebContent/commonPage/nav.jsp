@@ -90,7 +90,7 @@ body{
 				<li id="mySearch-icon"><a href="${pageContext.request.contextPath}/search"><span class="glyphicon glyphicon-search"></span></a></li>
 				<li><a href="${pageContext.request.contextPath}/group"><span class="glyphicon glyphicon-globe"></span></a></li>
 				<li><a href="${pageContext.request.contextPath}/my"><span class="glyphicon glyphicon-user"></span></a></li>
-				<li><a href="${pageContext.request.contextPath}/writePage.jsp"><span class="glyphicon glyphicon-pencil"></span></a></li>
+				<li><a href="${pageContext.request.contextPath}/writePage"><span class="glyphicon glyphicon-pencil"></span></a></li>
 			</ul>
 		</div>
 	</div>

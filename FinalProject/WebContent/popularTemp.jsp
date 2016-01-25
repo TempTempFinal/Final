@@ -46,13 +46,16 @@ section{
 .post{
 	border: 1px solid #bebebe;
 	border-radius: 10px;
+	
+
 }
 
 .post img{
 	border-radius: 10px;
-	    width: 100%;
+	max-width: 100%;
     min-height: 213px;
-    height: 213px;
+  	visibility : visible;
+  	display : block;
 }
 
 .postTitle{
@@ -185,7 +188,7 @@ section{
 									<div class="popularPostContainer">
 										<A href="${pageContext.request.contextPath}/detail?travlePostNumber=${topPost.travelPost_no}">
 											<div class="post">
-												<img src="${topPost.image_url}">												
+												<img src="${topPost.image_url}" >												
 											</div>
 											<div class="postTitle">
 												<span>${topPost.title}</span>

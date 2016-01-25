@@ -68,7 +68,7 @@ public class MypageController extends HttpServlet {
 			user = (User)session.getAttribute("twitterUser");
 			posts = db.getFrontTravlePostListById(Long.toString(user.getId()));
 			concerns = db.getConcernList(Long.toString(user.getId()));
-		
+			request.setAttribute("userId", Long.toString(user.getId()));
 			request.setAttribute("userImage", user.getProfileImageURL());
 			request.setAttribute("userName", user.getName());
 			request.setAttribute("posts",posts);		

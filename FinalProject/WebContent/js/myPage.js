@@ -118,3 +118,36 @@ function getContextPath(){
     return ctxPath;
 }
 
+function jsonObjectParse(obj){
+	
+	var size = 0;
+	
+	var path = location.pathname;
+	path = path.substring(0,path.indexOf('/',1));
+	
+	for(var i in obj.posts)
+		size++;
+
+	$('#post_list').empty();
+	for(var i=0; i<size; i++){
+		$divWrapper = $('<div></div>').addClass('span4');
+		$postContainer = $('<div></div>').addClass('post-container');
+		$postContainer.append($('<div></div>').addClass('img-div ').html('<img src="' + obj.posts[i].image_url + '">'));
+		$postContainer.append($('<div></div>').addClass('title-div ').text(obj.posts[i].title));
+		$postContainer.append($('<div></div>').addClass('location-div ').text(obj.posts[i].address));
+		
+		$pWrapper = $('<div></div>');
+		$pWrapper.append($('<a></a>').addClass('active pull-right').text(obj.posts[i].comment_count).append($('<i></i>').addClass('icon-comment')));
+		$pWrapper.append($('<a></a>').addClass('active pull-right').text(obj.posts[i].like_count).append($('<i></i>').addClass('icon-heart')));
+		
+		$postContainer.append($pWrapper);
+		$divWrapper.append($postContainer);
+		
+		$atag = $('<a></a>').attr('href',path + "/detail?travlePostNumber=" + obj.posts[i].travelPost_no)
+		$atag.append($divWrapper);
+		
+		$('#post_list').append($atag);
+	
+	}
+}
+

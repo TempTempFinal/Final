@@ -31,6 +31,7 @@ import com.lecture.finalproject.model.ModelImage;
 import com.lecture.finalproject.model.ModelInformation;
 import com.lecture.finalproject.model.ModelLocation;
 import com.lecture.finalproject.model.ModelTravelPost;
+import com.lecture.finalproject.model.ModelUser;
 import com.lecture.finalproject.service.S3Upload;
 import com.lecture.finalproject.service.PostUploaderHelper;
 import com.oreilly.servlet.MultipartRequest;
@@ -55,6 +56,7 @@ public class ServiceWritePage extends HttpServlet {
 	ModelTravelPost post = new ModelTravelPost();
 	Travelpost_db tp_db = new Travelpost_db();
 	ModelLocation loca = new ModelLocation();
+	ModelUser user = new ModelUser();
 
 	private String make(String s)
 	{
@@ -94,13 +96,13 @@ public class ServiceWritePage extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		ServletContext context = getServletContext();
-		
+
 
 		S3Upload s3 = new S3Upload();
 		String path = context.getRealPath("/");
 		String encType =  "UTF-8";
 		int sizeLimit = 20*1024*1024;
-		
+
 		MultipartRequest multi = new MultipartRequest(request, path, sizeLimit, encType, new DefaultFileRenamePolicy());
 
 		String title = multi.getParameter("istitle");
@@ -110,23 +112,31 @@ public class ServiceWritePage extends HttpServlet {
 		String lat = multi.getParameter("latreceiver");
 		String lng = multi.getParameter("lngreceiver");
 		String address = multi.getParameter("receiver");
+		String user_id = multi.getParameter("userid_Num");
 		String city1=null;
+		
 		String city2=null;
 		int num;
-		
-		String[] result = address.split(" ");
-		if(result[0].equalsIgnoreCase("대한민국"))
+		if(address !=null)
 		{
-			city1=result[1];
-			city2=result[2];
+			String[] result = address.split(" ");
+			if(result.length>=3)
+			{
+				if(result[0].equalsIgnoreCase("대한민국"))
+				{
+					city1=result[1];
+					city2=result[2];
+				}
+				else
+				{
+					city1=result[0];
+					city2=result[1];
+				}
+			}
 		}
-		else
-		{
-			city1=result[0];
-			city2=result[1];
-		}
-		
+
 		PostUploaderHelper hashExtracter = new PostUploaderHelper();
+
 		
 		info.setTravel_content(contents);
 		post.setTitle(title);
@@ -135,57 +145,40 @@ public class ServiceWritePage extends HttpServlet {
 		loca.setLongitude(lng);
 		loca.setCity1(city1);
 		loca.setCity2(city2);
-		//TODO 나중에 수정해야할 부분, title중복시 에러 , User ID, 
-		tp_db.insert("insert into travelpost_tb(title,travelPost_date,user_id) values("+make(post.getTitle())+","+"now(),"+make("khyunm91")+")");
+		user.setUser_id(user_id);
+		//TODO 나중에 수정해야할 부분, title중복시 에러 , 
+		
+		System.out.println(user.getUser_id());
+		//System.out.println(loca.getAddress());
+		tp_db.insert("insert into travelpost_tb(title,travelPost_date,user_id) values("+make(post.getTitle())+","+"now(),"+make(user.getUser_id())+")");
 		num = tp_db.findTravelPost_no(post.getTitle());
 		tp_db.insert("insert into information_tb(travel_content,travelpost_no) values("+make(info.getTravel_content())+","+num+")");
+
+
+
 		
-		
-		
-		//TODO 위치정보도 DB에 넣어줘야함
-		tp_db.insert("insert into location_tb(city1,city2,address,latitude,longitude,travelpost_no) values("+make(loca.getCity1())+","+make(loca.getCity2())+"," +make(loca.getAddress())+","+make(loca.getLatitude())+","+make(loca.getLongitude())+","+num+")");
 	
-		
+		tp_db.insert("insert into location_tb(city1,city2,address,latitude,longitude,travelpost_no) values("+make(loca.getCity1())+","+make(loca.getCity2())+"," +make(loca.getAddress())+","+make(loca.getLatitude())+","+make(loca.getLongitude())+","+num+")");
+
+
 		//해당 글의 Hash Tag와 특징 정보를 추출하여 해당 TravlePost_date 번호의 DB에 저장.
-		
+
 		hashExtracter.extractHashTagTest(contents, num);
 		hashExtracter.extractOnePostFeature(contents, num);
-		
-	
+
+
 		if(file != null){					
 			s3.fileUpload("team2tr", file);
 			img.setImage_url(s3.getFileURL("team2tr", uploadFileName));		
 			tp_db.insert("insert into image_tb(image_url,travelpost_no) values("+make(img.getImage_url())+","+num+")");		
 		}else{
-			tp_db.insert("insert into image_tb values('null','" + num + "')");
+			tp_db.insert("insert into image_tb values("+make("null") + num + "')");
 		}
-		
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/writePage.jsp");
-        dispatcher.forward(request, response);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/writePage.jsp");
+		dispatcher.forward(request, response);
 	}
-	/*
-	public String uploadImageFile(File file, String fileName)
-	{
-		AWSCredentials cre  = new BasicAWSCredentials("AKIAJN2OOMMG6LLSG5WA","gyuAFatGwK4VN9APCITukECI4VHI6wLOHKC3G8si");
-		AmazonS3Client conn = new AmazonS3Client(cre);
-
-		ObjectMetadata meta = new ObjectMetadata();
-		meta.setContentType("image/jpeg");
-		FileInputStream input = null;
-		try {
-			input = new FileInputStream(file);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//ByteArrayInputStream input = new ByteArrayInputStream(file);
-		conn.putObject("team2tr",fileName,input,meta);
-		conn.setObjectAcl("team2tr",fileName,CannedAccessControlList.PublicRead);
-
-		return fileName;
-	}
-	 */
-
+	
 
 
 

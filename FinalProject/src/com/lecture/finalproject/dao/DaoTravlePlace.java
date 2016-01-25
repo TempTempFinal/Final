@@ -65,6 +65,29 @@ public class DaoTravlePlace implements IDao{
     	return result;
     }
     
+    public ModelTravelPost getUserWritePost(String user_id) {
+    	ModelTravelPost result = null;
+    	
+    	try{
+    		String query = "select *from traelpost_tb where user_id = ?";
+    		
+    		pstmt = connection.prepareStatement(query);
+    		pstmt.setString(2, user_id);
+    		  while (rs.next()) {
+    			  result = new ModelTravelPost(rs.getInt("travelPost_no"), rs.getString("title"), rs.getString("travelPost_date"), rs.getInt("view_count"), rs.getInt("like_count"), rs.getInt("comment_count"),rs.getString("user_id"));
+              }
+    		
+    	}catch(SQLException e){
+    		System.out.println(e.getMessage());
+    	}
+    	
+    	
+    	return result;
+    }
+    	
+    	
+    
+    
     @Override
     public ModelTravelPost getTravelPostOne(int travelPost_no) {
     	// TODO Auto-generated method stub
@@ -608,6 +631,43 @@ int result = 0;
           }
           return result;
     }
+    
+    public List<ModelFrontTravlePost> getUserTravlePostList(int startPage, int pageNum, String user_id) {
+    	
+  	  List<ModelFrontTravlePost> result = new ArrayList<ModelFrontTravlePost>();
+  	  
+  	  try{
+  		  String query = "select image_url,travelPost_tb.travelPost_no, title,view_count, like_count, comment_count, address" +
+  				  			" from image_tb natural join "
+  				  				+ "(travelpost_tb  natural join location_tb)" +
+  				  							"where user_id='" + user_id + "'";
+  		  pstmt = connection.prepareStatement(query);
+  		 
+  		  
+  		  rs = pstmt.executeQuery();
+              
+            while (rs.next()) {
+          	  ModelFrontTravlePost one = new ModelFrontTravlePost();
+                
+          	  String image_url = rs.getString("image_url").equals("null") == true ? "img/notFound.jpg" : rs.getString("image_url");
+          	
+          	  System.out.println(image_url);
+                one.setImage_url(image_url);
+                one.setTravelPost_no(rs.getInt("travelPost_no"));
+                one.setAddress(rs.getString("address"));
+                one.setComment_count(rs.getInt("comment_count"));
+                one.setLike_count(rs.getInt("like_count"));
+                one.setTitle(rs.getString("title"));
+                result.add(one);
+            }
+          
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         
+        }
+        return result;
+  }
     
     
     @Override
