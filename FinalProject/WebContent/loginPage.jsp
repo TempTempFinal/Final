@@ -16,14 +16,14 @@
     <title>travel recommend</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="http://ironsummitmedia.github.io/startbootstrap-landing-page/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blackrockdigital.github.io/startbootstrap-landing-page/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="http://ironsummitmedia.github.io/startbootstrap-landing-page/css/landing-page.css" rel="stylesheet">
+    <link href="http://blackrockdigital.github.io/startbootstrap-landing-page/css/landing-page.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/awesome.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/grid.css" rel="stylesheet">
     <!-- Custom Fonts -->
-    <link href="http://ironsummitmedia.github.io/startbootstrap-landing-page/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://blackrockdigital.github.io/startbootstrap-landing-page/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
  	<link href="${pageContext.request.contextPath}/font/loginFont.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -281,10 +281,11 @@
 
 	<!-- jQuery -->
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="http://ironsummitmedia.github.io/startbootstrap-landing-page/js/jquery.js"></script>
+    <script src="http://blackrockdigital.github.io/startbootstrap-landing-page/js/jquery.js"></script>
   
     <!-- Bootstrap Core JavaScript -->
-    <script src="http://ironsummitmedia.github.io/startbootstrap-landing-page/js/bootstrap.min.js"></script>
+    <script src="http://blackrockdigital.github.io/startbootstrap-landing-page/js/bootstrap.js"></script>
+  
     
     <!-- plug in -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>

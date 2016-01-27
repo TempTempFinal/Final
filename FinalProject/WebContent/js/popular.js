@@ -48,9 +48,10 @@ function jsonObjectParse1(obj){
 
 	$('#topPost-list').empty();
 	for(var i=0; i<size; i++){
-		$imgTag = $('<img></img>').html('<img src="' + obj.posts[i].image_url + '">');
+		//FIXME
+		//$imgTag = $('<img></img>').html('<img src="' + obj.posts[i].image_url + '">');
 		$spanTag = $('<span></span>').text(obj.posts[i].title);
-		$postDivTag = $('<div></div>').addClass('post').append($imgTag);
+		$postDivTag = $('<div></div>').addClass('post').html('<img src="' + obj.posts[i].image_url + '">');
 		$postTitleTag = $('<div></div>').addClass('postTitle').append($spanTag);
 		$atag = $('<a></a>').attr('href',path + "/detail?travlePostNumber=" + obj.posts[i].travelPost_no).append($postDivTag).append($postTitleTag);
 		$popularContainerTag = $('<div></div>').addClass('popularPostContainer').append($atag);

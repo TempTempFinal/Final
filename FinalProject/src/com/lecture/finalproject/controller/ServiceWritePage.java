@@ -169,7 +169,7 @@ public class ServiceWritePage extends HttpServlet {
 
 		if(file != null){					
 			s3.fileUpload("team2tr", file);
-			img.setImage_url(s3.getFileURL("team2tr", uploadFileName));		
+			img.setImage_url("https://s3-ap-northeast-1.amazonaws.com/team2tr/"+uploadFileName);		
 			tp_db.insert("insert into image_tb(image_url,travelpost_no) values("+make(img.getImage_url())+","+num+")");		
 		}else{
 			tp_db.insert("insert into image_tb values("+make("null") + num + "')");

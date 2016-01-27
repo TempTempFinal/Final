@@ -52,8 +52,8 @@ section{
 
 .post img{
 	border-radius: 10px;
-	max-width: 100%;
-    min-height: 213px;
+	width: 318px;
+    height: 213px;
   	visibility : visible;
   	display : block;
 }
