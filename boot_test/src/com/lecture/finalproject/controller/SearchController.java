@@ -50,7 +50,7 @@ public class SearchController extends HttpServlet {
 			String userId = ((Long)session.getAttribute("twitterUserId")).toString();
 			
 			user = (User)session.getAttribute("twitterUser");
-			//concerns = db.getConcernList(userId);
+			concerns = db.getConcernList(userId);
 			
 			request.setAttribute("userName", user.getName());
 			request.setAttribute("concerns", concerns);

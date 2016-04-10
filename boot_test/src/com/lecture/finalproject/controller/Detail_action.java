@@ -96,7 +96,7 @@ public class Detail_action extends HttpServlet {
 			request.setAttribute("isLogin", "true");
 		}
 		
-		/*
+		
 		ServiceGetDetailInfo collector = new ServiceGetDetailInfo();
 		request.setAttribute("hashList",collector.getHashList(Integer.parseInt(postNum)));
 		request.setAttribute("featureList", collector.getFeatureList(Integer.parseInt(postNum)));
@@ -110,7 +110,7 @@ public class Detail_action extends HttpServlet {
 		
 		request.setAttribute("writer", collector.getWriter(Integer.parseInt(postNum)));
 		
-		*/
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/detailPage.jsp");
 		dispatcher.forward(request, response);
 	}

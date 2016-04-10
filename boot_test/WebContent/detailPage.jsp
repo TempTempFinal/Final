@@ -311,7 +311,9 @@ margin : 10px 10px 5px 10px;
 			</div>
 			<div class="row contentRow">
 				<div class="col-1 textContainer">
-					<p>${information.travel_content}</p>
+					<c:forEach items="${informationList}" var="info">
+					<p>${info.travel_content}</p>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="row">

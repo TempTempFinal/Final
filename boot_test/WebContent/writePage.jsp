@@ -96,6 +96,7 @@
 	
 	 function winopen(){
 	        win = window.open('map.jsp', 'ot', 'width=500px, height=500px');
+	        form.target="dialogPopup";
 	       
 	    }
 	    function winmessage(msg){

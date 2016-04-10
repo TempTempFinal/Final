@@ -29,7 +29,7 @@ public class TextCategorizer {
 	private File confFile = null;
 
 	private final static int UNKNOWN_LIMIT = 10;
-	private final String jarConfFile = "/Users/bagjeongho/Desktop/Final-master/Final-master/FinalProject/resource/fingerPrinter/textcat.conf";
+	private final String jarConfFile = "/Users/HYUNMIN-KIM/git/Final/boot_test/resource/fingerPrinter/textcat.conf";
 //	private String webAppPath = "";
 	private ArrayList<FingerPrint> categories = new ArrayList<FingerPrint>();
 
@@ -75,7 +75,7 @@ public class TextCategorizer {
 //		System.out.println("5-7");
 		this.categories.clear();
 		
-		String path = "/Users/bagjeongho/Desktop/Final-master/Final-master/FinalProject/resource/fingerPrinter/";
+		String path = "/Users/HYUNMIN-KIM/git/Final/boot_test/resource/fingerPrinter/";
 
 		try {
 			MyProperties properties = new MyProperties();

@@ -37,7 +37,7 @@ public class FriendshipRepository{
 		DaoTravlePlace db = new DaoTravlePlace();
 		
 		
-		modelUser = getModelUserFromDB(user.getId());
+		modelUser = getModelUserFromDB(Long.toString(user.getId()));
 		
 	
 	
@@ -65,7 +65,7 @@ public class FriendshipRepository{
 			db.insertUserInfo(modelUser);
 			
 			for(Long friend : modelUser.getFriend_list())
-				db.insertFriendship(Long.parseLong(modelUser.getUser_id()), friend);
+				db.insertFriendship(modelUser.getUser_id(), friend);
 		}
 	}
 	
@@ -73,12 +73,12 @@ public class FriendshipRepository{
 	//이걸로 해서 친구목록 저장해서 가져오면 친구기능은 끝!
 	//있다면 디비에서 친구록도 함께 가져오
 	
-	public ModelUser getModelUserFromDB(Long userId){
+	public ModelUser getModelUserFromDB(String userId){
 		DaoTravlePlace db = new DaoTravlePlace();
 		ModelUser temp = null;
 
 			
-		int count = db.getUserCount(Long.toString(userId));
+		int count = db.getUserCount(userId);
 		
 		if(count > 0){
 			temp = db.getUserInfo(userId);

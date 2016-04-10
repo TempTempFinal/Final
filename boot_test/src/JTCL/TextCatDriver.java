@@ -41,7 +41,7 @@ public class TextCatDriver {
 		HashMap<String,Double> concernWeight = new HashMap();
 		TextCategorizer guesser = new TextCategorizer();  
 		//C:\Users\KHM\git\Final\FinalProject\resource\fingerPrinter
-		guesser.setConfFiles("/Users/bagjeongho/Desktop/Final-master/Final-master/FinalProject/resource/fingerPrinter/textcat.conf");
+		guesser.setConfFiles("/Users/HYUNMIN-KIM/git/Final/boot_test/resource/fingerPrinter/textcat.conf");
 		//System.out.println(guesser.categorize(s));
 		//System.out.println(guesser.getCategoryDistances(s));
 

@@ -79,7 +79,7 @@ public class ServiceGetDetailInfo {
 	public ModelUser getWriter(int postNum){
 		ModelTravelPost	temp = getTravlePost(postNum);
 		
-		ModelUser result = db.getUserInfo(Long.parseLong(temp.getUser_id()));
+		ModelUser result = db.getUserInfo(temp.getUser_id());
 		return result;
 	}
 

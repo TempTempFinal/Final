@@ -20,7 +20,7 @@ import com.lecture.finalproject.model.ModelUser;
 
 public interface IDao {
 	
-	public abstract ModelUser getUserInfo(long user_id);
+	public abstract ModelUser getUserInfo(String user_id);
 	
 	public abstract int insertUserInfo(ModelUser user);
 	
@@ -129,15 +129,17 @@ public interface IDao {
     public abstract int getVisitState(int travelPost_no, String userID);
     
     
-    public abstract List<Long> getFriendship(long user_id);
+    public abstract List<Long> getFriendship(String user_id);
     public abstract List<ModelCheckIn> getCheckInList();   //수정요망ㅇㅇ
     
-    public abstract long[] getFriendsList(long user_id);  //수정요망ㅇ
-    public abstract int insertFriendship(long user_id, long friendship); //수정요망ㅇ
+    public abstract long[] getFriendsList(String user_id);  //수정요망ㅇ
+    public abstract int insertFriendship(String user_id, long friendship); //수정요망ㅇ
     
     public abstract List<ModelCheckIn> updateTopkPlaceInfo(List<ModelCheckIn> topkList);
     
     public abstract int test(double user_id, double friend_id);
+
+
 
     
     

@@ -156,8 +156,7 @@ public class DaoTravlePlace implements IDao{
     }
     
     
-    @Override
-    public ModelUser getUserInfo(long user_id) {
+    public ModelUser getUserInfo(String user_id) {
     	
     	ModelUser result = null;
     	
@@ -165,7 +164,7 @@ public class DaoTravlePlace implements IDao{
     		String query = "select * from user_tb where user_id = ?";
     		
     		pstmt = connection.prepareStatement(query);
-    		String temp = Long.toString(user_id);
+    		String temp = user_id;
     		
     		pstmt.setString(1, temp);
     		rs = pstmt.executeQuery();
@@ -1756,7 +1755,7 @@ int result = 0;
 	
 	//TODO 해당 테이블 만들어 줘야함
 	@Override
-	public List<Long> getFriendship(long user_id) {
+	public List<Long> getFriendship(String user_id) {
 		
 		List<Long> result = new ArrayList<Long>();
 		
@@ -1764,7 +1763,7 @@ int result = 0;
 			String query = "select friend_id from friendship_tb where user_id = ?";
 			
 			pstmt = connection.prepareStatement(query);
-			pstmt.setLong(1, user_id);
+			pstmt.setString(1, user_id);
 			
 			rs = pstmt.executeQuery();
 			
@@ -1826,7 +1825,7 @@ int result = 0;
 			String query = "select count(*) from checkin_tb where user_id = ? and travelPost_no = ?";
 			
 			pstmt = connection.prepareStatement(query);
-			pstmt.setInt(1, Integer.parseInt(userID));
+			pstmt.setLong(1, Long.parseLong(userID));
 			pstmt.setInt(2, travelPost_no);
 			
 			rs = pstmt.executeQuery();
@@ -1890,7 +1889,7 @@ int result = 0;
 	//TODO check필---================================
 	
  	@Override
- 	public long[] getFriendsList(long user_id) {
+ 	public long[] getFriendsList(String user_id) {
  	
  		List<Long> tempResult = new ArrayList<Long>();
  		
@@ -1898,7 +1897,7 @@ int result = 0;
  			String query = "select * from friendship_tb where user_id = ?";
  			
  			pstmt = connection.prepareStatement(query);
- 			pstmt.setString(1, Long.toString(user_id));
+ 			pstmt.setString(1, user_id);
  		
  			
  			rs = pstmt.executeQuery();
@@ -1917,7 +1916,7 @@ int result = 0;
 	  
  	
 	@Override
-	    public int insertFriendship(long user_id, long friendship) {
+	    public int insertFriendship(String user_id, long friendship) {
 	
 		int result = 0;
 
@@ -1925,8 +1924,8 @@ int result = 0;
 
 			String query = "insert into friendship_tb values(?,?)";
 			pstmt = connection.prepareStatement(query);                          // prepareStatement에서 해당 sql을 미리 컴파일한다.
-			pstmt.setString(1,Long.toString(user_id));
-			pstmt.setString(2,Long.toString(friendship));
+			pstmt.setString(1,user_id);
+			pstmt.setLong(2,friendship);
 			
 			result = pstmt.executeUpdate();
 

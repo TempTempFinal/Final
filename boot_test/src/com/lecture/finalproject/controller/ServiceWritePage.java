@@ -165,14 +165,16 @@ public class ServiceWritePage extends HttpServlet {
 
 		hashExtracter.extractHashTagTest(contents, num);
 		hashExtracter.extractOnePostFeature(contents, num);
-
+	System.out.println(file);
 
 		if(file != null){					
 			s3.fileUpload("team2tr", file);
 			img.setImage_url("https://s3-ap-northeast-1.amazonaws.com/team2tr/"+uploadFileName);		
 			tp_db.insert("insert into image_tb(image_url,travelpost_no) values("+make(img.getImage_url())+","+num+")");		
-		}else{
-			tp_db.insert("insert into image_tb values("+make("null") + num + "')");
+		}else
+		{
+			img.setImage_url("img/readyImage.jpg");
+			tp_db.insert("insert into image_tb values("+make(img.getImage_url()) +","+ num + ")");
 		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/writePage.jsp");

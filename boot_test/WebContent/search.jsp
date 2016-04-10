@@ -119,11 +119,11 @@ height: 150px;
 								<input type="hidden" name="method" value="originalSearch" id="hiddenMethod">
 			</form>
 		
-			 <%-- <%if(isLogin.equalsIgnoreCase("true")){%> 
-			 --%>	
+			 <%if(isLogin.equalsIgnoreCase("true")){%> 
+			 
 				<p class="recommend-title"><a href="${pageContext.request.contextPath}/MapSetup">친구들 사이 인기있는 여행지 보기</a></p> 
 				<p class="recommend-title"><b>${userName}</b>님 다음은 어떠신가요?</p>
-            <%--  	<div class="concern-list">
+              	<div class="concern-list">
              
 	       			<div class="row">
           			   <c:forEach items="${concerns}" var="concern">
@@ -131,7 +131,7 @@ height: 150px;
              			</c:forEach>
               		   </div>
 	           	</div>
-  			   <%}%> --%>
+  			   <%}%> 
 		</div>
 	</section>
 	<footer id="mainFooter">
